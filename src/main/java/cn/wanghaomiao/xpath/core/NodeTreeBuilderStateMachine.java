@@ -1,5 +1,9 @@
 package cn.wanghaomiao.xpath.core;
 
+import cn.wanghaomiao.xpath.model.Node;
+import cn.wanghaomiao.xpath.model.Predicate;
+import cn.wanghaomiao.xpath.util.EmMap;
+
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

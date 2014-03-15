@@ -7,7 +7,6 @@ import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,7 +39,7 @@ public class NodeTreeEvaluator {
             if (n.getScopeEm()== ScopeEm.RECURSIVE||n.getScopeEm()==ScopeEm.CURREC){
                 Elements searchRes = context.select(n.getTagName());
                 for (Element e:searchRes){
-                    Element filterR = filter(e,n.getPredicate());
+                    Element filterR = filter(e,n);
                     if (filterR!=null){
                         elstmp.add(filterR);
                     }
@@ -54,13 +53,18 @@ public class NodeTreeEvaluator {
                          }
                      }
                 }else if (n.getTagName().endsWith("()")){
+
                     //todo call func
 
                 }else {
                     LinkedList<Element> contextTmp = new LinkedList<Element>();
                     for (Element e:context){
-                        for (Element chi:e.children()){
-                            Element fchi=filter(chi,n.getPredicate());
+                        Elements filterScope = e.children();
+                        if (StringUtils.isNotBlank(n.getAxis())){
+
+                        }
+                        for (Element chi:filterScope){
+                            Element fchi=filter(chi,n);
                             if (fchi!=null){
                                 contextTmp.add(fchi);
                             }
@@ -73,9 +77,13 @@ public class NodeTreeEvaluator {
         return res;
     }
 
-    public Element filter(Element e,Predicate predicate){
+    public Element filter(Element e,Node node){
         return null;
     }
+
+//    public List<Object> callFunc(String funcname,Elements context,String ... args){
+//
+//    }
 
     public static void main(String[] args) throws IOException {
         Elements els=Jsoup.connect("http://www.baidu.com").get().select("div");

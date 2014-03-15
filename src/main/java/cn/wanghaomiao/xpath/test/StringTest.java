@@ -14,5 +14,7 @@ public class StringTest {
         while (tokenizer.hasMoreTokens()){
             System.out.println(tokenizer.nextToken());
         }
+        String s = "abcc(/div[1]/li[congtain(text(),'aa')],'tt')";
+
     }
 }
