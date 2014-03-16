@@ -13,7 +13,8 @@ public class RelexTest {
     public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         Method method= Functions.class.getMethod("exTest",String.class,int.class);
 //        method.invoke(Functions.class.newInstance(),"tt",5);
-        method.invoke(new Functions(),"tt",5);
-        System.out.println("123".substring(1));
+        String a = (String) method.invoke(new Functions(),"tt",5);
+        System.out.println(a);
+
     }
 }

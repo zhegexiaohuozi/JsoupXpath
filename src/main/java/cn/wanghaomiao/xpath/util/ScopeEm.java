@@ -1,12 +1,12 @@
 package cn.wanghaomiao.xpath.util;
 
 /**
- * 作用域
+ * 筛选作用域
  * @author 汪浩淼 [ et.tw@163.com ]
  * @since 14-3-7 下午4:26
  */
 public enum ScopeEm {
-    INCHILREN("/"),   //只在子代中查找
+    INCHILREN("/"),   //默认只在子代中筛选,有轴时由轴定义筛选域
     RECURSIVE("//"),  //向下递归查找
     CUR("./"),        //当前节点下
     CURREC(".//");    //当前节点向下递归

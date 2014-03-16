@@ -2,7 +2,6 @@ package cn.wanghaomiao.xpath.core;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,11 +10,6 @@ import java.util.List;
  * Date: 14-3-15 下午8:14
  */
 public class Functions {
-    public String exTest(String a,int b){
-        System.out.println(a+b);
-        return a+b;
-    }
-
     /**
      * 递归获取节点内全部的纯文本
      * @param context
@@ -71,6 +65,21 @@ public class Functions {
         if (context!=null&&context.size()>0){
             for (Element e:context){
                 res.add(e.outerHtml());
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 获取全部节点
+     * @param context
+     * @return
+     */
+    public List<Object> node(Elements context){
+        List<Object> res = new LinkedList<Object>();
+        if (context!=null&&context.size()>0){
+            for (Element e:context){
+                res.addAll(e.getAllElements());
             }
         }
         return res;
