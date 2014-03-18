@@ -39,7 +39,7 @@ public class NodeTreeBuilderStateMachine {
             public void parser(NodeTreeBuilderStateMachine stateMachine, char[] xpath) {
                 int curtmp = stateMachine.cur;
                 StringBuilder accumTmp=new StringBuilder();
-                while (xpath[curtmp]!='['&&xpath[curtmp]!='/'){
+                while (curtmp<xpath.length&&xpath[curtmp]!='['&&xpath[curtmp]!='/'){
                     if (xpath[curtmp]==':'){
                         stateMachine.context.xpathTr.getLast().setAxis(accumTmp.toString());
                         stateMachine.cur=curtmp+2;
@@ -55,18 +55,18 @@ public class NodeTreeBuilderStateMachine {
         TAG {
             @Override
             public void parser(NodeTreeBuilderStateMachine stateMachine, char[] xpath) {
-                while (xpath[stateMachine.cur]!='['&&xpath[stateMachine.cur]!='/'&&stateMachine.cur<xpath.length){
+                while (stateMachine.cur<xpath.length&&xpath[stateMachine.cur]!='['&&xpath[stateMachine.cur]!='/'){
                     stateMachine.accum.append(xpath[stateMachine.cur]);
                     stateMachine.cur+=1;
                 }
                 stateMachine.context.xpathTr.getLast().setTagName(stateMachine.accum.toString());
                 stateMachine.accum = new StringBuilder();
-                if (xpath[stateMachine.cur]=='['){
-                    stateMachine.state = PREDICATE;
+                if (stateMachine.cur==xpath.length){
+                    stateMachine.state =END;
                 }else if (xpath[stateMachine.cur]=='/'){
                     stateMachine.state = SCOPE;
-                }else if (stateMachine.cur==xpath.length){
-                    stateMachine.state =END;
+                }else if (xpath[stateMachine.cur]=='['){
+                    stateMachine.state = PREDICATE;
                 }
             }
         },

@@ -7,6 +7,7 @@ import cn.wanghaomiao.xpath.model.Predicate;
 import cn.wanghaomiao.xpath.util.ScopeEm;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -90,8 +91,7 @@ public class NodeTreeEvaluator {
      * @param node
      * @return
      */
-    public Element filter(Element e,Node node) throws NoSuchFunctionException {
-        //todo step1:根据tagName筛选
+    public Element filter(Element e,Node node) throws NoSuchFunctionException, NoSuchAxisException {
         if (node.getTagName().equals("*")||node.getTagName().equals(e.nodeName())){
             if (node.getPredicate()!=null){
                 Predicate p = node.getPredicate();
@@ -101,6 +101,7 @@ public class NodeTreeEvaluator {
                     }else if (p.getValue().endsWith("()")&&(Boolean)callFilterFunc(p.getValue().substring(0,p.getValue().length()-2),e)){
                         return e;
                     }
+                    //todo p.value ~= contains(./@href,'renren.com')
                 }else {
                     if (p.getLeft().endsWith("()")){
                         Object filterRes=p.getOpEm().excute(callFilterFunc(p.getLeft().substring(0,p.getLeft().length()-2),e).toString(),p.getRight());
@@ -109,13 +110,20 @@ public class NodeTreeEvaluator {
                         }else if(filterRes instanceof Integer && e.siblingIndex()==Integer.parseInt(filterRes.toString())){
                             return e;
                         }
+                    }else {
+                        // 操作符左边不是函数就是xpath表达式了
+                        List<Element> eltmp = new LinkedList<Element>();
+                        eltmp.add(e);
+                        List<Object> rstmp=evaluate(p.getLeft(),new Elements(eltmp));
+                        if ((Boolean) p.getOpEm().excute(StringUtils.join(rstmp,""),p.getRight())){
+                            return e;
+                        }
                     }
                 }
             }else {
                 return e;
             }
         }
-        //todo step2:根据predicate筛选
         return null;
     }
 
@@ -152,12 +160,14 @@ public class NodeTreeEvaluator {
         }
     }
 
-    public static void main(String[] args) throws IOException, NoSuchFunctionException {
-        Element a = Jsoup.connect("http://www.baidu.com").get().select("a").get(6);
-        Object b =  new NodeTreeEvaluator().callFilterFunc("position",a);
-        System.out.println(b.toString().getClass());
-        System.out.println(a.siblingIndex());
-
+    public static void main(String[] args) throws IOException, NoSuchFunctionException, NoSuchAxisException {
+        Document d = Jsoup.connect("http://www.baidu.com").get();
+        NodeTreeEvaluator b =  new NodeTreeEvaluator();
+        String xp = "//div[0]/a/@href";
+        List<Object> rs = b.evaluate(xp,d.children());
+        for (Object o:rs){
+            System.out.println(o.toString());
+        }
     }
 
 }
