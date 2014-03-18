@@ -84,4 +84,46 @@ public class Functions {
         }
         return res;
     }
+
+
+    /**
+     * =====================
+     * 下面是用于过滤器的函数
+     */
+
+    /**
+     * 判断一个元素是不是最后一个
+     * @param e
+     * @return
+     */
+    public boolean last(Element e){
+        return e.equals(e.lastElementSibling());
+    }
+    /**
+     * 判断一个元素是不是第一个
+     * @param e
+     * @return
+     */
+    public boolean first(Element e){
+        return e.equals(e.firstElementSibling());
+    }
+
+    /**
+     * 返回一个元素在兄弟节点中的位置
+     * @param e
+     * @return
+     */
+    public int position(Element e){
+        return e.siblingIndex();
+    }
+
+    /**
+     * 判断是否包含
+     * @param left
+     * @param right
+     * @return
+     */
+    public boolean contains(String left,String right){
+       return left.contains(right);
+    }
 }

@@ -5,8 +5,6 @@ import cn.wanghaomiao.xpath.model.Predicate;
 import cn.wanghaomiao.xpath.util.EmMap;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 用于生成xpath语法树的有限状态机
@@ -115,17 +113,26 @@ public class NodeTreeBuilderStateMachine {
      * @return
      */
     public Predicate genPredicate(String pre){
+        StringBuilder op = new StringBuilder();
+        StringBuilder left = new StringBuilder();
+        StringBuilder right = new StringBuilder();
         Predicate predicate = new Predicate();
-        String rex="\\+|=|-|>|<|>=|<=|^=|\\*=|$=|~=|!=";
-        String[] lr = pre.split(rex);
-        if (lr.length>1){
-            Pattern p = Pattern.compile(rex);
-            Matcher m = p.matcher(pre);
-            m.find();
-            predicate.setOpEm(EmMap.getInstance().opEmMap.get(m.group()));
-            predicate.setLeft(lr[0]);
-            predicate.setRight(lr[1]);
+        char[] preArray = pre.toCharArray();
+        for (int i=preArray.length-1;i>=0;i--){
+            char tmp = preArray[i];
+            if (EmMap.getInstance().commOpChar.contains(tmp)){
+                op.insert(0,tmp);
+            }else {
+                if (op.length()>0){
+                    left.insert(0,tmp);
+                }else {
+                    right.insert(0,tmp);
+                }
+            }
         }
+        predicate.setOpEm(EmMap.getInstance().opEmMap.get(op.toString()));
+        predicate.setLeft(left.toString());
+        predicate.setRight(right.toString());
         predicate.setValue(pre);
         return predicate;
     }
@@ -138,10 +145,13 @@ public class NodeTreeBuilderStateMachine {
             st.state.parser(st, expression.toCharArray());
         }
         for (Node n:st.context.xpathTr){
+            System.out.println("-------------------");
             System.out.println(n.getScopeEm().val());
             System.out.println(n.getAxis());
             System.out.println(n.getTagName());
             System.out.println(n.getPredicate().getValue());
+            System.out.println(n.getPredicate().getOpEm());
+            System.out.println(n.getPredicate().getLeft());
         }
     }
 }

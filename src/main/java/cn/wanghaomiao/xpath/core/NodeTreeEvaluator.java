@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
@@ -51,13 +52,18 @@ public class NodeTreeEvaluator {
             }else {
                 if (n.getTagName().startsWith("@")){
                      for (Element e:context){
-                         String value = e.attr(n.getTagName().substring(1));
-                         if (StringUtils.isNotBlank(value)){
-                             res.add(value);
+                         String key = n.getTagName().substring(1);
+                         if (key.equals("*")){
+                             res.add(e.attributes().toString());
+                         }else {
+                             String value = e.attr(key);
+                             if (StringUtils.isNotBlank(value)){
+                                 res.add(value);
+                             }
                          }
                      }
                 }else if (n.getTagName().endsWith("()")){
-                    res = callFunc(n.getTagName().substring(0,n.getTagName().length()-2),context);
+                    res = (List<Object>) callFunc(n.getTagName().substring(0,n.getTagName().length()-2),context);
                 }else {
                     for (Element e:context){
                         Elements filterScope = e.children();
@@ -84,8 +90,31 @@ public class NodeTreeEvaluator {
      * @param node
      * @return
      */
-    public Element filter(Element e,Node node){
+    public Element filter(Element e,Node node) throws NoSuchFunctionException {
         //todo step1:根据tagName筛选
+        if (node.getTagName().equals("*")||node.getTagName().equals(e.nodeName())){
+            if (node.getPredicate()!=null){
+                Predicate p = node.getPredicate();
+                if (p.getOpEm()==null){
+                    if (p.getValue().matches("\\d+")&&e.siblingIndex()==Integer.parseInt(p.getValue())){
+                        return e;
+                    }else if (p.getValue().endsWith("()")&&(Boolean)callFilterFunc(p.getValue().substring(0,p.getValue().length()-2),e)){
+                        return e;
+                    }
+                }else {
+                    if (p.getLeft().endsWith("()")){
+                        Object filterRes=p.getOpEm().excute(callFilterFunc(p.getLeft().substring(0,p.getLeft().length()-2),e).toString(),p.getRight());
+                        if (filterRes instanceof Boolean && (Boolean) filterRes){
+                            return e;
+                        }else if(filterRes instanceof Integer && e.siblingIndex()==Integer.parseInt(filterRes.toString())){
+                            return e;
+                        }
+                    }
+                }
+            }else {
+                return e;
+            }
+        }
         //todo step2:根据predicate筛选
         return null;
     }
@@ -101,10 +130,10 @@ public class NodeTreeEvaluator {
         }
     }
 
-    public List<Object> callFunc(String funcname,Elements context) throws NoSuchFunctionException {
+    public Object callFunc(String funcname,Elements context) throws NoSuchFunctionException {
         try {
             Method function = Functions.class.getMethod(funcname,Elements.class);
-            return (List<Object>) function.invoke(SingletonProducer.getInstance().getFunctions(),context);
+            return function.invoke(SingletonProducer.getInstance().getFunctions(),context);
         } catch (NoSuchMethodException e) {
             throw new NoSuchFunctionException("This function is not supported");
         } catch (Exception e1) {
@@ -112,8 +141,23 @@ public class NodeTreeEvaluator {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        Elements els=Jsoup.connect("http://www.baidu.com").get().select("div");
-        System.out.println(new NodeTreeEvaluator().getXpathNodeTree("//div[@class='aa']/child::li[contains(./text(),'abc')]/li[5]"));
+    public Object callFilterFunc(String funcname,Element el) throws NoSuchFunctionException {
+        try {
+            Method function = Functions.class.getMethod(funcname,Element.class);
+            return function.invoke(SingletonProducer.getInstance().getFunctions(),el);
+        } catch (NoSuchMethodException e) {
+            throw new NoSuchFunctionException("This function is not supported");
+        } catch (Exception et) {
+            throw new NoSuchFunctionException(et.getMessage());
+        }
     }
+
+    public static void main(String[] args) throws IOException, NoSuchFunctionException {
+        Element a = Jsoup.connect("http://www.baidu.com").get().select("a").get(6);
+        Object b =  new NodeTreeEvaluator().callFilterFunc("position",a);
+        System.out.println(b.toString().getClass());
+        System.out.println(a.siblingIndex());
+
+    }
+
 }
