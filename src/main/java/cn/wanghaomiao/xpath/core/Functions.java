@@ -19,7 +19,7 @@ public class Functions {
         List<Object> res = new LinkedList<Object>();
         if (context!=null&&context.size()>0){
             for (Element e:context){
-                res.add(e.text());
+                res.add(e.ownText());
             }
         }
         return res;
@@ -30,11 +30,11 @@ public class Functions {
      * @param context
      * @return
      */
-    public List<Object> ownText(Elements context){
+    public List<Object> allText(Elements context){
         List<Object> res = new LinkedList<Object>();
         if (context!=null&&context.size()>0){
             for (Element e:context){
-                res.add(e.ownText());
+                res.add(e.text());
             }
         }
         return res;
@@ -92,6 +92,24 @@ public class Functions {
      */
 
     /**
+     * 获取元素自己的子文本
+     * @param e
+     * @return
+     */
+    public String text(Element e){
+        return e.ownText();
+    }
+
+    /**
+     * 获取元素下面的全部文本
+     * @param e
+     * @return
+     */
+    public String allText(Element e){
+        return e.text();
+    }
+
+    /**
      * 判断一个元素是不是最后一个
      * @param e
      * @return
@@ -114,7 +132,7 @@ public class Functions {
      * @return
      */
     public int position(Element e){
-        return e.siblingIndex();
+        return e.siblingIndex()+1;
     }
 
     /**
@@ -126,4 +144,5 @@ public class Functions {
     public boolean contains(String left,String right){
        return left.contains(right);
     }
+
 }

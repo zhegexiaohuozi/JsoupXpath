@@ -48,14 +48,44 @@ public class XpathEvaluator {
             Node n = xpathNodes.get(i);
             LinkedList<Element> contextTmp = new LinkedList<Element>();
             if (n.getScopeEm()== ScopeEm.RECURSIVE||n.getScopeEm()==ScopeEm.CURREC){
-                Elements searchRes = context.select(n.getTagName());
-                for (Element e:searchRes){
-                    Element filterR = filter(e,n);
-                    if (filterR!=null){
-                        contextTmp.add(filterR);
+                if (n.getTagName().startsWith("@")){
+                    for (Element e:context){
+                        //处理上下文自身节点
+                        String key = n.getTagName().substring(1);
+                        if (key.equals("*")){
+                            res.add(e.attributes().toString());
+                        }else {
+                            String value = e.attr(key);
+                            if (StringUtils.isNotBlank(value)){
+                                res.add(value);
+                            }
+                        }
+                        //处理上下文子代节点
+                        for (Element dep:e.getAllElements()){
+                            if (key.equals("*")){
+                                res.add(dep.attributes().toString());
+                            }else {
+                                String value = dep.attr(key);
+                                if (StringUtils.isNotBlank(value)){
+                                    res.add(value);
+                                }
+                            }
+                        }
                     }
+                }else if (n.getTagName().endsWith("()")){
+                    //递归执行方法默认只支持text()
+                    res.add(context.text());
+                }else {
+                    Elements searchRes = context.select(n.getTagName());
+                    for (Element e:searchRes){
+                        Element filterR = filter(e,n);
+                        if (filterR!=null){
+                            contextTmp.add(filterR);
+                        }
+                    }
+                    context = new Elements(contextTmp);
                 }
-                context = new Elements(contextTmp);
+
             }else {
                 if (n.getTagName().startsWith("@")){
                      for (Element e:context){

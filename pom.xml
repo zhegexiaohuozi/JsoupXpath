@@ -7,15 +7,17 @@
     <packaging>jar</packaging>
     <name>JsoupXpath</name>
     <description>
-        HTML XPath selector based on Jsoup.
+        一个非常好用而且强大的基于xpath的html解析器，相信是目前市面上最好用的。xpath解析器与执行器完全独立，
+        html的DOM树借用Jsoup产生。
     </description>
+    <developers>
+        <developer>
+            <id>wanghaomiao.cn</id>
+            <name>Haomiao Wang</name>
+            <email>et.tw@163.com</email>
+        </developer>
+    </developers>
         <dependencies>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.7</version>
-                <scope>test</scope>
-            </dependency>
             <dependency>
                 <groupId>org.jsoup</groupId>
                 <artifactId>jsoup</artifactId>
@@ -32,57 +34,14 @@
                 <version>2.6</version>
             </dependency>
             <dependency>
-                <groupId>net.sourceforge.nekohtml</groupId>
-                <artifactId>nekohtml</artifactId>
-                <version>1.9.19</version>
-            </dependency>
-            <dependency>
-                <groupId>dom4j</groupId>
-                <artifactId>dom4j</artifactId>
-                <version>1.6.1</version>
-            </dependency>
-            <!--尼玛的下边都是手动添加的依赖-->
-            <dependency>
-                <groupId>xml-apis</groupId>
-                <artifactId>xml-apis</artifactId>
-                <version>1.4.01</version>
-            </dependency>
-            <dependency>
-                <groupId>jaxen</groupId>
-                <artifactId>jaxen</artifactId>
-                <version>1.1.4</version>
-            </dependency>
-            <dependency>
-                <groupId>net.sourceforge.htmlcleaner</groupId>
-                <artifactId>htmlcleaner</artifactId>
-                <version>2.7</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jdom</groupId>
-                <artifactId>jdom2</artifactId>
-                <version>2.0.5</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>fluent-hc</artifactId>
                 <version>4.3.1</version>
             </dependency>
-<!--htmlunit-->
             <dependency>
-                <groupId>net.sourceforge.htmlunit</groupId>
-                <artifactId>htmlunit</artifactId>
-                <version>2.13</version>
-            </dependency>
-            <dependency>
-                <groupId>net.sourceforge.htmlunit</groupId>
-                <artifactId>htmlunit-core-js</artifactId>
-                <version>2.13</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.squirrelframework</groupId>
-                <artifactId>squirrel-foundation</artifactId>
-                <version>0.3.1</version>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.1.37</version>
             </dependency>
         </dependencies>
 
@@ -155,43 +114,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.4.1</version>
-            </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>release-sign-artifacts</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.1</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
-
 </project>

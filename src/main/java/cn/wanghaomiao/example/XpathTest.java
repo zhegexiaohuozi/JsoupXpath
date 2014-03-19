@@ -7,6 +7,8 @@ import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.Node;
 import com.alibaba.fastjson.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,18 +20,20 @@ import java.util.List;
 public class XpathTest {
     public static void main(String[] args) throws IOException, NoSuchFunctionException, XpathSyntaxErrorException, NoSuchAxisException {
         String x1 = "//a/@href";
-        String x2 = "//div[@class='BlogStat']/a/span/text()";
-        List<Node> ndlist = new XpathEvaluator().getXpathNodeTree(x2);
+//        String x2 = "//div[@id='paging_block']/div/a[text()='Next >']/@href";
+        String x2 = "//div[@id='paging_block']/div/a[text()*='Next']/@href";
+        String x3 = "//h1/text()";
+        String x4 = "//h1/allText()";
+        String x5 = "//h1//text()";
+        String x6 = "//div/a";
+        String x7 = "//div[@id='post_list']/div[position()<3]/div/div/h3/allText()";
+        List<Node> ndlist = new XpathEvaluator().getXpathNodeTree(x7);
         JSONObject j = new JSONObject();
         j.put("ns",ndlist);
         System.out.println(j.toJSONString());
-//        for (Node n:ndlist){
-//            
-//        }
-//        Document doc = Jsoup.connect("http://my.oschina.net/feichexia/blog/196575").get();
-        String body = HttpUtil.getBody("http://my.oschina.net/feichexia/blog/196575");
-        JXDocument jxDocument = new JXDocument(body);
-        List<Object> rs = jxDocument.sel(x2);
+        Document doc = Jsoup.connect("http://www.cnblogs.com/").get();
+        JXDocument jxDocument = new JXDocument(doc);
+        List<Object> rs = jxDocument.sel(x7);
         for (Object o:rs){
             System.out.println(o.toString());
         }
