@@ -118,17 +118,24 @@ public class NodeTreeBuilderStateMachine {
         StringBuilder right = new StringBuilder();
         Predicate predicate = new Predicate();
         char[] preArray = pre.toCharArray();
-        for (int i=preArray.length-1;i>=0;i--){
-            char tmp = preArray[i];
-            if (EmMap.getInstance().commOpChar.contains(tmp)){
-                op.insert(0,tmp);
-            }else {
-                if (op.length()>0){
-                    left.insert(0,tmp);
-                }else {
-                    right.insert(0,tmp);
-                }
+        int index = preArray.length-1;
+        int argDeep = 0;
+        int opFlag = 0;
+        while (index>=0){
+            char tmp = preArray[index];
+            if (tmp=='\''){
+                argDeep+=1;
             }
+            if (argDeep==1&&tmp!='\''){
+                right.insert(0,tmp);
+            }else if (argDeep==2&&EmMap.getInstance().commOpChar.contains(tmp)){
+                op.insert(0,tmp);
+                opFlag=1;
+            }else if (argDeep>=2&&opFlag>0){
+                argDeep++;//取完操作符后剩下的都属于left
+                left.insert(0,tmp);
+            }
+            index-=1;
         }
         predicate.setOpEm(EmMap.getInstance().opEmMap.get(op.toString()));
         predicate.setLeft(left.toString());

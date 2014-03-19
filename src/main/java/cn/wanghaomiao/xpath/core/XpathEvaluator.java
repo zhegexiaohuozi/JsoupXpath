@@ -20,7 +20,12 @@ import java.util.List;
  * @author 汪浩淼 [ et.tw@163.com ]
  * @since 14-3-12 下午3:42
  */
-public class NodeTreeEvaluator {
+public class XpathEvaluator {
+    /**
+     * 获取xpath解析语法树
+     * @param xpath
+     * @return
+     */
     public List<Node> getXpathNodeTree(String xpath){
         NodeTreeBuilderStateMachine st = new NodeTreeBuilderStateMachine();
         while (st.state != NodeTreeBuilderStateMachine.BuilderState.END){
@@ -39,7 +44,8 @@ public class NodeTreeEvaluator {
         List<Object> res = new LinkedList<Object>();
         Elements context = root;
         List<Node> xpathNodes=getXpathNodeTree(xpath);
-        for (Node n:xpathNodes){
+        for (int i=0;i<xpathNodes.size();i++){
+            Node n = xpathNodes.get(i);
             LinkedList<Element> contextTmp = new LinkedList<Element>();
             if (n.getScopeEm()== ScopeEm.RECURSIVE||n.getScopeEm()==ScopeEm.CURREC){
                 Elements searchRes = context.select(n.getTagName());
@@ -79,6 +85,9 @@ public class NodeTreeEvaluator {
                         }
                     }
                     context=new Elements(contextTmp);
+                    if (i==xpathNodes.size()-1){
+                        res.addAll(contextTmp);
+                    }
                 }
             }
         }
@@ -110,8 +119,14 @@ public class NodeTreeEvaluator {
                         }else if(filterRes instanceof Integer && e.siblingIndex()==Integer.parseInt(filterRes.toString())){
                             return e;
                         }
+                    }else if (p.getLeft().startsWith("@")){
+                        String lValue = e.attr(p.getLeft().substring(1));
+                        Object filterRes = p.getOpEm().excute(lValue,p.getRight());
+                        if ((Boolean) filterRes){
+                            return e;
+                        }
                     }else {
-                        // 操作符左边不是函数就是xpath表达式了
+                        // 操作符左边不是函数、属性默认就是xpath表达式了
                         List<Element> eltmp = new LinkedList<Element>();
                         eltmp.add(e);
                         List<Object> rstmp=evaluate(p.getLeft(),new Elements(eltmp));
@@ -162,7 +177,7 @@ public class NodeTreeEvaluator {
 
     public static void main(String[] args) throws IOException, NoSuchFunctionException, NoSuchAxisException {
         Document d = Jsoup.connect("http://www.baidu.com").get();
-        NodeTreeEvaluator b =  new NodeTreeEvaluator();
+        XpathEvaluator b =  new XpathEvaluator();
         String xp = "//div[0]/a/@href";
         List<Object> rs = b.evaluate(xp,d.children());
         for (Object o:rs){
