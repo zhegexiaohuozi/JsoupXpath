@@ -5,13 +5,11 @@ import cn.wanghaomiao.xpath.exception.NoSuchFunctionException;
 import cn.wanghaomiao.xpath.model.Node;
 import cn.wanghaomiao.xpath.model.Predicate;
 import cn.wanghaomiao.xpath.util.ScopeEm;
+import cn.wanghaomiao.xpath.util.StrUtil;
 import org.apache.commons.lang.StringUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
@@ -135,14 +133,14 @@ public class XpathEvaluator {
             if (node.getPredicate()!=null){
                 Predicate p = node.getPredicate();
                 if (p.getOpEm()==null){
-                    if (p.getValue().matches("\\d+")&&e.siblingIndex()==Integer.parseInt(p.getValue())){
+                    if (p.getValue().matches("\\d+")&&getElIndex(e)==Integer.parseInt(p.getValue())){
                         return e;
                     }else if (p.getValue().endsWith("()")&&(Boolean)callFilterFunc(p.getValue().substring(0,p.getValue().length()-2),e)){
                         return e;
                     }
                     //todo p.value ~= contains(./@href,'renren.com')
                 }else {
-                    if (p.getLeft().endsWith("()")){
+                    if (p.getLeft().matches("[^/]+\\(\\)")){
                         Object filterRes=p.getOpEm().excute(callFilterFunc(p.getLeft().substring(0,p.getLeft().length()-2),e).toString(),p.getRight());
                         if (filterRes instanceof Boolean && (Boolean) filterRes){
                             return e;
@@ -172,9 +170,17 @@ public class XpathEvaluator {
         return null;
     }
 
+    /**
+     * 调用轴选择器
+     * @param axis
+     * @param e
+     * @return
+     * @throws NoSuchAxisException
+     */
     public Elements getAxisScopeEls(String axis,Element e) throws NoSuchAxisException {
         try {
-            Method axisSelector = AxisSelector.class.getMethod(axis, Element.class);
+            String functionName = StrUtil.getJMethodNameFromStr(axis);
+            Method axisSelector = AxisSelector.class.getMethod(functionName, Element.class);
             return (Elements) axisSelector.invoke(SingletonProducer.getInstance().getAxisSelector(),e);
         }catch (NoSuchMethodException e1) {
             throw new NoSuchAxisException("this axis is not supported,plase use other instead of '"+axis+"'");
@@ -183,6 +189,13 @@ public class XpathEvaluator {
         }
     }
 
+    /**
+     * 调用xpath主干上的函数
+     * @param funcname
+     * @param context
+     * @return
+     * @throws NoSuchFunctionException
+     */
     public Object callFunc(String funcname,Elements context) throws NoSuchFunctionException {
         try {
             Method function = Functions.class.getMethod(funcname,Elements.class);
@@ -194,6 +207,13 @@ public class XpathEvaluator {
         }
     }
 
+    /**
+     * 调用谓语中函数
+     * @param funcname
+     * @param el
+     * @return
+     * @throws NoSuchFunctionException
+     */
     public Object callFilterFunc(String funcname,Element el) throws NoSuchFunctionException {
         try {
             Method function = Functions.class.getMethod(funcname,Element.class);
@@ -205,14 +225,14 @@ public class XpathEvaluator {
         }
     }
 
-    public static void main(String[] args) throws IOException, NoSuchFunctionException, NoSuchAxisException {
-        Document d = Jsoup.connect("http://www.baidu.com").get();
-        XpathEvaluator b =  new XpathEvaluator();
-        String xp = "//div[0]/a/@href";
-        List<Object> rs = b.evaluate(xp,d.children());
-        for (Object o:rs){
-            System.out.println(o.toString());
+    public int getElIndex(Element e){
+        int index = 1;
+        Element curEl = e.firstElementSibling();
+        while (!e.equals(curEl)){
+            curEl = curEl.nextElementSibling();
+            index+=1;
         }
+        return index;
     }
 
 }

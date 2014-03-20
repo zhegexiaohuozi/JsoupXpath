@@ -1,5 +1,7 @@
 package cn.wanghaomiao.xpath.util;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 操作符
  * @author 汪浩淼 [ et.tw@163.com ]
@@ -9,16 +11,28 @@ public enum OpEm {
     PLUS("+"){
         @Override
         public Object excute(String left,String right) {
-            int li = Integer.parseInt(left);
-            int ri = Integer.parseInt(right);
+            int li = 0;
+            if (StringUtils.isNotBlank(left)){
+                li = Integer.parseInt(left);
+            }
+            int ri = 0;
+            if (StringUtils.isNotBlank(right)){
+                ri=Integer.parseInt(right);
+            }
             return li + ri;
         }
     },
     MINUS("-"){
         @Override
         public Object excute(String left, String right) {
-            int li = Integer.parseInt(left);
-            int ri = Integer.parseInt(right);
+            int li = 0;
+            if (StringUtils.isNotBlank(left)){
+                li = Integer.parseInt(left);
+            }
+            int ri = 0;
+            if (StringUtils.isNotBlank(right)){
+                ri=Integer.parseInt(right);
+            }
             return li - ri;
         }
     },
@@ -37,32 +51,56 @@ public enum OpEm {
     GT(">"){
         @Override
         public Object excute(String left, String right) {
-            int li = Integer.parseInt(left);
-            int ri = Integer.parseInt(right);
+            int li = 0;
+            if (StringUtils.isNotBlank(left)){
+                li = Integer.parseInt(left);
+            }
+            int ri = 0;
+            if (StringUtils.isNotBlank(right)){
+                ri=Integer.parseInt(right);
+            }
             return li > ri;
         }
     },
     LT("<"){
         @Override
         public Object excute(String left, String right) {
-            int li = Integer.parseInt(left);
-            int ri = Integer.parseInt(right);
+            int li = 0;
+            if (StringUtils.isNotBlank(left)){
+                li = Integer.parseInt(left);
+            }
+            int ri = 0;
+            if (StringUtils.isNotBlank(right)){
+                ri=Integer.parseInt(right);
+            }
             return li < ri;
         }
     },
     GE(">="){
         @Override
         public Object excute(String left, String right) {
-            int li = Integer.parseInt(left);
-            int ri = Integer.parseInt(right);
+            int li = 0;
+            if (StringUtils.isNotBlank(left)){
+                li = Integer.parseInt(left);
+            }
+            int ri = 0;
+            if (StringUtils.isNotBlank(right)){
+                ri=Integer.parseInt(right);
+            }
             return li >= ri;
         }
     },
     LE("<="){
         @Override
         public Object excute(String left, String right) {
-            int li = Integer.parseInt(left);
-            int ri = Integer.parseInt(right);
+            int li = 0;
+            if (StringUtils.isNotBlank(left)){
+                li = Integer.parseInt(left);
+            }
+            int ri = 0;
+            if (StringUtils.isNotBlank(right)){
+                ri=Integer.parseInt(right);
+            }
             return li <= ri;
         }
     },

@@ -2,8 +2,11 @@ package cn.wanghaomiao.xpath.core;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author: 汪浩淼 [ et.tw@163.com ]
@@ -85,6 +88,24 @@ public class Functions {
         return res;
     }
 
+    /**
+     * 抽取节点自有文本中全部数字
+     * @param context
+     * @return
+     */
+    public List<Object> num(Elements context){
+        List<Object> res = new LinkedList<Object>();
+        if (context!=null){
+            Pattern pattern = Pattern.compile("\\d+");
+            for (Element e:context){
+                Matcher matcher = pattern.matcher(e.ownText());
+                if (matcher.find()){
+                    res.add(matcher.group());
+                }
+            }
+        }
+        return res;
+    }
 
     /**
      * =====================
@@ -132,7 +153,13 @@ public class Functions {
      * @return
      */
     public int position(Element e){
-        return e.siblingIndex()+1;
+        int index = 1;
+        Element curEl = e.firstElementSibling();
+        while (!e.equals(curEl)){
+            curEl = curEl.nextElementSibling();
+            index+=1;
+        }
+        return index;
     }
 
     /**

@@ -4,8 +4,6 @@ import cn.wanghaomiao.xpath.model.Node;
 import cn.wanghaomiao.xpath.model.Predicate;
 import cn.wanghaomiao.xpath.util.EmMap;
 
-import java.io.IOException;
-
 /**
  * 用于生成xpath语法树的有限状态机
  * @author 汪浩淼 [et.tw@163.com]
@@ -103,9 +101,6 @@ public class NodeTreeBuilderStateMachine {
         };
         public void parser(NodeTreeBuilderStateMachine stateMachine,char[] xpath){}
     }
-    public void process(char[] xpath){
-        state.parser(this, xpath);
-    }
 
     /**
      * 根据谓语字符串初步生成谓语体
@@ -121,7 +116,7 @@ public class NodeTreeBuilderStateMachine {
         int index = preArray.length-1;
         int argDeep = 0;
         int opFlag = 0;
-        if (pre.matches("\\S+(\\+|=|-|>|<|>=|<=|^=|\\*=|$=|~=|!=)'\\S+'")){
+        if (pre.matches(".+(\\+|=|-|>|<|>=|<=|^=|\\*=|$=|~=|!=)'.+'")){
             while (index>=0){
                 char tmp = preArray[index];
                 if (tmp=='\''){
@@ -138,14 +133,15 @@ public class NodeTreeBuilderStateMachine {
                 }
                 index-=1;
             }
-        }else if (pre.matches("\\S+(\\+|=|-|>|<|>=|<=|^=|\\*=|$=|~=|!=)[^']+")){
+        }else if (pre.matches(".+(\\+|=|-|>|<|>=|<=|^=|\\*=|$=|~=|!=)[^']+")){
             while (index>=0){
                 char tmp = preArray[index];
-                if (EmMap.getInstance().commOpChar.contains(tmp)){
+                if (opFlag==0&&EmMap.getInstance().commOpChar.contains(tmp)){
                     op.insert(0,tmp);
                 }else {
                     if (op.length()>0){
                         left.insert(0,tmp);
+                        opFlag=1;
                     }else {
                         right.insert(0,tmp);
                     }
@@ -159,23 +155,5 @@ public class NodeTreeBuilderStateMachine {
         predicate.setRight(right.toString());
         predicate.setValue(pre);
         return predicate;
-    }
-
-
-    public static void main(String[] args) throws IOException {
-        String expression = ".//div[@class='aa']/child::li[contains(./text(),'abc')]/li[5]";
-        NodeTreeBuilderStateMachine st = new NodeTreeBuilderStateMachine();
-        while (st.state != BuilderState.END){
-            st.state.parser(st, expression.toCharArray());
-        }
-        for (Node n:st.context.xpathTr){
-            System.out.println("-------------------");
-            System.out.println(n.getScopeEm().val());
-            System.out.println(n.getAxis());
-            System.out.println(n.getTagName());
-            System.out.println(n.getPredicate().getValue());
-            System.out.println(n.getPredicate().getOpEm());
-            System.out.println(n.getPredicate().getLeft());
-        }
     }
 }

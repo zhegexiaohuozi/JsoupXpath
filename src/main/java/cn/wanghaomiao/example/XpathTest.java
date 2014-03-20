@@ -1,14 +1,12 @@
 package cn.wanghaomiao.example;
 
-import cn.wanghaomiao.xpath.core.XpathEvaluator;
 import cn.wanghaomiao.xpath.exception.NoSuchAxisException;
 import cn.wanghaomiao.xpath.exception.NoSuchFunctionException;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
-import cn.wanghaomiao.xpath.model.Node;
-import com.alibaba.fastjson.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,15 +24,23 @@ public class XpathTest {
         String x4 = "//h1/allText()";
         String x5 = "//h1//text()";
         String x6 = "//div/a";
-        String x7 = "//div[@id='post_list']/div[position()<3]/div/div/h3/allText()";
-        List<Node> ndlist = new XpathEvaluator().getXpathNodeTree(x7);
-        JSONObject j = new JSONObject();
-        j.put("ns",ndlist);
-        System.out.println(j.toJSONString());
+        String x7 = "//div[@id='post_list']/div[position()<3]/div/h3/allText()";
+        String x8 = "//div[@id='post_list']/div[first()]/div/h3/allText()";
+        String x9 = "//div[@id='post_list']/div[1]/div/h3/allText()";
+//        String x9 = "//div[@id='post_list']/div[last()]/div/h3/allText()";
+        //杀器，查找评论大于1000的条目（当然只是为了演示复杂xpath了，谓语中可以各种嵌套，这样才能测试的更全面嘛）
+        String x10 = "//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
+        //轴的支持，必须接近完美
+        String x11 = "//div[@id='post_list']/div[self::div/div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
+        String x12 = "//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()";
         Document doc = Jsoup.connect("http://www.cnblogs.com/").get();
         JXDocument jxDocument = new JXDocument(doc);
-        List<Object> rs = jxDocument.sel(x7);
+        List<Object> rs = jxDocument.sel(x12);
         for (Object o:rs){
+            if (o instanceof Element){
+                int index = ((Element) o).siblingIndex();
+                System.out.println(index);
+            }
             System.out.println(o.toString());
         }
     }
