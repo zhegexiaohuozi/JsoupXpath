@@ -11,33 +11,67 @@ import org.jsoup.select.Elements;
  * Date: 14-3-15 下午10:18
  */
 public class AxisSelector {
-
+    /**
+     * 自身
+     * @param e
+     * @return
+     */
     public Elements self(Element e){
         return new Elements(e);
     }
 
+    /**
+     * 父节点
+     * @param e
+     * @return
+     */
     public Elements parent(Element e){
         return new Elements(e.parent());
     }
 
+    /**
+     * 直接子节点
+     * @param e
+     * @return
+     */
     public Elements child(Element e){
         return e.children();
     }
 
+    /**
+     * 全部祖先节点 父亲，爷爷 ， 爷爷的父亲...
+     * @param e
+     * @return
+     */
     public Elements ancestor(Element e){
         return e.parents();
     }
 
+    /**
+     * 全部祖先节点和自身节点
+     * @param e
+     * @return
+     */
     public Elements ancestorOrSelf(Element e){
         Elements rs=e.parents();
         rs.add(e);
         return rs;
     }
 
+    /**
+     * 全部子代节点 儿子，孙子，孙子的儿子...
+     * @param e
+     * @return
+     */
     public Elements descendant(Element e){
         return e.getAllElements();
     }
 
+    /**
+     * 全部子代节点和自身
+     * @param e
+     * @return
+     */
     public Elements descendantOrSelf(Element e){
         Elements rs = e.getAllElements();
         rs.add(e);
@@ -45,7 +79,7 @@ public class AxisSelector {
     }
 
     /**
-     * preceding-sibling
+     * 节点前面的全部同胞节点，preceding-sibling
      * @param e
      * @return
      */
@@ -73,7 +107,7 @@ public class AxisSelector {
     }
 
     /**
-     * following-sibling
+     * 节点后面的全部同胞节点following-sibling
      * @param e
      * @return
      */
