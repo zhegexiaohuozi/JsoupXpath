@@ -28,6 +28,7 @@ I will write more document later...
 	//轴支持
 	"//div[@id='post_list']/div[self::div/div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
 	"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()";
+	"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()|//div[@id='post_list']/div[1]/div/h3/allText()";
 ``` 
 
 在这里暂不列出框架间的对比了，但我相信，你们用了会发现JsoupXpath就是目前市面上最强大的的Xpath解析器。
@@ -66,6 +67,7 @@ I will write more document later...
 - `html()`获取全部节点的内部的html
 - `outerHtml()`获取全部节点的 包含节点本身在内的全部html
 - `num()`抽取节点自有文本中全部数字，如果知道节点中
+
 ### 其他说明 ###
 - `contains(arga,argb)`这个函数暂时不支持，因为JsoupXpath拥有强大的运算符支持，完全可以取代它！如,可以用`*=`取代`contains()` 例：`//div[text()*='next']`
 
@@ -97,11 +99,13 @@ I will write more document later...
 - `a>=b` 大于等于 返回Boolean
 - `a<b` 小于 返回Boolean
 - `a<=b` 小于等于 返回Boolean 
+
 ### 操作符扩展 ###
 - `a^=b` 字符串a是否以字符串b开头 a startwith b 返回Boolean
 - `a*=b` a是否包含b, a contains b 返回Boolean
 - `a$=b` a是否以b结尾 a endwith b 返回Boolean
 - `a~=b` a的内容是否符合 正则表达式b 返回Boolean
+
 ### 其他说明 ###
 基本这些足够了，其他鸡肋的暂时不支持，如有特殊需求请联系我。
 

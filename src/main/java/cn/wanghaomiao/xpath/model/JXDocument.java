@@ -36,7 +36,6 @@ public class JXDocument {
         } catch (NoSuchFunctionException e) {
             throw e;
         } catch (Exception e){
-            e.printStackTrace();
             throw new XpathSyntaxErrorException("please check the xpath syntax");
         }
         return res;

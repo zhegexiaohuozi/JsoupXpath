@@ -33,9 +33,10 @@ public class XpathTest {
         //轴的支持，必须接近完美
         String x11 = "//div[@id='post_list']/div[self::div/div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
         String x12 = "//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()";
+        String x13 = "//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()|//div[@id='post_list']/div[1]/div/h3/allText()";
         Document doc = Jsoup.connect("http://www.cnblogs.com/").get();
         JXDocument jxDocument = new JXDocument(doc);
-        List<Object> rs = jxDocument.sel(x12);
+        List<Object> rs = jxDocument.sel(x13);
         for (Object o:rs){
             if (o instanceof Element){
                 int index = ((Element) o).siblingIndex();

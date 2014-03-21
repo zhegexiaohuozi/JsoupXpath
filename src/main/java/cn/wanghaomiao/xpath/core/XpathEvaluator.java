@@ -29,9 +29,11 @@ public class XpathEvaluator {
     public List<Object> xpathParser(String xpath,Elements root) throws NoSuchAxisException, NoSuchFunctionException {
         if (xpath.contains("|")){
             List<Object> rs = new LinkedList<Object>();
-            String[] chiXpaths = xpath.split("|");
+            String[] chiXpaths = xpath.split("\\|");
             for (String chiXp:chiXpaths){
-                rs.addAll(evaluate(chiXp,root));
+                if (chiXp.length()>0){
+                    rs.addAll(evaluate(chiXp.trim(),root));
+                }
             }
             return rs;
         }else {
