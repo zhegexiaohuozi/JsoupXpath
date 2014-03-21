@@ -107,5 +107,4 @@ I will write more document later...
 
 ## 作者 ##
 - 汪浩淼
-- 互联网软件工程师
 - email：`et.tw#163.com`
