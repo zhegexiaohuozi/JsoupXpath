@@ -30,7 +30,7 @@ public class JXDocument {
     public List<Object> sel(String xpath) throws NoSuchAxisException, NoSuchFunctionException, XpathSyntaxErrorException {
         List<Object> res = null;
         try {
-             res = xpathEva.evaluate(xpath,elements);
+             res = xpathEva.xpathParser(xpath,elements);
         } catch (NoSuchAxisException e) {
             throw e;
         } catch (NoSuchFunctionException e) {

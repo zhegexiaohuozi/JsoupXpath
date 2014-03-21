@@ -19,6 +19,25 @@ import java.util.List;
  * @since 14-3-12 下午3:42
  */
 public class XpathEvaluator {
+
+    /**
+     * xpath解析器的总入口，同时预处理，如‘|’
+     * @param xpath
+     * @param root
+     * @return
+     */
+    public List<Object> xpathParser(String xpath,Elements root) throws NoSuchAxisException, NoSuchFunctionException {
+        if (xpath.contains("|")){
+            List<Object> rs = new LinkedList<Object>();
+            String[] chiXpaths = xpath.split("|");
+            for (String chiXp:chiXpaths){
+                rs.addAll(evaluate(chiXp,root));
+            }
+            return rs;
+        }else {
+            return evaluate(xpath,root);
+        }
+    }
     /**
      * 获取xpath解析语法树
      * @param xpath

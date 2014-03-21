@@ -10,7 +10,7 @@ I will write more document later...
 **JsoupXpath** 是一款纯Java开发的使用xpath解析html的解析器，xpath语法分析与执行完全独立，html的DOM树生成借助Jsoup，故命名为JsoupXpath.
 为了在java里也享受xpath的强大与方便但又苦于找不到一款足够强大的xpath解析器，故开发了JsoupXpath。JsoupXpath的实现逻辑清晰，扩展方便，
 支持几乎全部常用的xpath语法，如下面这些：
-```java
+```
     http://www.cnblogs.com/ 为例
 	"//a/@href";
 	"//div[@id='paging_block']/div/a[text()='Next >']/@href";
@@ -35,9 +35,10 @@ I will write more document later...
 ## 快速开始 ##
 
 ```java
-    String doc = "...";
+    String xpath="//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
+	String doc = "...";
     JXDocument jxDocument = new JXDocument(doc);
-	List<Object> rs = jxDocument.sel(x12);
+	List<Object> rs = jxDocument.sel(xpath);
 	for (Object o:rs){
 	    if (o instanceof Element){
 	        int index = ((Element) o).siblingIndex();
