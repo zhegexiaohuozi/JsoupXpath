@@ -65,6 +65,10 @@ I will write more document later...
 
 支持标准xpath语法（支持谓语嵌套），支持全部常用函数，支持全部常用轴，去掉了一些标准里面华而不实的函数和轴，下面会具体介绍。语法可以参考[http://www.w3school.com.cn/xpath/index.asp](http://www.w3school.com.cn/xpath/index.asp "xpath")
 
+### 关于使用Xpath的一些注意事项 ####
+
+非常不建议直接粘贴Firefox或chrome里生成的Xpath，这些浏览器在渲染页面会根据标准自动补全一些标签，如table标签会自动加上tbody标签，这样生成的Xpath路径显然不是最通用的，所以很可能就取不到值。所以，要使用Xpath并感受Xpath的强大以及他所带来便捷与优雅最好就是学习下Xpath的标准语法，这样应对各种问题才能游刃有余，享受Xpath的真正威力！
+
 ## 函数 ##
 
 - `text()` 提取节点的自有文本
