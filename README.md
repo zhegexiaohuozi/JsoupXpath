@@ -59,7 +59,7 @@ I will write more document later...
 	    System.out.println(o.toString());
 	}
 ```
-其他可以参加 `cn.wanghaomiao.example`包下的例子
+其他可以参考 `cn.wanghaomiao.example`包下的例子
 
 ## 语法 ##
 
