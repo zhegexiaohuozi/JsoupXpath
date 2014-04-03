@@ -35,7 +35,7 @@ I will write more document later...
  
 ## 快速开始 ##
 
-如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如果有私服可以将源码deploy到私服中，并使用如下dependency：
+如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(目前0.1.0版本已经上传至中央maven库)：
 ```
    <dependency>
        <groupId>cn.wanghaomiao</groupId>
@@ -44,7 +44,7 @@ I will write more document later...
    </dependency>
 ```
 
-未来我会争取把JsoupXpath推到中央Maven库的，这样大家使用起来就更方便了。
+依赖配置好后，就可以使用如下例子进行体验了！
 
 ```java
     String xpath="//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
