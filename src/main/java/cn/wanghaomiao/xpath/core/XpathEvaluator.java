@@ -4,8 +4,8 @@ import cn.wanghaomiao.xpath.exception.NoSuchAxisException;
 import cn.wanghaomiao.xpath.exception.NoSuchFunctionException;
 import cn.wanghaomiao.xpath.model.Node;
 import cn.wanghaomiao.xpath.model.Predicate;
+import cn.wanghaomiao.xpath.util.CommonUtil;
 import cn.wanghaomiao.xpath.util.ScopeEm;
-import cn.wanghaomiao.xpath.util.StrUtil;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -200,7 +200,7 @@ public class XpathEvaluator {
      */
     public Elements getAxisScopeEls(String axis,Element e) throws NoSuchAxisException {
         try {
-            String functionName = StrUtil.getJMethodNameFromStr(axis);
+            String functionName = CommonUtil.getJMethodNameFromStr(axis);
             Method axisSelector = AxisSelector.class.getMethod(functionName, Element.class);
             return (Elements) axisSelector.invoke(SingletonProducer.getInstance().getAxisSelector(),e);
         }catch (NoSuchMethodException e1) {
@@ -247,13 +247,10 @@ public class XpathEvaluator {
     }
 
     public int getElIndex(Element e){
-        int index = 1;
-        Element curEl = e.firstElementSibling();
-        while (!e.equals(curEl)){
-            curEl = curEl.nextElementSibling();
-            index+=1;
+        if (e!=null){
+            return CommonUtil.getElIndexInSameTags(e);
         }
-        return index;
+        return 1;
     }
 
 }

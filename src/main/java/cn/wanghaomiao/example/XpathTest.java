@@ -8,6 +8,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,9 +36,21 @@ public class XpathTest {
         String x11 = "//div[@id='post_list']/div[self::div/div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
         String x12 = "//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()";
         String x13 = "//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()|//div[@id='post_list']/div[1]/div/h3/allText()";
-        Document doc = Jsoup.connect("http://www.cnblogs.com/").get();
+        String x14 = "//html/body/div/div[4]/div[6]/div[19]/div[2]/h3/a";
+        String x15 = "//html[1]/body[1]/div[3]/div[1]/div[1]/div[1]/ul[1]/li/div[2]/h2/a";
+        String x16 = "//html/body/div[3]/div/div/div/ul/li/div[2]/h2/a";
+//        Document doc = Jsoup.connect("http://www.cnblogs.com/").get();
+//        BufferedReader br = new BufferedReader(new FileReader("D:\\LAB\\tt.html"));
+//        StringBuilder content = new StringBuilder();
+//        String line = br.readLine();
+//        content.append(line);
+//        while (line!=null){
+//            line = br.readLine();
+//            content.append(line);
+//        }
+        Document doc = Jsoup.connect("http://book.douban.com/search/java").userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0").get();
         JXDocument jxDocument = new JXDocument(doc);
-        List<Object> rs = jxDocument.sel(x13);
+        List<Object> rs = jxDocument.sel(x16);
         for (Object o:rs){
             if (o instanceof Element){
                 int index = ((Element) o).siblingIndex();

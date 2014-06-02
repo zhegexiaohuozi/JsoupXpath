@@ -1,5 +1,6 @@
 package cn.wanghaomiao.xpath.core;
 
+import cn.wanghaomiao.xpath.util.CommonUtil;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -132,35 +133,29 @@ public class Functions {
     }
 
     /**
-     * 判断一个元素是不是最后一个
+     * 判断一个元素是不是最后一个同名同胞中的
      * @param e
      * @return
      */
     public boolean last(Element e){
-        return e.equals(e.lastElementSibling());
+        return CommonUtil.getElIndexInSameTags(e)==CommonUtil.sameTagElNums(e);
     }
     /**
-     * 判断一个元素是不是第一个
+     * 判断一个元素是不是同名同胞中的第一个
      * @param e
      * @return
      */
     public boolean first(Element e){
-        return e.equals(e.firstElementSibling());
+        return CommonUtil.getElIndexInSameTags(e)==1;
     }
 
     /**
-     * 返回一个元素在兄弟节点中的位置
+     * 返回一个元素在同名兄弟节点中的位置
      * @param e
      * @return
      */
     public int position(Element e){
-        int index = 1;
-        Element curEl = e.firstElementSibling();
-        while (!e.equals(curEl)){
-            curEl = curEl.nextElementSibling();
-            index+=1;
-        }
-        return index;
+        return CommonUtil.getElIndexInSameTags(e);
     }
 
     /**
