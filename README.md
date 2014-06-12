@@ -11,53 +11,53 @@ I will write more document later...
 为了在java里也享受xpath的强大与方便但又苦于找不到一款足够强大的xpath解析器，故开发了JsoupXpath。JsoupXpath的实现逻辑清晰，扩展方便，
 支持几乎全部常用的xpath语法，如下面这些：
 ```
-    http://www.cnblogs.com/ 为例
-	"//a/@href";
-	"//div[@id='paging_block']/div/a[text()='Next >']/@href";
-	"//div[@id='paging_block']/div/a[text()*='Next']/@href";
-	"//h1/text()";
-	"//h1/allText()";
-	"//h1//text()";
-	"//div/a";
-	"//div[@id='post_list']/div[position()<3]/div/h3/allText()";
-	"//div[@id='post_list']/div[first()]/div/h3/allText()";
-	"//div[@id='post_list']/div[1]/div/h3/allText()";
-	"//div[@id='post_list']/div[last()]/div/h3/allText()";
-	//查找评论大于1000的条目（当然只是为了演示复杂xpath了，谓语中可以各种嵌套，这样才能测试的更全面嘛）
-	"//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
-	//轴支持
-	"//div[@id='post_list']/div[self::div/div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
-	"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()";
-	"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()|//div[@id='post_list']/div[1]/div/h3/allText()";
+http://www.cnblogs.com/ 为例
+"//a/@href";
+"//div[@id='paging_block']/div/a[text()='Next >']/@href";
+"//div[@id='paging_block']/div/a[text()*='Next']/@href";
+"//h1/text()";
+"//h1/allText()";
+"//h1//text()";
+"//div/a";
+"//div[@id='post_list']/div[position()<3]/div/h3/allText()";
+"//div[@id='post_list']/div[first()]/div/h3/allText()";
+"//div[@id='post_list']/div[1]/div/h3/allText()";
+"//div[@id='post_list']/div[last()]/div/h3/allText()";
+//查找评论大于1000的条目（当然只是为了演示复杂xpath了，谓语中可以各种嵌套，这样才能测试的更全面嘛）
+"//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
+//轴支持
+"//div[@id='post_list']/div[self::div/div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
+"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()";
+"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()|//div[@id='post_list']/div[1]/div/h3/allText()";
 ``` 
 
 在这里暂不列出框架间的对比了，但我相信，你们用了会发现JsoupXpath就是目前市面上最强大的的Xpath解析器。
  
 ## 快速开始 ##
 
-如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(目前0.1.0版本已经上传至中央maven库)：
+如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(已经上传至中央maven库,最新版本0.1.1)：
 ```
-   <dependency>
-       <groupId>cn.wanghaomiao</groupId>
-       <artifactId>JsoupXpath</artifactId>
-       <version>0.1.0</version>
-   </dependency>
+<dependency>
+   <groupId>cn.wanghaomiao</groupId>
+   <artifactId>JsoupXpath</artifactId>
+   <version>0.1.1</version>
+</dependency>
 ```
 
 依赖配置好后，就可以使用如下例子进行体验了！
 
 ```java
-    String xpath="//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
-	String doc = "...";
-    JXDocument jxDocument = new JXDocument(doc);
-	List<Object> rs = jxDocument.sel(xpath);
-	for (Object o:rs){
-	    if (o instanceof Element){
-	        int index = ((Element) o).siblingIndex();
-	        System.out.println(index);
-	    }
-	    System.out.println(o.toString());
+String xpath="//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
+String doc = "...";
+JXDocument jxDocument = new JXDocument(doc);
+List<Object> rs = jxDocument.sel(xpath);
+for (Object o:rs){
+	if (o instanceof Element){
+		int index = ((Element) o).siblingIndex();
+		System.out.println(index);
 	}
+	System.out.println(o.toString());
+}
 ```
 其他可以参考 `cn.wanghaomiao.example`包下的例子
 
