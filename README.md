@@ -125,5 +125,5 @@ for (Object o:rs){
 基本这些足够了，其他鸡肋的暂时不支持，如有特殊需求请联系我。
 
 ## 作者 ##
-- 汪浩淼
+- site:[www.wanghaomiao.cn](http://www.wanghaomiao.cn)
 - email：`et.tw#163.com`
