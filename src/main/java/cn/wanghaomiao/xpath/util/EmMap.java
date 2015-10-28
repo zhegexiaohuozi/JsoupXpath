@@ -7,7 +7,7 @@ import java.util.Set;
 
 /**
  * @author 汪浩淼 [ et.tw@163.com ]
- * @since 14-3-11 下午6:00
+ * @since 14-3-11
  */
 public class EmMap {
     public Map<String,ScopeEm> scopeEmMap = new HashMap<String, ScopeEm>();

@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * @author 汪浩淼 [ et.tw@163.com ]
- * @since 14-3-19 上午11:03
+ * @since 14-3-19
  */
 public class XpathTest {
     public static void main(String[] args) throws IOException, NoSuchFunctionException, XpathSyntaxErrorException, NoSuchAxisException {

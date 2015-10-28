@@ -5,7 +5,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * 操作符
  * @author 汪浩淼 [ et.tw@163.com ]
- * @since 14-3-7 下午3:43
+ * @since 14-3-7
  */
 public enum OpEm {
     PLUS("+"){

@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 /**
  * xpath解析器的支持的全部函数集合，如需扩展按形式添加即可
  * @author: 汪浩淼 [ et.tw@163.com ]
- * Date: 14-3-15 下午8:14
+ * Date: 14-3-15
  */
 public class Functions {
     /**

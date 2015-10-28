@@ -4,8 +4,7 @@ import cn.wanghaomiao.xpath.util.ScopeEm;
 
 /**
  * xpath语法链的一个基本节点
- * @author 汪浩淼 [haomiaowang@sohu-inc.com et.tw@163.com]
- * @since 14-3-7 下午3:36
+ * @author 汪浩淼 [ et.tw@163.com]
  */
 public class Node {
     private ScopeEm scopeEm;
