@@ -8,7 +8,7 @@ import org.jsoup.select.Elements;
  * 去掉不实用的轴，不支持namespace，attribute（可用 /@*代替），preceding(preceding-sibling支持)，following(following-sibling支持)
  * 添加 preceding-sibling-one，following-sibling-one,即只选前一个或后一个兄弟节点，添加 sibling 选取全部兄弟节点
  * @author: 汪浩淼 [ et.tw@163.com ]
- * Date: 14-3-15 下午10:18
+ * Date: 14-3-15
  */
 public class AxisSelector {
     /**

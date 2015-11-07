@@ -8,14 +8,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
 /**
  * @author 汪浩淼 [ et.tw@163.com ]
- * @since 14-3-19 上午11:03
+ * @since 14-3-19
  */
 public class XpathTest {
     public static void main(String[] args) throws IOException, NoSuchFunctionException, XpathSyntaxErrorException, NoSuchAxisException {

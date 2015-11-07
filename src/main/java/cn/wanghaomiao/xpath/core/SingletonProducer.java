@@ -2,7 +2,7 @@ package cn.wanghaomiao.xpath.core;
 
 /**
  * @author: 汪浩淼 [ et.tw@163.com ]
- * Date: 14-3-16 下午6:29
+ * Date: 14-3-16
  */
 public class SingletonProducer {
     private static SingletonProducer producer = new SingletonProducer();

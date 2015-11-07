@@ -3,7 +3,7 @@ package cn.wanghaomiao.xpath.util;
 /**
  * 筛选作用域
  * @author 汪浩淼 [ et.tw@163.com ]
- * @since 14-3-7 下午4:26
+ * @since 14-3-7
  */
 public enum ScopeEm {
     INCHILREN("/"),   //默认只在子代中筛选,有轴时由轴定义筛选域
