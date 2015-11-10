@@ -37,6 +37,7 @@ public class XpathTest {
         String x14 = "//html/body/div/div[4]/div[6]/div[19]/div[2]/h3/a";
         String x15 = "//html[1]/body[1]/div[3]/div[1]/div[1]/div[1]/ul[1]/li/div[2]/h2/a";
         String x16 = "//html/body/div[3]/div/div/div/ul/li/div[2]/h2/a";
+        String x17 = "//div[@class='info']/h2/../a/text()";
 //        Document doc = Jsoup.connect("http://www.cnblogs.com/").get();
 //        BufferedReader br = new BufferedReader(new FileReader("D:\\LAB\\tt.html"));
 //        StringBuilder content = new StringBuilder();
@@ -48,7 +49,7 @@ public class XpathTest {
 //        }
         Document doc = Jsoup.connect("http://book.douban.com/search/java").userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0").get();
         JXDocument jxDocument = new JXDocument(doc);
-        List<Object> rs = jxDocument.sel(x16);
+        List<Object> rs = jxDocument.sel(x17);
         for (Object o:rs){
             if (o instanceof Element){
                 int index = ((Element) o).siblingIndex();
