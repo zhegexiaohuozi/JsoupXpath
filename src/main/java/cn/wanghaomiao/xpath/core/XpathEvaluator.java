@@ -11,15 +11,29 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 汪浩淼 [ et.tw@163.com ]
  * @since 14-3-12
  */
 public class XpathEvaluator {
+    private Map<String,Method> emFuncs;
+    private Map<String,Method> axisFuncs;
 
+    public XpathEvaluator(){
+        emFuncs = new HashMap<String, Method>();
+        axisFuncs = new HashMap<String, Method>();
+        for (Method m:Functions.class.getDeclaredMethods()){
+            emFuncs.put(renderFuncKey(m.getName(),m.getParameterTypes()),m);
+        }
+        for (Method m:AxisSelector.class.getDeclaredMethods()){
+            emFuncs.put(renderFuncKey(m.getName(),m.getParameterTypes()),m);
+        }
+    }
     /**
      * xpath解析器的总入口，同时预处理，如‘|’
      * @param xpath
@@ -201,12 +215,10 @@ public class XpathEvaluator {
     public Elements getAxisScopeEls(String axis,Element e) throws NoSuchAxisException {
         try {
             String functionName = CommonUtil.getJMethodNameFromStr(axis);
-            Method axisSelector = AxisSelector.class.getMethod(functionName, Element.class);
+            Method axisSelector = axisFuncs.get(renderFuncKey(functionName,e.getClass()));
             return (Elements) axisSelector.invoke(SingletonProducer.getInstance().getAxisSelector(),e);
-        }catch (NoSuchMethodException e1) {
+        }catch (Exception e1) {
             throw new NoSuchAxisException("this axis is not supported,plase use other instead of '"+axis+"'");
-        } catch (Exception e2) {
-            throw new NoSuchAxisException(e2.getMessage());
         }
     }
 
@@ -219,12 +231,10 @@ public class XpathEvaluator {
      */
     public Object callFunc(String funcname,Elements context) throws NoSuchFunctionException {
         try {
-            Method function = Functions.class.getMethod(funcname,Elements.class);
+            Method function = emFuncs.get(renderFuncKey(funcname,context.getClass()));
             return function.invoke(SingletonProducer.getInstance().getFunctions(),context);
-        } catch (NoSuchMethodException e) {
+        } catch (Exception e) {
             throw new NoSuchFunctionException("This function is not supported");
-        } catch (Exception e1) {
-            throw new NoSuchFunctionException(e1.getMessage());
         }
     }
 
@@ -237,12 +247,10 @@ public class XpathEvaluator {
      */
     public Object callFilterFunc(String funcname,Element el) throws NoSuchFunctionException {
         try {
-            Method function = Functions.class.getMethod(funcname,Element.class);
+            Method function = emFuncs.get(renderFuncKey(funcname,el.getClass()));
             return function.invoke(SingletonProducer.getInstance().getFunctions(),el);
-        } catch (NoSuchMethodException e) {
+        } catch (Exception e) {
             throw new NoSuchFunctionException("This function is not supported");
-        } catch (Exception et) {
-            throw new NoSuchFunctionException(et.getMessage());
         }
     }
 
@@ -251,6 +259,10 @@ public class XpathEvaluator {
             return CommonUtil.getElIndexInSameTags(e);
         }
         return 1;
+    }
+
+    private String renderFuncKey(String funcName,Class... params){
+        return funcName+"|"+StringUtils.join(params,",");
     }
 
 }

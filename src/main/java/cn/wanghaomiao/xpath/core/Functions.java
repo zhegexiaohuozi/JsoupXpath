@@ -24,7 +24,11 @@ public class Functions {
         List<Object> res = new LinkedList<Object>();
         if (context!=null&&context.size()>0){
             for (Element e:context){
-                res.add(e.ownText());
+                if (e.nodeName().equals("script")){
+                    res.add(e.data());
+                }else {
+                    res.add(e.ownText());
+                }
             }
         }
         return res;
