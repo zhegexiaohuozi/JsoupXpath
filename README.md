@@ -35,12 +35,12 @@ http://www.cnblogs.com/ 为例
  
 ## 快速开始 ##
 
-如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(已经上传至中央maven库,最新版本0.1.1)：
+如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(已经上传至中央maven库,最新版本0.2.0)：
 ```
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>0.1.1</version>
+   <version>0.2.0</version>
 </dependency>
 ```
 
