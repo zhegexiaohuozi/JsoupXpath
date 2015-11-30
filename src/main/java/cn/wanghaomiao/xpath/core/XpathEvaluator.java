@@ -165,12 +165,14 @@ public class XpathEvaluator {
      */
     public Element filter(Element e,Node node) throws NoSuchFunctionException, NoSuchAxisException {
         if (node.getTagName().equals("*")||node.getTagName().equals(e.nodeName())){
-            if (node.getPredicate()!=null){
+            if (node.getPredicate()!=null&&StringUtils.isNotBlank(node.getPredicate().getValue())){
                 Predicate p = node.getPredicate();
                 if (p.getOpEm()==null){
                     if (p.getValue().matches("\\d+")&&getElIndex(e)==Integer.parseInt(p.getValue())){
                         return e;
                     }else if (p.getValue().endsWith("()")&&(Boolean)callFilterFunc(p.getValue().substring(0,p.getValue().length()-2),e)){
+                        return e;
+                    }else if (p.getValue().startsWith("@")&&e.hasAttr(StringUtils.substringAfter(p.getValue(),"@"))){
                         return e;
                     }
                     //todo p.value ~= contains(./@href,'renren.com')
