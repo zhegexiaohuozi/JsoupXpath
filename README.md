@@ -35,18 +35,18 @@ http://www.cnblogs.com/ 为例
  
 ## 快速开始 ##
 
-如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(已经上传至中央maven库,最新版本0.2.0)：
+如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(中央maven库,最新版本0.2.1)：
 ```
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>0.2.0</version>
+   <version>0.2.1</version>
 </dependency>
 ```
 
 依赖配置好后，就可以使用如下例子进行体验了！
 
-```java
+```
 String xpath="//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
 String doc = "...";
 JXDocument jxDocument = new JXDocument(doc);
