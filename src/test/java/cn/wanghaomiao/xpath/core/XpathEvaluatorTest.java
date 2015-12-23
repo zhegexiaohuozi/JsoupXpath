@@ -33,4 +33,10 @@ public class XpathEvaluatorTest {
         List<Node> nodes = underTest.getXpathNodeTree("//meta[@charset]");
         Assert.assertTrue(StringUtils.isBlank(nodes.get(0).getPredicate().getLeft()));
     }
+
+    @Test
+    public void testXpathNodeTree(){
+        List<Node> nodes = underTest.getXpathNodeTree("//meta[@charset!~'xx']/@href");
+        System.out.println(nodes);
+    }
 }

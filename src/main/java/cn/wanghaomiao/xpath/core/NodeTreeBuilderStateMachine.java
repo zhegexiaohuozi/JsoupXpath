@@ -116,7 +116,7 @@ public class NodeTreeBuilderStateMachine {
         int index = preArray.length-1;
         int argDeep = 0;
         int opFlag = 0;
-        if (pre.matches(".+(\\+|=|-|>|<|>=|<=|^=|\\*=|$=|~=|!=)'.+'")){
+        if (pre.matches(".+(\\+|=|-|>|<|>=|<=|^=|\\*=|$=|~=|!=|!~)'.+'")){
             while (index>=0){
                 char tmp = preArray[index];
                 if (tmp=='\''){
@@ -133,7 +133,7 @@ public class NodeTreeBuilderStateMachine {
                 }
                 index-=1;
             }
-        }else if (pre.matches(".+(\\+|=|-|>|<|>=|<=|^=|\\*=|$=|~=|!=)[^']+")){
+        }else if (pre.matches(".+(\\+|=|-|>|<|>=|<=|^=|\\*=|$=|~=|!=|!~)[^']+")){
             while (index>=0){
                 char tmp = preArray[index];
                 if (opFlag==0&&EmMap.getInstance().commOpChar.contains(tmp)){

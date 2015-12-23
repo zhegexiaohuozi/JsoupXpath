@@ -37,6 +37,7 @@ public class EmMap {
         opEmMap.put("$=",OpEm.ENDWITH);
         opEmMap.put("*=",OpEm.CONTAIN);
         opEmMap.put("~=",OpEm.REGEX);
+        opEmMap.put("!~",OpEm.NOTMATCH);
 
         commOpChar.add('+');
         commOpChar.add('-');

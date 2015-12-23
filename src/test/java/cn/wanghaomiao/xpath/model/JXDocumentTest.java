@@ -1,5 +1,8 @@
 package cn.wanghaomiao.xpath.model;
 
+import cn.wanghaomiao.xpath.exception.NoSuchAxisException;
+import cn.wanghaomiao.xpath.exception.NoSuchFunctionException;
+import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,7 +25,7 @@ public class JXDocumentTest {
 
     @Before
     public void before() throws Exception {
-        String html = "<html><body><script>console.log('aaaaa')</script><div class='test'>搜易贷致力于普惠金融，专注于互联网投资理财与小额贷款，搭建中国最大、用户体验最好的个人及中小企业的互联网信贷平台</div></body></html>";
+        String html = "<html><body><script>console.log('aaaaa')</script><div class='test'>搜易贷致力于普惠金融，专注于互联网投资理财与小额贷款，搭建中国最大、用户体验最好的个人及中小企业的互联网信贷平台</div><div class='xiao'>Two</div></body></html>";
         underTest = new JXDocument(html);
     }
     /**
@@ -34,6 +37,13 @@ public class JXDocumentTest {
         List<Object> res = underTest.sel(xpath);
         Assert.assertNotNull(res);
         Assert.assertTrue(res.size()>0);
+        System.out.println(StringUtils.join(res,","));
+    }
+
+    @Test
+    public void testNotMatchFilter() throws Exception {
+        String xpath="//div[@class!~'xiao']/text()";
+        List<Object> res = underTest.sel(xpath);
         System.out.println(StringUtils.join(res,","));
     }
 }

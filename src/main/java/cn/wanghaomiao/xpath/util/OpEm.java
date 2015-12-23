@@ -127,6 +127,12 @@ public enum OpEm {
         public Object excute(String left, String right) {
             return left.matches(right);
         }
+    },
+    NOTMATCH("!~"){
+        @Override
+        public Object excute(String left, String right) {
+            return !left.matches(right);
+        }
     };
     private String val;
     private OpEm(String type){

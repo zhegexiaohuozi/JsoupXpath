@@ -40,7 +40,7 @@ http://www.cnblogs.com/ 为例
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>0.2.1</version>
+   <version>0.2.2</version>
 </dependency>
 ```
 
@@ -116,10 +116,11 @@ for (Object o:rs){
 - `a<=b` 小于等于 返回Boolean 
 
 ### 操作符扩展 ###
-- `a^=b` 字符串a是否以字符串b开头 a startwith b 返回Boolean
-- `a*=b` a是否包含b, a contains b 返回Boolean
-- `a$=b` a是否以b结尾 a endwith b 返回Boolean
-- `a~=b` a的内容是否符合 正则表达式b 返回Boolean
+- `a^=b` 字符串a以字符串b开头 a startwith b
+- `a*=b` a包含b, a contains b
+- `a$=b` a以b结尾 a endwith b
+- `a~=b` a的内容符合 正则表达式b
+- `a!~b` a的内容不符合 正则表达式b
 
 ### 其他说明 ###
 基本这些足够了，其他鸡肋的暂时不支持，如有特殊需求请联系我。
