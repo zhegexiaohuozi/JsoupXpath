@@ -1,7 +1,7 @@
 JsoupXpath
 ==========
 
-A html parser with xpath base on Jsoup.Maybe it is the best in java,ha ha.Just try it.
+A html parser with xpath base on Jsoup.Maybe it is the best in java,Just try it.
 
 I will write more document later...
 
@@ -12,27 +12,33 @@ I will write more document later...
 支持几乎全部常用的xpath语法，如下面这些：
 ```
 http://www.cnblogs.com/ 为例
-"//a/@href";
-"//div[@id='paging_block']/div/a[text()='Next >']/@href";
-"//div[@id='paging_block']/div/a[text()*='Next']/@href";
-"//h1/text()";
-"//h1/allText()";
-"//h1//text()";
-"//div/a";
-"//div[@id='post_list']/div[position()<3]/div/h3/allText()";
-"//div[@id='post_list']/div[first()]/div/h3/allText()";
-"//div[@id='post_list']/div[1]/div/h3/allText()";
-"//div[@id='post_list']/div[last()]/div/h3/allText()";
+"//a/@href"
+"//div[@id='paging_block']/div/a[text()='Next >']/@href"
+"//div[@id='paging_block']/div/a[text()*='Next']/@href"
+"//h1/text()"
+"//h1/allText()"
+"//h1//text()"
+"//div/a"
+"//div[@id='post_list']/div[position()<3]/div/h3/allText()"
+"//div[@id='post_list']/div[first()]/div/h3/allText()"
+"//div[@id='post_list']/div[1]/div/h3/allText()"
+"//div[@id='post_list']/div[last()]/div/h3/allText()"
 //查找评论大于1000的条目（当然只是为了演示复杂xpath了，谓语中可以各种嵌套，这样才能测试的更全面嘛）
-"//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
+"//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()"
 //轴支持
-"//div[@id='post_list']/div[self::div/div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
-"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()";
-"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()|//div[@id='post_list']/div[1]/div/h3/allText()";
+"//div[@id='post_list']/div[self::div/div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()"
+"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()"
+"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()|//div[@id='post_list']/div[1]/div/h3/allText()"
 ``` 
 
 在这里暂不列出框架间的对比了，但我相信，你们用了会发现JsoupXpath就是目前市面上最强大的的Xpath解析器。
  
+# 社区讨论 #
+大家有什么问题或建议现在都可以选择通过下面的邮件列表讨论，首次发言前需先订阅并等待审核通过（主要用来屏蔽广告宣传等）
+- 订阅:请发邮件到 `seimicrawler+subscribe@googlegroups.com`
+- 发言:请发邮件到 `seimicrawler@googlegroups.com`
+- 退订:请发邮件至 `seimicrawler+unsubscribe@googlegroups.com`
+
 ## 快速开始 ##
 
 如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(中央maven库,最新版本0.2.2)：
