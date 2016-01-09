@@ -138,7 +138,3 @@ for (Object o:rs){
 项目或组织名称：XX
 项目或组织URL：http://xxx.xxx.cc
 ```
-
-## 联系我 ##
-- site:[www.wanghaomiao.cn](http://www.wanghaomiao.cn)
-- email：`et.tw#163.com`
