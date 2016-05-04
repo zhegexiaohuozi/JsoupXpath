@@ -31,7 +31,7 @@ public class XpathEvaluator {
             emFuncs.put(renderFuncKey(m.getName(),m.getParameterTypes()),m);
         }
         for (Method m:AxisSelector.class.getDeclaredMethods()){
-            emFuncs.put(renderFuncKey(m.getName(),m.getParameterTypes()),m);
+            axisFuncs.put(renderFuncKey(m.getName(),m.getParameterTypes()),m);
         }
     }
     /**
