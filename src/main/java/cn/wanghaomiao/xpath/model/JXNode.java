@@ -1,4 +1,4 @@
-package cn.wanghaomiao.xpath.core;
+package cn.wanghaomiao.xpath.model;
 /*
    Copyright 2014 Wang Haomiao<et.tw@163.com>
 
@@ -14,19 +14,12 @@ package cn.wanghaomiao.xpath.core;
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-import cn.wanghaomiao.xpath.model.Node;
-
-import java.util.LinkedList;
+import org.jsoup.select.Elements;
 
 /**
- * @author 汪浩淼 [ et.tw@163.com ]
- * @since 14-3-10
+ * @author 汪浩淼 et.tw@163.com
+ * @since 2016/5/12.
  */
-public class XContext {
-    public LinkedList<Node> xpathTr;
-    public XContext(){
-        if (xpathTr==null){
-            xpathTr = new LinkedList<Node>();
-        }
-    }
+public class JXNode {
+    private Elements elements;
 }
