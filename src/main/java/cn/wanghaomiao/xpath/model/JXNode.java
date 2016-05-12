@@ -16,10 +16,50 @@ package cn.wanghaomiao.xpath.model;
  */
 import org.jsoup.select.Elements;
 
+import java.util.List;
+
 /**
+ * XPath提取后的
  * @author 汪浩淼 et.tw@163.com
  * @since 2016/5/12.
  */
 public class JXNode {
     private Elements elements;
+    private boolean isText;
+    private String textVal;
+
+    public Elements getElements() {
+        return elements;
+    }
+
+    public JXNode setElements(Elements elements) {
+        this.elements = elements;
+        return this;
+    }
+
+    public boolean isText() {
+        return isText;
+    }
+
+    public JXNode setText(boolean text) {
+        isText = text;
+        return this;
+    }
+
+    public String getTextVal() {
+        return textVal;
+    }
+
+    public JXNode setTextVal(String textVal) {
+        this.textVal = textVal;
+        return this;
+    }
+
+    public List<JXNode> xpath(String xpath){
+        if (elements==null||elements.size()<=0){
+            return null;
+        }
+        JXDocument doc = new JXDocument(elements);
+        return doc.xpath(xpath);
+    }
 }

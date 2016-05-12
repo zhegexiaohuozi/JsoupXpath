@@ -53,4 +53,8 @@ public class JXDocument {
         }
         return res;
     }
+
+    public List<JXNode> xpath(String xpath){
+        return null;
+    }
 }
