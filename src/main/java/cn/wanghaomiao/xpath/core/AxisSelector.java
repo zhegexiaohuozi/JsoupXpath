@@ -128,8 +128,8 @@ public class AxisSelector {
      */
     public Elements followingSiblingOne(Element e){
         Elements rs = new Elements();
-        if (e.previousElementSibling()!=null){
-            rs.add(e.previousElementSibling());
+        if (e.nextElementSibling()!=null){
+            rs.add(e.nextElementSibling());
         }
         return rs;
     }
