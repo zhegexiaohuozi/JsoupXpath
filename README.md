@@ -11,28 +11,42 @@ I will write more document later...
 为了在java里也享受xpath的强大与方便但又苦于找不到一款足够强大的xpath解析器，故开发了JsoupXpath。JsoupXpath的实现逻辑清晰，扩展方便，
 支持几乎全部常用的xpath语法，如下面这些：
 ```
-http://www.cnblogs.com/ 为例
-"//a/@href"
-"//div[@id='paging_block']/div/a[text()='Next >']/@href"
-"//div[@id='paging_block']/div/a[text()*='Next']/@href"
-"//h1/text()"
-"//h1/allText()"
-"//h1//text()"
-"//div/a"
-"//div[@id='post_list']/div[position()<3]/div/h3/allText()"
-"//div[@id='post_list']/div[first()]/div/h3/allText()"
-"//div[@id='post_list']/div[1]/div/h3/allText()"
-"//div[@id='post_list']/div[last()]/div/h3/allText()"
-//查找评论大于1000的条目（当然只是为了演示复杂xpath了，谓语中可以各种嵌套，这样才能测试的更全面嘛）
-"//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()"
-//轴支持
-"//div[@id='post_list']/div[self::div/div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()"
-"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()"
-"//div[@id='post_list']/div[2]/div/p/preceding-sibling::h3/allText()|//div[@id='post_list']/div[1]/div/h3/allText()"
+@RunWith(PowerMockRunner.class)
+@PowerMockRunnerDelegate(DataProviderRunner.class)
+public class JXDocumentTest {
+    private JXDocument doubanTest;
+    @Before
+    public void before() throws Exception {
+        if (doubanTest == null){
+            Document doc = Jsoup.connect("https://book.douban.com/subject_search?start=15&search_text=java&cat=1001").userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0").get();
+            doubanTest = new JXDocument(doc);
+        }
+    }
+    @Test
+    @DataProvider(value = {
+            "//a/@href",
+            "//div[@class='paginator']/span[@class='next']/a/@href",
+            "//ul[@class='subject-list']/li[position()<3]/div/h2/allText()",
+            "//ul[@class='subject-list']/li[first()]/div/h2/allText()",
+            "//ul[@class='subject-list']/li[./div/div/span[@class='pl']/num()>900]/div/h2/allText()", //查找评论大于1000的条目（当然只是为了演示复杂xpath了，谓语中可以各种嵌套，这样才能测试的更全面）
+            "//ul[@class='subject-list']/li[self::li/div/div/span[@class='pl']/num()>900]/div/h2/allText()", //支持轴
+            "//*[@id='content']/div/div[1]/ul/li[14]/div[2]/h2/a/text()" //chrome拷贝
+    })
+    public void testXpath(String xpath) throws NoSuchFunctionException, XpathSyntaxErrorException, NoSuchAxisException {
+        System.out.println("current xpath:"+xpath);
+        List<Object> rs = doubanTest.sel(xpath);
+        for (Object o:rs){
+            if (o instanceof Element){
+                int index = ((Element) o).siblingIndex();
+                System.out.println(index);
+            }
+            System.out.println(o.toString());
+        }
+    }
+}
 ``` 
+[上面测试案例完整地址](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/src/test/java/cn/wanghaomiao/xpath/model/JXDocumentTest.java)
 
-在这里暂不列出框架间的对比了，但我相信，你们用了会发现JsoupXpath就是目前市面上最强大的的Xpath解析器。
- 
 # 社区讨论 #
 大家有什么问题或建议现在都可以选择通过下面的邮件列表讨论，首次发言前需先订阅并等待审核通过（主要用来屏蔽广告宣传等）
 - 订阅:请发邮件到 `seimicrawler+subscribe@googlegroups.com`
