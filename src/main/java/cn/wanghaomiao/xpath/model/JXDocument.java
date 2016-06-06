@@ -22,6 +22,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -40,21 +41,36 @@ public class JXDocument {
         elements = els;
     }
     
-    public List<Object> sel(String xpath) throws NoSuchAxisException, NoSuchFunctionException, XpathSyntaxErrorException {
-        List<Object> res = null;
+    public List<Object> sel(String xpath) throws XpathSyntaxErrorException {
+        List<Object> res = new LinkedList<Object>();
         try {
-             res = xpathEva.xpathParser(xpath,elements);
-        } catch (NoSuchAxisException e) {
-            throw e;
-        } catch (NoSuchFunctionException e) {
-            throw e;
+             List<JXNode> jns = xpathEva.xpathParser(xpath,elements);
+             for (JXNode j:jns){
+                 if (j.isText()){
+                     res.add(j.getTextVal());
+                 }else {
+                     res.add(j.getElement());
+                 }
+             }
         } catch (Exception e){
-            throw new XpathSyntaxErrorException("please check the xpath syntax");
+            String msg = "please check the xpath syntax";
+            if (e instanceof NoSuchAxisException||e instanceof NoSuchFunctionException){
+                msg = e.getMessage();
+            }
+            throw new XpathSyntaxErrorException(msg);
         }
         return res;
     }
 
-    public List<JXNode> xpath(String xpath){
-        return null;
+    public List<JXNode> selN(String xpath) throws XpathSyntaxErrorException{
+        try {
+            return xpathEva.xpathParser(xpath,elements);
+        }catch (Exception e){
+            String msg = "please check the xpath syntax";
+            if (e instanceof NoSuchAxisException||e instanceof NoSuchFunctionException){
+                msg = e.getMessage();
+            }
+            throw new XpathSyntaxErrorException(msg);
+        }
     }
 }

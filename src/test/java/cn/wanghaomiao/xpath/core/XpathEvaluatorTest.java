@@ -1,7 +1,7 @@
 package cn.wanghaomiao.xpath.core;
 
 import cn.wanghaomiao.xpath.model.Node;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

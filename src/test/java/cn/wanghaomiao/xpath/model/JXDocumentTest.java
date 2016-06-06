@@ -1,14 +1,11 @@
 package cn.wanghaomiao.xpath.model;
 
-import cn.wanghaomiao.xpath.exception.NoSuchAxisException;
-import cn.wanghaomiao.xpath.exception.NoSuchFunctionException;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,28 +33,29 @@ public class JXDocumentTest {
     public void before() throws Exception {
         String html = "<html><body><script>console.log('aaaaa')</script><div class='test'>搜易贷致力于普惠金融，专注于互联网投资理财与小额贷款，搭建中国最大、用户体验最好的个人及中小企业的互联网信贷平台</div><div class='xiao'>Two</div></body></html>";
         underTest = new JXDocument(html);
-        if (doubanTest == null){
+        if (doubanTest == null) {
             Document doc = Jsoup.connect("https://book.douban.com/subject_search?start=15&search_text=java&cat=1001").userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0").get();
             doubanTest = new JXDocument(doc);
         }
     }
+
     /**
      * Method: sel(String xpath)
      */
     @Test
     public void testSel() throws Exception {
-        String xpath="//script[1]/text()";
+        String xpath = "//script[1]/text()";
         List<Object> res = underTest.sel(xpath);
         Assert.assertNotNull(res);
-        Assert.assertTrue(res.size()>0);
-        System.out.println(StringUtils.join(res,","));
+        Assert.assertTrue(res.size() > 0);
+        System.out.println(StringUtils.join(res, ","));
     }
 
     @Test
     public void testNotMatchFilter() throws Exception {
-        String xpath="//div[@class!~'xiao']/text()";
+        String xpath = "//div[@class!~'xiao']/text()";
         List<Object> res = underTest.sel(xpath);
-        System.out.println(StringUtils.join(res,","));
+        System.out.println(StringUtils.join(res, ","));
     }
 
     @Test
@@ -70,15 +68,31 @@ public class JXDocumentTest {
             "//ul[@class='subject-list']/li[self::li/div/div/span[@class='pl']/num()>900]/div/h2/allText()",
             "//*[@id='content']/div/div[1]/ul/li[14]/div[2]/h2/a/text()" //chrome拷贝
     })
-    public void testXpath(String xpath) throws NoSuchFunctionException, XpathSyntaxErrorException, NoSuchAxisException {
-        System.out.println("current xpath:"+xpath);
-        List<Object> rs = doubanTest.sel(xpath);
-        for (Object o:rs){
-            if (o instanceof Element){
-                int index = ((Element) o).siblingIndex();
+    public void testXpath(String xpath) throws XpathSyntaxErrorException {
+        System.out.println("current xpath:" + xpath);
+        List<JXNode> rs = doubanTest.selN(xpath);
+        for (JXNode n : rs) {
+            if (!n.isText()) {
+                int index = n.getElement().siblingIndex();
                 System.out.println(index);
             }
-            System.out.println(o.toString());
+            System.out.println(n.toString());
         }
     }
+
+    @Test
+    @DataProvider(value = {
+            "//ul[@class='subject-list']/li"
+    })
+    public void testJXNode(String xpath) throws XpathSyntaxErrorException {
+        System.out.println("current xpath:" + xpath);
+        List<JXNode> jxNodeList = doubanTest.selN(xpath);
+        for (JXNode node : jxNodeList) {
+            if (!node.isText()) {
+                System.out.println(StringUtils.join(node.sel("/div/h2/a/text()"), ""));
+            }
+        }
+    }
+
+
 }
