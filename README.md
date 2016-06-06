@@ -47,6 +47,33 @@ public class JXDocumentTest {
 ``` 
 [上面测试案例完整地址](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/src/test/java/cn/wanghaomiao/xpath/model/JXDocumentTest.java)
 
+# Change Log #
+
+## v0.3.0 ##
+
+- `JXDocument`中增加`public List<JXNode> selN(String xpath)`方法，提取结果可继续执行XPath提取
+
+```
+@Test
+@DataProvider(value = {
+        "//ul[@class='subject-list']/li"
+})
+public void testJXNode(String xpath) throws XpathSyntaxErrorException {
+    System.out.println("current xpath:" + xpath);
+    List<JXNode> jxNodeList = doubanTest.selN(xpath);
+    for (JXNode node : jxNodeList) {
+        if (!node.isText()) {
+            System.out.println(StringUtils.join(node.sel("/div/h2/a/text()"), ""));
+        }
+    }
+}
+```
+完整示例请参见[JXDocumentTest](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/src/test/java/cn/wanghaomiao/xpath/model/JXDocumentTest.java)
+
+- 依赖包`commons-lang`升级到`commons-lang3`
+
+- 修复已知Bug，在此感谢[@suclogger](https://github.com/suclogger)的Merge Request
+
 # 社区讨论 #
 大家有什么问题或建议现在都可以选择通过下面的邮件列表讨论，首次发言前需先订阅并等待审核通过（主要用来屏蔽广告宣传等）
 - 订阅:请发邮件到 `seimicrawler+subscribe@googlegroups.com`
@@ -60,7 +87,7 @@ public class JXDocumentTest {
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>0.2.2</version>
+   <version>0.3.0</version>
 </dependency>
 ```
 
