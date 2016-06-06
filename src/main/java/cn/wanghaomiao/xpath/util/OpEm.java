@@ -14,7 +14,7 @@ package cn.wanghaomiao.xpath.util;
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 操作符

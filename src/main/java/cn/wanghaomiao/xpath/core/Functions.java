@@ -14,6 +14,7 @@ package cn.wanghaomiao.xpath.core;
    See the License for the specific language governing permissions and
    limitations under the License.
  */
+import cn.wanghaomiao.xpath.model.JXNode;
 import cn.wanghaomiao.xpath.util.CommonUtil;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -34,14 +35,14 @@ public class Functions {
      * @param context
      * @return
      */
-    public List<Object> text(Elements context){
-        List<Object> res = new LinkedList<Object>();
+    public List<JXNode> text(Elements context){
+        List<JXNode> res = new LinkedList<JXNode>();
         if (context!=null&&context.size()>0){
             for (Element e:context){
                 if (e.nodeName().equals("script")){
-                    res.add(e.data());
+                    res.add(JXNode.t(e.data()));
                 }else {
-                    res.add(e.ownText());
+                    res.add(JXNode.t(e.ownText()));
                 }
             }
         }
@@ -53,11 +54,11 @@ public class Functions {
      * @param context
      * @return
      */
-    public List<Object> allText(Elements context){
-        List<Object> res = new LinkedList<Object>();
+    public List<JXNode> allText(Elements context){
+        List<JXNode> res = new LinkedList<JXNode>();
         if (context!=null&&context.size()>0){
             for (Element e:context){
-                res.add(e.text());
+                res.add(JXNode.t(e.text()));
             }
         }
         return res;
@@ -68,11 +69,11 @@ public class Functions {
      * @param context
      * @return
      */
-    public List<Object> html(Elements context){
-        List<Object> res = new LinkedList<Object>();
+    public List<JXNode> html(Elements context){
+        List<JXNode> res = new LinkedList<JXNode>();
         if (context!=null&&context.size()>0){
             for (Element e:context){
-                res.add(e.html());
+                res.add(JXNode.t(e.html()));
             }
         }
         return res;
@@ -83,11 +84,11 @@ public class Functions {
      * @param context
      * @return
      */
-    public List<Object> outerHtml(Elements context){
-        List<Object> res = new LinkedList<Object>();
+    public List<JXNode> outerHtml(Elements context){
+        List<JXNode> res = new LinkedList<JXNode>();
         if (context!=null&&context.size()>0){
             for (Element e:context){
-                res.add(e.outerHtml());
+                res.add(JXNode.t(e.outerHtml()));
             }
         }
         return res;
@@ -98,14 +99,8 @@ public class Functions {
      * @param context
      * @return
      */
-    public List<Object> node(Elements context){
-        List<Object> res = new LinkedList<Object>();
-        if (context!=null&&context.size()>0){
-            for (Element e:context){
-                res.addAll(e.getAllElements());
-            }
-        }
-        return res;
+    public List<JXNode> node(Elements context){
+        return html(context);
     }
 
     /**
@@ -113,14 +108,14 @@ public class Functions {
      * @param context
      * @return
      */
-    public List<Object> num(Elements context){
-        List<Object> res = new LinkedList<Object>();
+    public List<JXNode> num(Elements context){
+        List<JXNode> res = new LinkedList<JXNode>();
         if (context!=null){
             Pattern pattern = Pattern.compile("\\d+");
             for (Element e:context){
                 Matcher matcher = pattern.matcher(e.ownText());
                 if (matcher.find()){
-                    res.add(matcher.group());
+                    res.add(JXNode.t(matcher.group()));
                 }
             }
         }

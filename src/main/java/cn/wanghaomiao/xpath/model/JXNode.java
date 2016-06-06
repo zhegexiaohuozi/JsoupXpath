@@ -14,6 +14,9 @@ package cn.wanghaomiao.xpath.model;
    See the License for the specific language governing permissions and
    limitations under the License.
  */
+
+import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.List;
@@ -24,16 +27,16 @@ import java.util.List;
  * @since 2016/5/12.
  */
 public class JXNode {
-    private Elements elements;
+    private Element element;
     private boolean isText;
     private String textVal;
 
-    public Elements getElements() {
-        return elements;
+    public Element getElement() {
+        return element;
     }
 
-    public JXNode setElements(Elements elements) {
-        this.elements = elements;
+    public JXNode setElement(Element element) {
+        this.element = element;
         return this;
     }
 
@@ -55,11 +58,32 @@ public class JXNode {
         return this;
     }
 
-    public List<JXNode> xpath(String xpath){
-        if (elements==null||elements.size()<=0){
+    public List<JXNode> sel(String xpath) throws XpathSyntaxErrorException {
+        if (element ==null){
             return null;
         }
-        JXDocument doc = new JXDocument(elements);
-        return doc.xpath(xpath);
+        JXDocument doc = new JXDocument(new Elements(element));
+        return doc.selN(xpath);
+    }
+
+    public static JXNode e(Element element){
+        JXNode n = new JXNode();
+        n.setElement(element).setText(false);
+        return n;
+    }
+
+    public static JXNode t(String txt){
+        JXNode n = new JXNode();
+        n.setTextVal(txt).setText(true);
+        return n;
+    }
+
+    @Override
+    public String toString() {
+        if (isText){
+            return textVal;
+        }else {
+            return element.toString();
+        }
     }
 }
