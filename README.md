@@ -49,8 +49,10 @@ public class JXDocumentTest {
 
 # Change Log #
 
-## v0.3.0 ##
+## v0.3.1 ##
+- 修复递归获取节点问题。
 
+## v0.3.0 ##
 - `JXDocument`中增加`public List<JXNode> selN(String xpath)`方法，提取结果可继续执行XPath提取
 
 ```
@@ -82,12 +84,12 @@ public void testJXNode(String xpath) throws XpathSyntaxErrorException {
 
 ## 快速开始 ##
 
-如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(中央maven库,最新版本0.3.0)：
+如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(中央maven库,最新版本0.3.1)：
 ```
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>0.3.0</version>
+   <version>0.3.1</version>
 </dependency>
 ```
 
