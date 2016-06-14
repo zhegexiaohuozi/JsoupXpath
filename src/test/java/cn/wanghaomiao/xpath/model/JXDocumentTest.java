@@ -94,5 +94,14 @@ public class JXDocumentTest {
         }
     }
 
+    @Test
+    @DataProvider(value = {
+            "//ul[@class='subject-list']"
+    })
+    public void testRecursionNode(String xpath) throws XpathSyntaxErrorException {
+        System.out.println("current xpath:" + xpath);
+        List<JXNode> jxNodeList = doubanTest.selN(xpath);
+        System.out.println(jxNodeList.size());
+    }
 
 }

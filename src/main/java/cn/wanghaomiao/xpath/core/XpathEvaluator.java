@@ -138,6 +138,11 @@ public class XpathEvaluator {
                         }
                     }
                     context = new Elements(contextTmp);
+                    if (i == xpathNodes.size() - 1) {
+                        for (Element e : contextTmp) {
+                            res.add(JXNode.e(e));
+                        }
+                    }
                 }
 
             } else {
