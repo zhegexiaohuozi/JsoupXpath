@@ -130,7 +130,7 @@ public class NodeTreeBuilderStateMachine {
         int index = preArray.length-1;
         int argDeep = 0;
         int opFlag = 0;
-        if (pre.matches(".+(\\+|=|-|>|<|>=|<=|^=|\\*=|$=|~=|!=|!~)'.+'")){
+        if (pre.matches(".+(\\+|=|-|>|<|>=|<=|^=|\\*=|$=|~=|!=|!~)\\s*'.+'")){
             while (index>=0){
                 char tmp = preArray[index];
                 if (tmp=='\''){
@@ -165,8 +165,8 @@ public class NodeTreeBuilderStateMachine {
         }
 
         predicate.setOpEm(EmMap.getInstance().opEmMap.get(op.toString()));
-        predicate.setLeft(left.toString());
-        predicate.setRight(right.toString());
+        predicate.setLeft(left.toString().trim());
+        predicate.setRight(right.toString().trim());
         predicate.setValue(pre);
         return predicate;
     }
