@@ -84,12 +84,12 @@ public void testJXNode(String xpath) throws XpathSyntaxErrorException {
 
 ## 快速开始 ##
 
-如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(中央maven库,最新版本0.3.1)：
+如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(中央maven库,最新版本0.3.2)：
 ```
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>0.3.1</version>
+   <version>0.3.2</version>
 </dependency>
 ```
 

@@ -29,6 +29,8 @@ public class JXDocumentTest {
 
     private JXDocument doubanTest;
 
+    private JXDocument custom;
+
     @Before
     public void before() throws Exception {
         String html = "<html><body><script>console.log('aaaaa')</script><div class='test'>搜易贷致力于普惠金融，专注于互联网投资理财与小额贷款，搭建中国最大、用户体验最好的个人及中小企业的互联网信贷平台</div><div class='xiao'>Two</div></body></html>";
@@ -37,6 +39,7 @@ public class JXDocumentTest {
             Document doc = Jsoup.connect("https://book.douban.com/subject_search?start=15&search_text=java&cat=1001").userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0").get();
             doubanTest = new JXDocument(doc);
         }
+        custom = new JXDocument("<li><b>性别：</b>男</li>");
     }
 
     /**
@@ -102,6 +105,14 @@ public class JXDocumentTest {
         System.out.println("current xpath:" + xpath);
         List<JXNode> jxNodeList = doubanTest.selN(xpath);
         System.out.println(jxNodeList.size());
+    }
+
+    @Test
+    public void testAs() throws XpathSyntaxErrorException {
+        List<JXNode> jxNodeList = custom.selN("//b[text()='性别：']/parent::*/text()");
+        for (JXNode jxNode : jxNodeList) {
+            System.out.println(jxNode.getTextVal());
+        }
     }
 
 }
