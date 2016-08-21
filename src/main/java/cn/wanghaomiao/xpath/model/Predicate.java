@@ -18,7 +18,7 @@ import cn.wanghaomiao.xpath.util.OpEm;
 
 /**
  * xpath语法节点的谓语部分，即要满足的限定条件
- * @author 汪浩淼 [ et.tw@163.com]
+ * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
  */
 public class Predicate {
 

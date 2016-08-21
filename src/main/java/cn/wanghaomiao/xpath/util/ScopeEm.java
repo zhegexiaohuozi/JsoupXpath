@@ -16,7 +16,7 @@ package cn.wanghaomiao.xpath.util;
  */
 /**
  * 筛选作用域
- * @author 汪浩淼 [ et.tw@163.com ]
+ * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
  * @since 14-3-7
  */
 public enum ScopeEm {

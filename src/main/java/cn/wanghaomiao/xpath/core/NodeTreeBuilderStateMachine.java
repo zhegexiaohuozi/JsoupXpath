@@ -20,7 +20,7 @@ import cn.wanghaomiao.xpath.util.EmMap;
 
 /**
  * 用于生成xpath语法树的有限状态机
- * @author 汪浩淼 [et.tw@163.com]
+ * @author github.com/zhegexiaohuozi [et.tw@163.com]
  * @since 13-12-26
  */
 public class NodeTreeBuilderStateMachine {

@@ -15,7 +15,7 @@ package cn.wanghaomiao.xpath.model;
    limitations under the License.
  */
 /**
- * @author 汪浩淼 et.tw@163.com
+ * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
  * @since 2015/11/29.
  */
 public class XpathResult {

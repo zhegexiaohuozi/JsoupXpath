@@ -18,7 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * 操作符
- * @author 汪浩淼 [ et.tw@163.com ]
+ * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
  * @since 14-3-7
  */
 public enum OpEm {

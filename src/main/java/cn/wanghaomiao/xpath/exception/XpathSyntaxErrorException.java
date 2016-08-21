@@ -15,7 +15,7 @@ package cn.wanghaomiao.xpath.exception;
    limitations under the License.
  */
 /**
- * @author 汪浩淼 [ et.tw@163.com ]
+ * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
  * @since 14-3-19
  */
 public class XpathSyntaxErrorException extends Exception {

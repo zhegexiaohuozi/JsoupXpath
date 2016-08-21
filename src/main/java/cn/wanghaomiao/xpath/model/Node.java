@@ -18,7 +18,7 @@ import cn.wanghaomiao.xpath.util.ScopeEm;
 
 /**
  * xpath语法链的一个基本节点
- * @author 汪浩淼 [ et.tw@163.com]
+ * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
  */
 public class Node {
     private ScopeEm scopeEm;

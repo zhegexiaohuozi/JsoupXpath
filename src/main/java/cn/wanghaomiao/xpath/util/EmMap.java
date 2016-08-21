@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author 汪浩淼 [ et.tw@163.com ]
+ * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
  * @since 14-3-11
  */
 public class EmMap {

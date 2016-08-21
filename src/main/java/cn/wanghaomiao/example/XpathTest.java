@@ -1,7 +1,7 @@
 package cn.wanghaomiao.example;
 
 /**
- * @author 汪浩淼 [ et.tw@163.com ]
+ * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
  * @since 14-3-19
  */
 public class XpathTest {

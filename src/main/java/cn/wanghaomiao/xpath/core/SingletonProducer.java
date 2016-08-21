@@ -16,7 +16,7 @@ package cn.wanghaomiao.xpath.core;
  */
 
 /**
- * @author: 汪浩淼 [ et.tw@163.com ]
+ * @author: github.com/zhegexiaohuozi [seimimaster@gmail.com]
  * Date: 14-3-16
  */
 public class SingletonProducer {

@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * XPath提取后的
- * @author 汪浩淼 et.tw@163.com
+ * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
  * @since 2016/5/12.
  */
 public class JXNode {

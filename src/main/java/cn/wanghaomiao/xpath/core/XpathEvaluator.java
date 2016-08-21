@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author 汪浩淼 [ et.tw@163.com ]
+ * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
  * @since 14-3-12
  */
 public class XpathEvaluator {

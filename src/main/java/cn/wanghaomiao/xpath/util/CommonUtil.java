@@ -18,7 +18,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
- * @author: 汪浩淼 [ et.tw@163.com ]
+ * @author: github.com/zhegexiaohuozi [seimimaster@gmail.com]
  * Date: 14-3-15
  */
 public class CommonUtil {

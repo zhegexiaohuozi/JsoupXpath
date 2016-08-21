@@ -16,7 +16,7 @@ package cn.wanghaomiao.xpath.exception;
  */
 /**
  * 使用不存在的轴语法则抛出此异常
- * @author: 汪浩淼 [ et.tw@163.com ]
+ * @author: github.com/zhegexiaohuozi [seimimaster@gmail.com]
  * Date: 14-3-15
  */
 public class NoSuchAxisException extends Exception {
