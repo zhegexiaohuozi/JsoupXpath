@@ -142,8 +142,8 @@ public class AxisSelector {
      */
     public Elements followingSiblingOne(Element e){
         Elements rs = new Elements();
-        if (e.nextElementSibling()!=null){
-            rs.add(e.nextElementSibling());
+        if (e.previousElementSibling()!=null){
+            rs.add(e.previousElementSibling());
         }
         return rs;
     }
