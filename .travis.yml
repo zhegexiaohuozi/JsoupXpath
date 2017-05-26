@@ -22,7 +22,7 @@ env:
 addons:
   coverity_scan:
     project:
-      name: "seimigroup/JsoupXpath"
+      name: "zhegexiaohuozi/JsoupXpath"
       description: "Build submitted via Travis CI"
     notification_email: seimimaster@gmail.com
     build_command_prepend: "mvn clean"
