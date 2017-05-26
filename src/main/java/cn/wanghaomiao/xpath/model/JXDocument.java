@@ -1,4 +1,11 @@
 package cn.wanghaomiao.xpath.model;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 /*
    Copyright 2014 Wang Haomiao<et.tw@163.com>
 
@@ -18,12 +25,6 @@ import cn.wanghaomiao.xpath.core.XpathEvaluator;
 import cn.wanghaomiao.xpath.exception.NoSuchAxisException;
 import cn.wanghaomiao.xpath.exception.NoSuchFunctionException;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
@@ -72,5 +73,25 @@ public class JXDocument {
             }
             throw new XpathSyntaxErrorException(msg);
         }
+    }
+    
+    public Object selOne(String xpath) throws XpathSyntaxErrorException {
+    	JXNode jxNode = selNOne(xpath);
+    	if(jxNode != null) {
+    		if (jxNode.isText()){
+                return jxNode.getTextVal();
+            }else {
+                return jxNode.getElement();
+            }
+    	}
+    	return null;
+    }
+    
+    public JXNode selNOne(String xpath) throws XpathSyntaxErrorException {
+    	List<JXNode> jxNodeList = selN(xpath);
+    	if(jxNodeList != null && jxNodeList.size() > 0) {
+    		return jxNodeList.get(0);
+    	}
+    	return null;
     }
 }
