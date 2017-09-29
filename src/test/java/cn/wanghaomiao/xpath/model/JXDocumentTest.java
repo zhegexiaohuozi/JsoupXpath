@@ -1,6 +1,6 @@
 package cn.wanghaomiao.xpath.model;
 
-import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
+import org.seimicrawler.xpath.exception.XpathSyntaxErrorException;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import org.apache.commons.lang3.StringUtils;
@@ -12,13 +12,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.modules.junit4.PowerMockRunnerDelegate;
+import org.seimicrawler.xpath.model.JXDocument;
+import org.seimicrawler.xpath.model.JXNode;
 
 import java.util.List;
 
 /**
  * JXDocument Tester.
  *
- * @author <et.tw@163.com>
+ * @author <seimimaster@gmail.com>
  * @version 1.0
  */
 @RunWith(PowerMockRunner.class)

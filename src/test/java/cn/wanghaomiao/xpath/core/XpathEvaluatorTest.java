@@ -1,6 +1,7 @@
 package cn.wanghaomiao.xpath.core;
 
-import cn.wanghaomiao.xpath.model.Node;
+import org.seimicrawler.xpath.core.XpathEvaluator;
+import org.seimicrawler.xpath.model.Node;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * XpathEvaluator Tester.
  *
- * @author <et.tw@163.com>
+ * @author <seimimaster@gmail.com>
  * @version 1.0
  */
 @RunWith(PowerMockRunner.class)
