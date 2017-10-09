@@ -30,7 +30,7 @@ a!~b a的内容不符合 正则表达式b
 
 */
 
-
+k
 main  :  expr
   ;
 
@@ -40,15 +40,17 @@ locationPath
   ;
 
 absoluteLocationPathNoroot
-  :  '/' relativeLocationPath
-  |  '//' relativeLocationPath
+  :  PATHSEP relativeLocationPath
+//  |  ABRPATH relativeLocationPath
   ;
 
 relativeLocationPath
-  :  step (('/'|'//') step)*
+//  :  step ((PATHSEP|ABRPATH) step)*
+  :  step (PATHSEP step)*
   ;
 
-step  :  axisSpecifier nodeTest predicate*
+step
+  :  axisSpecifier nodeTest predicate*
   |  abbreviatedStep
   ;
 
@@ -93,7 +95,8 @@ unionExprNoRoot
 
 pathExprNoRoot
   :  locationPath
-  |  filterExpr (('/'|'//') relativeLocationPath)?
+//  |  filterExpr ((PATHSEP|ABRPATH) relativeLocationPath)?
+  |  filterExpr (PATHSEP relativeLocationPath)?
   ;
 
 filterExpr
@@ -158,6 +161,7 @@ NodeType:  'comment'
   |  'text'
   |  'processing-instruction'
   |  'node'
+  |  'num'                                              //自定义
   ;
   
 Number  :  Digits ('.' Digits?)?
@@ -185,8 +189,9 @@ AxisName:  'ancestor'
 
 
   PATHSEP 
-       :'/';
-  ABRPATH   
+       :'/'
+       |ABRPATH;
+  ABRPATH
        : '//';
   LPAR   
        : '(';
