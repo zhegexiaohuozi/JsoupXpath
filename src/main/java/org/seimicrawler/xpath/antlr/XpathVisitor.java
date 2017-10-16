@@ -1,4 +1,4 @@
-// Generated from D:/CODE/OSS/JsoupXpath/src/main/resources/dsl\Xpath.g4 by ANTLR 4.7
+// Generated from D:/CODE/JAVA/JsoupXpath/src/main/resources/dsl\Xpath.g4 by ANTLR 4.7
 package org.seimicrawler.xpath.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -113,82 +113,29 @@ public interface XpathVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAndExpr(XpathParser.AndExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code eqExpression}
-	 * labeled alternative in {@link XpathParser#equalityExpr}.
+	 * Visit a parse tree produced by {@link XpathParser#equalityExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitEqExpression(XpathParser.EqExpressionContext ctx);
+	T visitEqualityExpr(XpathParser.EqualityExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code notEqExpression}
-	 * labeled alternative in {@link XpathParser#equalityExpr}.
+	 * Visit a parse tree produced by {@link XpathParser#relationalExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNotEqExpression(XpathParser.NotEqExpressionContext ctx);
+	T visitRelationalExpr(XpathParser.RelationalExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ltExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
+	 * Visit a parse tree produced by {@link XpathParser#additiveExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLtExpression(XpathParser.LtExpressionContext ctx);
+	T visitAdditiveExpr(XpathParser.AdditiveExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code gtExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
+	 * Visit a parse tree produced by {@link XpathParser#multiplicativeExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitGtExpression(XpathParser.GtExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ltEqExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLtEqExpression(XpathParser.LtEqExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code gtEqExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGtEqExpression(XpathParser.GtEqExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code addExpression}
-	 * labeled alternative in {@link XpathParser#additiveExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAddExpression(XpathParser.AddExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code subtractExpression}
-	 * labeled alternative in {@link XpathParser#additiveExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSubtractExpression(XpathParser.SubtractExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code multiplyExpression}
-	 * labeled alternative in {@link XpathParser#multiplicativeExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMultiplyExpression(XpathParser.MultiplyExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code divideExpression}
-	 * labeled alternative in {@link XpathParser#multiplicativeExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDivideExpression(XpathParser.DivideExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code modulusExpression}
-	 * labeled alternative in {@link XpathParser#multiplicativeExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitModulusExpression(XpathParser.ModulusExpressionContext ctx);
+	T visitMultiplicativeExpr(XpathParser.MultiplicativeExprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link XpathParser#unaryExprNoRoot}.
 	 * @param ctx the parse tree

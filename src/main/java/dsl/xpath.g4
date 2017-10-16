@@ -1,4 +1,4 @@
-grammar Xpath;
+grammar xpath;
 
 /*
 XPath 1.0 grammar. Should conform to the official spec at
@@ -19,16 +19,7 @@ Do with this code as you will.
 /*
     Ported to Antlr4 by Tom Everett <tom@khubla.com>
 */
-/**
-操作符额外扩展：
 
-a^=b 字符串a以字符串b开头 a startwith b
-a*=b a包含b, a contains b
-a$=b a以b结尾 a endwith b
-a~=b a的内容符合 正则表达式b
-a!~b a的内容不符合 正则表达式b
-
-*/
 
 main  :  expr
   ;
@@ -39,15 +30,15 @@ locationPath
   ;
 
 absoluteLocationPathNoroot
-  :  op=('/'|'//') relativeLocationPath
+  :  '/' relativeLocationPath
+  |  '//' relativeLocationPath
   ;
 
 relativeLocationPath
-  :  step (op=('/'|'//') step)*
+  :  step (('/'|'//') step)*
   ;
 
-step
-  :  axisSpecifier nodeTest predicate*
+step  :  axisSpecifier nodeTest predicate*
   |  abbreviatedStep
   ;
 
@@ -92,7 +83,7 @@ unionExprNoRoot
 
 pathExprNoRoot
   :  locationPath
-  |  filterExpr (op=('/'|'//') relativeLocationPath)?
+  |  filterExpr (('/'|'//') relativeLocationPath)?
   ;
 
 filterExpr
@@ -106,20 +97,20 @@ andExpr  :  equalityExpr ('and' equalityExpr)*
   ;
 
 equalityExpr
-  :  relationalExpr (op=('='|'!=') relationalExpr)*
+  :  relationalExpr (('='|'!=') relationalExpr)*
   ;
 
 relationalExpr
-  :  additiveExpr (op=('<'|'>'|'<='|'>=') additiveExpr)*
+  :  additiveExpr (('<'|'>'|'<='|'>=') additiveExpr)*
   ;
 
 additiveExpr
-  :  multiplicativeExpr (op=('+'|'-') multiplicativeExpr)*
+  :  multiplicativeExpr (('+'|'-') multiplicativeExpr)*
   ;
 
 multiplicativeExpr
-  :  unaryExprNoRoot (op=('*'|'`div`'|'`mod`') multiplicativeExpr)?
-  |  '/' (op=('`div`'|'`mod`') multiplicativeExpr)?
+  :  unaryExprNoRoot (('*'|'div'|'mod') multiplicativeExpr)?
+  |  '/' (('div'|'mod') multiplicativeExpr)?
   ;
 
 unaryExprNoRoot
@@ -150,7 +141,6 @@ NodeType:  'comment'
   |  'text'
   |  'processing-instruction'
   |  'node'
-  |  'num'                                              //自定义
   ;
   
 Number  :  Digits ('.' Digits?)?
@@ -179,7 +169,7 @@ AxisName:  'ancestor'
 
   PATHSEP 
        :'/';
-  ABRPATH
+  ABRPATH   
        : '//';
   LPAR   
        : '(';
@@ -213,17 +203,7 @@ AxisName:  'ancestor'
        :  '<=';
   GE   
        :  '>=';
-  START_WITH
-       :  '^=';
-  END_WITH
-       :  '$=';
-  CONTAIN_WITH
-       :  '*=';
-  REGEXP_WITH
-       :  '~=';
-  REGEXP_NOT_WITH
-       :  '!~';
-  COLON
+  COLON   
        :  ':';
   CC   
        :  '::';

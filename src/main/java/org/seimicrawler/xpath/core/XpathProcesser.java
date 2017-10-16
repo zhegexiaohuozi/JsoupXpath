@@ -22,8 +22,12 @@ public class XpathProcesser extends XpathBaseVisitor<JXNode> {
 
     @Override
     public JXNode visitAbsoluteLocationPathNoroot(XpathParser.AbsoluteLocationPathNorootContext ctx) {
-//        JXNode pathSep = visit(ctx.PATHSEP());
-//        JXNode pathRSep = visit(ctx.ABRPATH());
+        if (ctx.op.getType() == XpathParser.ABRPATH){
+            // '//'
+            isRecursion = true;
+        }else {
+            isRecursion = false;
+        }
         return super.visitAbsoluteLocationPathNoroot(ctx);
     }
 

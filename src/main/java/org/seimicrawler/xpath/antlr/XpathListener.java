@@ -1,4 +1,4 @@
-// Generated from D:/CODE/OSS/JsoupXpath/src/main/resources/dsl\Xpath.g4 by ANTLR 4.7
+// Generated from D:/CODE/JAVA/JsoupXpath/src/main/resources/dsl\Xpath.g4 by ANTLR 4.7
 package org.seimicrawler.xpath.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -178,137 +178,45 @@ public interface XpathListener extends ParseTreeListener {
 	 */
 	void exitAndExpr(XpathParser.AndExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code eqExpression}
-	 * labeled alternative in {@link XpathParser#equalityExpr}.
+	 * Enter a parse tree produced by {@link XpathParser#equalityExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterEqExpression(XpathParser.EqExpressionContext ctx);
+	void enterEqualityExpr(XpathParser.EqualityExprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code eqExpression}
-	 * labeled alternative in {@link XpathParser#equalityExpr}.
+	 * Exit a parse tree produced by {@link XpathParser#equalityExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitEqExpression(XpathParser.EqExpressionContext ctx);
+	void exitEqualityExpr(XpathParser.EqualityExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code notEqExpression}
-	 * labeled alternative in {@link XpathParser#equalityExpr}.
+	 * Enter a parse tree produced by {@link XpathParser#relationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterNotEqExpression(XpathParser.NotEqExpressionContext ctx);
+	void enterRelationalExpr(XpathParser.RelationalExprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code notEqExpression}
-	 * labeled alternative in {@link XpathParser#equalityExpr}.
+	 * Exit a parse tree produced by {@link XpathParser#relationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitNotEqExpression(XpathParser.NotEqExpressionContext ctx);
+	void exitRelationalExpr(XpathParser.RelationalExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ltExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
+	 * Enter a parse tree produced by {@link XpathParser#additiveExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterLtExpression(XpathParser.LtExpressionContext ctx);
+	void enterAdditiveExpr(XpathParser.AdditiveExprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ltExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
+	 * Exit a parse tree produced by {@link XpathParser#additiveExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitLtExpression(XpathParser.LtExpressionContext ctx);
+	void exitAdditiveExpr(XpathParser.AdditiveExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code gtExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
+	 * Enter a parse tree produced by {@link XpathParser#multiplicativeExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterGtExpression(XpathParser.GtExpressionContext ctx);
+	void enterMultiplicativeExpr(XpathParser.MultiplicativeExprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code gtExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
+	 * Exit a parse tree produced by {@link XpathParser#multiplicativeExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitGtExpression(XpathParser.GtExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ltEqExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterLtEqExpression(XpathParser.LtEqExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ltEqExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitLtEqExpression(XpathParser.LtEqExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code gtEqExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterGtEqExpression(XpathParser.GtEqExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code gtEqExpression}
-	 * labeled alternative in {@link XpathParser#relationalExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitGtEqExpression(XpathParser.GtEqExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code addExpression}
-	 * labeled alternative in {@link XpathParser#additiveExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterAddExpression(XpathParser.AddExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code addExpression}
-	 * labeled alternative in {@link XpathParser#additiveExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitAddExpression(XpathParser.AddExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code subtractExpression}
-	 * labeled alternative in {@link XpathParser#additiveExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterSubtractExpression(XpathParser.SubtractExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code subtractExpression}
-	 * labeled alternative in {@link XpathParser#additiveExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitSubtractExpression(XpathParser.SubtractExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code multiplyExpression}
-	 * labeled alternative in {@link XpathParser#multiplicativeExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterMultiplyExpression(XpathParser.MultiplyExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code multiplyExpression}
-	 * labeled alternative in {@link XpathParser#multiplicativeExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitMultiplyExpression(XpathParser.MultiplyExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code divideExpression}
-	 * labeled alternative in {@link XpathParser#multiplicativeExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterDivideExpression(XpathParser.DivideExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code divideExpression}
-	 * labeled alternative in {@link XpathParser#multiplicativeExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitDivideExpression(XpathParser.DivideExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code modulusExpression}
-	 * labeled alternative in {@link XpathParser#multiplicativeExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterModulusExpression(XpathParser.ModulusExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code modulusExpression}
-	 * labeled alternative in {@link XpathParser#multiplicativeExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitModulusExpression(XpathParser.ModulusExpressionContext ctx);
+	void exitMultiplicativeExpr(XpathParser.MultiplicativeExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link XpathParser#unaryExprNoRoot}.
 	 * @param ctx the parse tree

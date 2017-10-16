@@ -1,4 +1,4 @@
-// Generated from D:/CODE/OSS/JsoupXpath/src/main/resources/dsl\Xpath.g4 by ANTLR 4.7
+// Generated from D:/CODE/JAVA/JsoupXpath/src/main/resources/dsl\Xpath.g4 by ANTLR 4.7
 package org.seimicrawler.xpath.antlr;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

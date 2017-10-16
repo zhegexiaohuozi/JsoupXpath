@@ -1,4 +1,4 @@
-// Generated from D:/CODE/OSS/JsoupXpath/src/main/resources/dsl\Xpath.g4 by ANTLR 4.7
+// Generated from D:/CODE/JAVA/JsoupXpath/src/main/resources/dsl\Xpath.g4 by ANTLR 4.7
 package org.seimicrawler.xpath.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -220,133 +220,49 @@ public class XpathBaseListener implements XpathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEqExpression(XpathParser.EqExpressionContext ctx) { }
+	@Override public void enterEqualityExpr(XpathParser.EqualityExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEqExpression(XpathParser.EqExpressionContext ctx) { }
+	@Override public void exitEqualityExpr(XpathParser.EqualityExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNotEqExpression(XpathParser.NotEqExpressionContext ctx) { }
+	@Override public void enterRelationalExpr(XpathParser.RelationalExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNotEqExpression(XpathParser.NotEqExpressionContext ctx) { }
+	@Override public void exitRelationalExpr(XpathParser.RelationalExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLtExpression(XpathParser.LtExpressionContext ctx) { }
+	@Override public void enterAdditiveExpr(XpathParser.AdditiveExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLtExpression(XpathParser.LtExpressionContext ctx) { }
+	@Override public void exitAdditiveExpr(XpathParser.AdditiveExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGtExpression(XpathParser.GtExpressionContext ctx) { }
+	@Override public void enterMultiplicativeExpr(XpathParser.MultiplicativeExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGtExpression(XpathParser.GtExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLtEqExpression(XpathParser.LtEqExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLtEqExpression(XpathParser.LtEqExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterGtEqExpression(XpathParser.GtEqExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitGtEqExpression(XpathParser.GtEqExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAddExpression(XpathParser.AddExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAddExpression(XpathParser.AddExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSubtractExpression(XpathParser.SubtractExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSubtractExpression(XpathParser.SubtractExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMultiplyExpression(XpathParser.MultiplyExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMultiplyExpression(XpathParser.MultiplyExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDivideExpression(XpathParser.DivideExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDivideExpression(XpathParser.DivideExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterModulusExpression(XpathParser.ModulusExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitModulusExpression(XpathParser.ModulusExpressionContext ctx) { }
+	@Override public void exitMultiplicativeExpr(XpathParser.MultiplicativeExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
