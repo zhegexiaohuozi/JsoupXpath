@@ -20,13 +20,16 @@ Do with this code as you will.
     Ported to Antlr4 by Tom Everett <tom@khubla.com>
 */
 /**
-操作符额外扩展：
+操作符扩展：
 
 a^=b 字符串a以字符串b开头 a startwith b
 a*=b a包含b, a contains b
 a$=b a以b结尾 a endwith b
 a~=b a的内容符合 正则表达式b
 a!~b a的内容不符合 正则表达式b
+
+轴扩展：
+
 
 */
 
@@ -86,7 +89,7 @@ functionCall
   ;
 
 unionExprNoRoot
-  :  pathExprNoRoot ('|' unionExprNoRoot)?
+  :  pathExprNoRoot (op='|' unionExprNoRoot)?
   |  '/' '|' unionExprNoRoot
   ;
 
@@ -110,20 +113,20 @@ equalityExpr
   ;
 
 relationalExpr
-  :  additiveExpr (op=('<'|'>'|'<='|'>=') additiveExpr)*
+  :  additiveExpr (op=(LESS|MORE_|LESS|GE|START_WITH|END_WITH|CONTAIN_WITH|REGEXP_WITH|REGEXP_NOT_WITH) additiveExpr)*
   ;
 
 additiveExpr
-  :  multiplicativeExpr (op=('+'|'-') multiplicativeExpr)*
+  :  multiplicativeExpr (op=(PLUS|MINUS) multiplicativeExpr)*
   ;
 
 multiplicativeExpr
-  :  unaryExprNoRoot (op=('*'|'`div`'|'`mod`') multiplicativeExpr)?
-  |  '/' (op=('`div`'|'`mod`') multiplicativeExpr)?
+  :  unaryExprNoRoot (op=(MUL|DIVISION|MODULO) multiplicativeExpr)?
+//  |  '/' (op=('`div`'|'`mod`') multiplicativeExpr)?
   ;
 
 unaryExprNoRoot
-  :  '-'* unionExprNoRoot
+  :  (sign=MINUS)? unionExprNoRoot
   ;
 
 qName  :  nCName (':' nCName)?
@@ -151,6 +154,7 @@ NodeType:  'comment'
   |  'processing-instruction'
   |  'node'
   |  'num'                                              //自定义
+  |  'allText'                                              //自定义
   ;
   
 Number  :  Digits ('.' Digits?)?
@@ -197,6 +201,10 @@ AxisName:  'ancestor'
        :  '.';
   MUL   
        : '*';
+  DIVISION
+       : '`div`';
+  MODULO
+       : '`mod`';
   DOTDOT   
        :  '..';
   AT   
