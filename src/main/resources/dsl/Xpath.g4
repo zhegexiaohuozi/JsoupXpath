@@ -154,7 +154,7 @@ NodeType:  'comment'
   |  'processing-instruction'
   |  'node'
   |  'num'                                              //自定义
-  |  'allText'                                              //自定义
+  |  'allText'                                          //自定义
   ;
   
 Number  :  Digits ('.' Digits?)?
