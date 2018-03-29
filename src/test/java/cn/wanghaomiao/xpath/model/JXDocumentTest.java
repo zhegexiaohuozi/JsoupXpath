@@ -77,6 +77,8 @@ public class JXDocumentTest {
             "//ul[@class='subject-list']/li[first()]/div/h2/allText()",
             "//ul[@class='subject-list']/li[./div/div/span[@class='pl']/num()>10000]/div/h2/allText()", //查找评论大于10000的条目（当然只是为了演示复杂xpath了，谓语中可以各种嵌套，这样才能测试的更全面）
             "//ul[@class='subject-list']/li[self::li/div/div/span[@class='pl']/num()>10000]/div/h2/allText()",
+            "//ul[@class='subject-list']/li[contains(self::li/div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",
+            "//ul[@class='subject-list']/li[contains(./div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",
             "//*[@id='content']/div/div[1]/ul/li[14]/div[2]/h2/a/text()" //chrome拷贝
     })
     public void testXpath(String xpath) throws XpathSyntaxErrorException {
