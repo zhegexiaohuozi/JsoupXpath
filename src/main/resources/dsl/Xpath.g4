@@ -21,15 +21,15 @@ Do with this code as you will.
 */
 /**
 操作符扩展：
-
-a^=b 字符串a以字符串b开头 a startwith b
-a*=b a包含b, a contains b
-a$=b a以b结尾 a endwith b
-a~=b a的内容符合 正则表达式b
-a!~b a的内容不符合 正则表达式b
+    a^=b 字符串a以字符串b开头 a startwith b
+    a*=b a包含b, a contains b
+    a$=b a以b结尾 a endwith b
+    a~=b a的内容符合 正则表达式b
+    a!~b a的内容不符合 正则表达式b
 
 轴扩展：
-
+    following-sibling-one
+    preceding-sibling-one
 
 */
 
@@ -178,6 +178,8 @@ AxisName:  'ancestor'
   |  'preceding'
   |  'preceding-sibling'
   |  'self'
+  |  'following-sibling-one'
+  |  'preceding-sibling-one'
   ;
 
 
