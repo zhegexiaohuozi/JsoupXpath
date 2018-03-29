@@ -36,7 +36,7 @@ Do with this code as you will.
 main  :  expr
   ;
 
-locationPath 
+locationPath
   :  relativeLocationPath
   |  absoluteLocationPathNoroot
   ;
@@ -80,7 +80,7 @@ primaryExpr
   :  variableReference
   |  '(' expr ')'
   |  Literal
-  |  Number  
+  |  Number
   |  functionCall
   ;
 
@@ -156,7 +156,7 @@ NodeType:  'comment'
   |  'num'                                              //自定义
   |  'allText'                                          //自定义
   ;
-  
+
 Number  :  Digits ('.' Digits?)?
   |  '.' Digits
   ;

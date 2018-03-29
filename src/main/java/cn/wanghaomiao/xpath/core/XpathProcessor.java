@@ -15,9 +15,11 @@ import cn.wanghaomiao.xpath.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.Stack;
 
 import static cn.wanghaomiao.xpath.antlr.XpathParser.*;
@@ -49,10 +51,10 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
     @Override
     public XValue visitAbsoluteLocationPathNoroot(XpathParser.AbsoluteLocationPathNorootContext ctx) {
         // '//'
-        if (ctx.op.getType() == XpathParser.ABRPATH){
+        if (Objects.equals(ctx.op.getText(),"//")){
             currentScope().recursion();
         }
-        return this.visit(ctx.relativeLocationPath());
+        return visit(ctx.relativeLocationPath());
     }
 
     @Override
@@ -68,12 +70,6 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
             }else {
                 if ("//".equals(step.getText())){
                     currentScope().recursion();
-                }else {
-                    Elements newContext = new Elements();
-                    for (Element el:currentScope().context()){
-                           newContext.addAll(el.children());
-                    }
-                    updateCurrentContext(newContext);
                 }
             }
         }
@@ -86,9 +82,11 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
             return visit(ctx.abbreviatedStep());
         }
         boolean filterByAttr = false;
+        boolean isAxisOk = false;
         if (ctx.axisSpecifier()!=null&&!ctx.axisSpecifier().isEmpty()){
             XValue axis = visit(ctx.axisSpecifier());
             if (axis!=null){
+                isAxisOk = true;
                 if (axis.isElements()){
                     updateCurrentContext(axis.asElements());
                 }else if (axis.isAttr()){
@@ -119,10 +117,19 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                         updateCurrentContext(current.select(tagName));
                     }else {
                         Elements newContext = new Elements();
-                        for (Element e:currentScope().context()){
-                            if (e.tagName().equals(tagName)||"*".equals(tagName)){
-                                newContext.add(e);
+                        for (Element el:currentScope().context()){
+                            if (isAxisOk){
+                                if (el.nodeName().equals(tagName)||"*".equals(tagName)){
+                                    newContext.add(el);
+                                }
+                            }else {
+                                for (Element e:el.children()){
+                                    if (e.nodeName().equals(tagName)||"*".equals(tagName)){
+                                        newContext.add(e);
+                                    }
+                                }
                             }
+
                         }
                         updateCurrentContext(newContext);
                     }
@@ -144,14 +151,12 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
     @Override
     public XValue visitAbbreviatedStep(XpathParser.AbbreviatedStepContext ctx) {
         if ("..".equals(ctx.getText())){
+            Set<Element> total = new HashSet<>();
             Elements newContext = new Elements();
             for (Element e:currentScope().context()){
-                Element p = e.parent();
-                if (!newContext.contains(p)){
-                    newContext.add(p);
-                }
+                total.add(e.parent());
             }
-            updateCurrentContext(newContext);
+            newContext.addAll(total);
             return XValue.create(newContext);
         }else {
             return XValue.create(currentScope().context());
@@ -488,7 +493,9 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
         List<XValue> params = new LinkedList<>();
         XValue funcName = visit(ctx.functionName());
         for (XpathParser.ExprContext exprContext:ctx.expr()){
+            scopeStack.push(Scope.create(currentScope().context()));
             params.add(visit(exprContext));
+            scopeStack.pop();
         }
         Function function = Scanner.findFunctionByName(funcName.asString());
         return function.call(currentScope().singleEl(),params);

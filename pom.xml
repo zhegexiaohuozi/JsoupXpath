@@ -7,14 +7,13 @@
     </parent>
     <groupId>cn.wanghaomiao</groupId>
     <artifactId>JsoupXpath</artifactId>
-    <version>2.0.0</version>
+    <version>2.0-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <name>JsoupXpath</name>
     <url>https://github.com/zhegexiaohuozi/JsoupXpath</url>
     <description>
-        一个非常好用而且强大的基于xpath的html解析器，相信是目前市面上最好用的。xpath解析器与执行器完全独立，
-        html的DOM树借用Jsoup产生。
+        一个非常好用而且强大的基于xpath的html解析器。html的DOM树生成依赖Jsoup。Lexer 和 Parser基于Antlr4,支持完备的W3C XPATH 1.0标准语法，W3C规范：http://www.w3.org/TR/1999/REC-xpath-19991116。
     </description>
     <licenses>
         <license>
@@ -32,7 +31,7 @@
         <developer>
             <id>wanghaomiao.cn</id>
             <name>Haomiao Wang</name>
-            <email>et.tw@163.com</email>
+            <email>seimimaster@gmail.com</email>
         </developer>
     </developers>
     <dependencies>
