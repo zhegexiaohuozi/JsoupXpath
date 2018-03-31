@@ -30,6 +30,7 @@ Do with this code as you will.
 轴扩展：
     following-sibling-one
     preceding-sibling-one
+    sibling
 
 */
 
@@ -155,6 +156,7 @@ NodeType:  'comment'
   |  'node'
   |  'num'                                              //自定义
   |  'allText'                                          //自定义
+  |  'outerHtml'                                        //自定义
   ;
 
 Number  :  Digits ('.' Digits?)?
@@ -173,13 +175,14 @@ AxisName:  'ancestor'
   |  'descendant-or-self'
   |  'following'
   |  'following-sibling'
-  |  'namespace'
+//  |  'namespace'
   |  'parent'
   |  'preceding'
   |  'preceding-sibling'
   |  'self'
   |  'following-sibling-one'
   |  'preceding-sibling-one'
+  |  'sibling'
   ;
 
 

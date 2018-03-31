@@ -21,7 +21,7 @@ import org.jsoup.select.Elements;
 import java.util.Objects;
 
 /**
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * Date: 14-3-15
  */
 public class CommonUtil {

@@ -10,7 +10,7 @@ import java.util.List;
  * Function: number count(node-set)
  * The count function returns the number of nodes in the argument node-set.
  *
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/27.
  */
 public class Count implements Function {

@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * the preceding-sibling-one axis JsoupXpath自定义扩展，用于选取节点的前一个兄弟节点，如果存在的话。
  *
- * @author: github.com/hermitmmll
+ * @author github.com/hermitmmll
  * @since 2018/3/27.
  */
 public class PrecedingSiblingOneSelector implements AxisSelector {

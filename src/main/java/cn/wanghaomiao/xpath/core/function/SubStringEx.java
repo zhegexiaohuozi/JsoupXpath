@@ -21,14 +21,14 @@ import java.util.List;
  * StringUtils.substring("abc", -2, -1) = "b"
  * StringUtils.substring("abc", -4, 2)  = "ab"
  *
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/26.
  */
 
 public class SubStringEx implements Function {
     @Override
     public String name() {
-        return "jx:substring";
+        return "substring-ex";
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.List;
  * Function: boolean starts-with(string, string)
  *
  * The starts-with function returns true if the first argument string starts with the second argument string, and otherwise returns false.
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/26.
  */
 public class StartsWith implements Function {
