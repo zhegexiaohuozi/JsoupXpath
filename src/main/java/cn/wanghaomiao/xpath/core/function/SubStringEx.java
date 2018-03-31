@@ -1,9 +1,9 @@
 package cn.wanghaomiao.xpath.core.function;
 
 import cn.wanghaomiao.xpath.core.Function;
+import cn.wanghaomiao.xpath.core.Scope;
 import cn.wanghaomiao.xpath.core.XValue;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.nodes.Element;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class SubStringEx implements Function {
     }
 
     @Override
-    public XValue call(Element context, List<XValue> params) {
+    public XValue call(Scope scope, List<XValue> params) {
         String target = params.get(0).asString();
         int start = params.get(1).asLong().intValue();
         if (params.get(2)!=null){

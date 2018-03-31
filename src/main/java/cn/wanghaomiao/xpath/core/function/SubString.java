@@ -1,7 +1,7 @@
 package cn.wanghaomiao.xpath.core.function;
 
+import cn.wanghaomiao.xpath.core.Scope;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.nodes.Element;
 import cn.wanghaomiao.xpath.core.Function;
 import cn.wanghaomiao.xpath.core.XValue;
 
@@ -32,7 +32,7 @@ public class SubString implements Function {
     }
 
     @Override
-    public XValue call(Element context, List<XValue> params) {
+    public XValue call(Scope scope, List<XValue> params) {
         String target = params.get(0).asString();
         int start = params.get(1).asLong().intValue();
         start = Math.max(start-1,0);
