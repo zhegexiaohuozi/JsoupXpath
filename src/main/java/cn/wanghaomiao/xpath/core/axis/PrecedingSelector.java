@@ -13,7 +13,7 @@ import java.util.Set;
  * the preceding axis contains all nodes in the same document as the context node that are before the context
  * node in document order, excluding any ancestors and excluding attribute nodes and namespace nodes
  *
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/27.
  */
 public class PrecedingSelector implements AxisSelector {

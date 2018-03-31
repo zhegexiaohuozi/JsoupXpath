@@ -15,7 +15,7 @@ package cn.wanghaomiao.xpath.exception;
    limitations under the License.
  */
 /**
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * Date: 14-3-16
  */
 public class NoSuchFunctionException extends RuntimeException {

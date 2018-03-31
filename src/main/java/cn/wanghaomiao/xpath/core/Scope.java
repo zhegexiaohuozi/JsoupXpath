@@ -11,7 +11,7 @@ import cn.wanghaomiao.xpath.exception.XpathParserException;
 public class Scope {
     private Elements context;
     private boolean isRecursion = false;
-
+    private Scope parent;
 
     private Scope(Elements context){
         super();
@@ -33,7 +33,16 @@ public class Scope {
     }
 
     public static Scope create(Scope scope){
-        return new Scope(scope.context());
+        return  new Scope(scope.context()).setParent(scope);
+    }
+
+    public Scope setParent(Scope scope){
+        this.parent = scope;
+        return this;
+    }
+
+    public Scope getParent() {
+        return parent;
     }
 
     public void setContext(Elements context) {

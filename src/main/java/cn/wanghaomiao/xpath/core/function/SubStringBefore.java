@@ -1,7 +1,7 @@
 package cn.wanghaomiao.xpath.core.function;
 
+import cn.wanghaomiao.xpath.core.Scope;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.nodes.Element;
 import cn.wanghaomiao.xpath.core.Function;
 import cn.wanghaomiao.xpath.core.XValue;
 
@@ -15,7 +15,7 @@ import java.util.List;
  *  if the first argument string does not contain the second argument string.
  *  For example, substring-before("1999/04/01","/") returns 1999.
  *
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/26.
  */
 public class SubStringBefore implements Function{
@@ -25,7 +25,7 @@ public class SubStringBefore implements Function{
     }
 
     @Override
-    public XValue call(Element context, List<XValue> params) {
+    public XValue call(Scope scope, List<XValue> params) {
         String target = params.get(0).asString();
         String sep = params.get(1).asString();
         return XValue.create(StringUtils.substringBefore(target,sep));

@@ -6,7 +6,7 @@ import cn.wanghaomiao.xpath.core.XValue;
 
 /**
  * the self axis contains just the context node itself
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/2/28.
  */
 public class SelfSelector implements AxisSelector {

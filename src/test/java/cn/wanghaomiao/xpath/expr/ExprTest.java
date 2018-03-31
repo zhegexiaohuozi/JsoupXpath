@@ -44,6 +44,9 @@ public class ExprTest extends BaseTest {
 //        CharStream input = CharStreams.fromString("//ul[@class='subject-list']/li[./div/div/span[@class='pl']/num()>10000]/div[@class='info']/h2/allText()");
 //        CharStream input = CharStreams.fromString("//ul[@class='subject-list']/li[contains(self::li/div/div/span[@class='pl']//text(),'14582')]/div/h2//text()");
         CharStream input = CharStreams.fromString("//ul[@class='subject-list']/li[contains(./div/div/span[@class='pl']//text(),'14582')]/div/h2//text()");
+//        CharStream input = CharStreams.fromString("//*[@id=\"subject_list\"]/ul/li[2]/div[2]/h2/a//text()");
+//        CharStream input = CharStreams.fromString("//*[contains(@id,\"subject_\")]/ul/li[2]/div[2]/h2/a//text()");
+//        CharStream input = CharStreams.fromString("//*[contains(@id,\"subject_\")]/ul/li[2]/div[2]/h2/a//text()");
         XpathLexer lexer = new XpathLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         XpathParser parser = new XpathParser(tokens);

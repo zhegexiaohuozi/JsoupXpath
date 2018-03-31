@@ -1,6 +1,6 @@
 package cn.wanghaomiao.xpath.core.function;
 
-import org.jsoup.nodes.Element;
+import cn.wanghaomiao.xpath.core.Scope;
 import cn.wanghaomiao.xpath.core.Function;
 import cn.wanghaomiao.xpath.core.XValue;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * Function: boolean contains(string, string)
  *
  * The contains function returns true if the first argument string contains the second argument string, and otherwise returns false.
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/26.
  */
 public class Contains implements Function {
@@ -20,7 +20,7 @@ public class Contains implements Function {
     }
 
     @Override
-    public XValue call(Element context, List<XValue> params) {
+    public XValue call(Scope scope, List<XValue> params) {
         String first = params.get(0).asString();
         String second = params.get(1).asString();
         return XValue.create(first.contains(second));

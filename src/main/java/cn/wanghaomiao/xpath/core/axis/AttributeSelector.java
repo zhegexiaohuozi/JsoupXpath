@@ -6,7 +6,7 @@ import org.jsoup.select.Elements;
 
 /**
  * the attribute axis contains the attributes of the context node; the axis will be empty unless the context node is an element
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/26.
  */
 public class AttributeSelector implements AxisSelector{
