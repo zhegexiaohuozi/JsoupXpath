@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk7
+  - oraclejdk8
 notification:
   email:
     recipients:
@@ -14,11 +14,6 @@ after_success:
 branches:
   only:
     - master
-
-env:
-  global:
-     - secure: ""
-     - "MAVEN_OPTS=-Xms1024m -Xmx3072m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m"
 
 addons:
   coverity_scan:
