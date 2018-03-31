@@ -9,7 +9,7 @@ notification:
     on_failure: always
 
 after_success:
-  - mvn clean test
+  - mvn clean compile test
 
 branches:
   only:
