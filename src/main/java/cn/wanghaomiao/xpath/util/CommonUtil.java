@@ -1,6 +1,6 @@
 package cn.wanghaomiao.xpath.util;
 /*
-   Copyright 2014 Wang Haomiao<et.tw@163.com>
+   Copyright 2014 Wang Haomiao<seimimaster@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
- * @author: 汪浩淼 [ et.tw@163.com ]
+ * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
  * Date: 14-3-15
  */
 public class CommonUtil {
@@ -63,5 +63,31 @@ public class CommonUtil {
     public static int sameTagElNums(Element e){
         Elements els = e.parent().getElementsByTag(e.tagName());
         return els.size();
+    }
+
+    public static Elements followingSibling(Element el){
+        Elements rs = new Elements();
+        Element tmp = el.nextElementSibling();
+        while (tmp!=null){
+            rs.add(tmp);
+            tmp = tmp.nextElementSibling();
+        }
+        if (rs.size() > 0){
+            return rs;
+        }
+        return null;
+    }
+
+    public static Elements precedingSibling(Element el){
+        Elements rs = new Elements();
+        Element tmp = el.previousElementSibling();
+        while (tmp!=null){
+            rs.add(tmp);
+            tmp = tmp.previousElementSibling();
+        }
+        if (rs.size() > 0){
+            return rs;
+        }
+        return null;
     }
 }

@@ -7,14 +7,13 @@
     </parent>
     <groupId>cn.wanghaomiao</groupId>
     <artifactId>JsoupXpath</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>2.0-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <name>JsoupXpath</name>
     <url>https://github.com/zhegexiaohuozi/JsoupXpath</url>
     <description>
-        一个非常好用而且强大的基于xpath的html解析器，相信是目前市面上最好用的。xpath解析器与执行器完全独立，
-        html的DOM树借用Jsoup产生。
+        一个非常好用而且强大的基于xpath的html解析器。html的DOM树生成依赖Jsoup。Lexer 和 Parser基于Antlr4,支持完备的W3C XPATH 1.0标准语法，W3C规范：http://www.w3.org/TR/1999/REC-xpath-19991116。
     </description>
     <licenses>
         <license>
@@ -32,19 +31,45 @@
         <developer>
             <id>wanghaomiao.cn</id>
             <name>Haomiao Wang</name>
-            <email>et.tw@163.com</email>
+            <email>seimimaster@gmail.com</email>
         </developer>
     </developers>
     <dependencies>
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.7.2</version>
+            <version>1.10.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <!-- test -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
@@ -73,8 +98,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -87,5 +112,23 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.html</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.html</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 </project>

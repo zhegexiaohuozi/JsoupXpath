@@ -1,6 +1,6 @@
 package cn.wanghaomiao.xpath.exception;
 /*
-   Copyright 2014 Wang Haomiao<et.tw@163.com>
+   Copyright 2014 Wang Haomiao<seimimaster@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@ package cn.wanghaomiao.xpath.exception;
    limitations under the License.
  */
 /**
- * @author: 汪浩淼 [ et.tw@163.com ]
+ * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
  * Date: 14-3-16
  */
-public class NoSuchFunctionException extends Exception {
+public class NoSuchFunctionException extends RuntimeException {
     public NoSuchFunctionException(String msg){
         super(msg);
     }

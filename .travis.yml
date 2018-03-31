@@ -1,0 +1,35 @@
+language: java
+jdk:
+  - oraclejdk7
+notification:
+  email:
+    recipients:
+      - seimimaster@gmail.com
+    on_success: always
+    on_failure: always
+
+after_success:
+  - mvn clean test
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+     - secure: ""
+     - "MAVEN_OPTS=-Xms1024m -Xmx3072m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m"
+
+addons:
+  coverity_scan:
+    project:
+      name: "zhegexiaohuozi/JsoupXpath"
+      description: "Build submitted via Travis CI"
+    notification_email: seimimaster@gmail.com
+    build_command_prepend: "mvn clean"
+    build_command: "mvn -DskipTests=true compile"
+    branch_pattern: master
+
+cache:
+  directories:
+    - $HOME/.m2
