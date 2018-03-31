@@ -1,7 +1,5 @@
 package cn.wanghaomiao.xpath.core;
 
-import org.jsoup.nodes.Element;
-
 import java.util.List;
 
 /**
@@ -10,5 +8,5 @@ import java.util.List;
  */
 public interface Function {
     String name();
-    XValue call(Element context, List<XValue> params);
+    XValue call(Scope scope, List<XValue> params);
 }

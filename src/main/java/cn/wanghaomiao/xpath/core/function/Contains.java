@@ -1,6 +1,6 @@
 package cn.wanghaomiao.xpath.core.function;
 
-import org.jsoup.nodes.Element;
+import cn.wanghaomiao.xpath.core.Scope;
 import cn.wanghaomiao.xpath.core.Function;
 import cn.wanghaomiao.xpath.core.XValue;
 
@@ -20,7 +20,7 @@ public class Contains implements Function {
     }
 
     @Override
-    public XValue call(Element context, List<XValue> params) {
+    public XValue call(Scope scope, List<XValue> params) {
         String first = params.get(0).asString();
         String second = params.get(1).asString();
         return XValue.create(first.contains(second));

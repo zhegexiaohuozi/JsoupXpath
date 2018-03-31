@@ -1,6 +1,6 @@
 package cn.wanghaomiao.xpath.core.function;
 
-import org.jsoup.nodes.Element;
+import cn.wanghaomiao.xpath.core.Scope;
 import cn.wanghaomiao.xpath.core.Function;
 import cn.wanghaomiao.xpath.core.XValue;
 import cn.wanghaomiao.xpath.util.CommonUtil;
@@ -22,7 +22,7 @@ public class Position implements Function {
     }
 
     @Override
-    public XValue call(Element context, List<XValue> params) {
-        return XValue.create(CommonUtil.getElIndexInSameTags(context));
+    public XValue call(Scope scope, List<XValue> params) {
+        return XValue.create(CommonUtil.getIndexInContext(scope.singleEl(),scope.getParent().context()));
     }
 }
