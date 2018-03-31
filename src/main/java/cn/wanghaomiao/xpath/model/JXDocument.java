@@ -1,13 +1,26 @@
 package cn.wanghaomiao.xpath.model;
+
+import cn.wanghaomiao.xpath.antlr.XpathLexer;
+import cn.wanghaomiao.xpath.antlr.XpathParser;
+import cn.wanghaomiao.xpath.core.XValue;
+import cn.wanghaomiao.xpath.core.XpathProcessor;
+import cn.wanghaomiao.xpath.exception.DoFailOnErrorHandler;
+import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
 /*
-   Copyright 2014 Wang Haomiao<et.tw@163.com>
+   Copyright 2014 Wang Haomiao<seimimaster@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -21,17 +34,12 @@ import org.jsoup.select.Elements;
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-import cn.wanghaomiao.xpath.core.XpathEvaluator;
-import cn.wanghaomiao.xpath.exception.NoSuchAxisException;
-import cn.wanghaomiao.xpath.exception.NoSuchFunctionException;
-import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 
 /**
- * @author github.com/zhegexiaohuozi [seimimaster@gmail.com]
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  */
 public class JXDocument {
     private Elements elements;
-    private XpathEvaluator xpathEva = new XpathEvaluator();
     public JXDocument(Document doc){
         elements = doc.children();
     }
@@ -43,36 +51,42 @@ public class JXDocument {
     }
     
     public List<Object> sel(String xpath) throws XpathSyntaxErrorException {
-        List<Object> res = new LinkedList<Object>();
-        try {
-             List<JXNode> jns = xpathEva.xpathParser(xpath,elements);
-             for (JXNode j:jns){
-                 if (j.isText()){
-                     res.add(j.getTextVal());
-                 }else {
-                     res.add(j.getElement());
-                 }
-             }
-        } catch (Exception e){
-            String msg = "please check the xpath syntax";
-            if (e instanceof NoSuchAxisException||e instanceof NoSuchFunctionException){
-                msg = e.getMessage();
+        List<Object> res = new LinkedList<>();
+        for (JXNode node:selN(xpath)){
+            if (node.isText()){
+                res.add(node.getTextVal());
+            }else {
+                res.add(node.getElement());
             }
-            throw new XpathSyntaxErrorException(msg);
         }
         return res;
     }
 
     public List<JXNode> selN(String xpath) throws XpathSyntaxErrorException{
+        List<JXNode> finalRes = new LinkedList<>();
         try {
-            return xpathEva.xpathParser(xpath,elements);
-        }catch (Exception e){
-            String msg = "please check the xpath syntax";
-            if (e instanceof NoSuchAxisException||e instanceof NoSuchFunctionException){
-                msg = e.getMessage();
+            CharStream input = CharStreams.fromString(xpath);
+            XpathLexer lexer = new XpathLexer(input);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            XpathParser parser = new XpathParser(tokens);
+            parser.setErrorHandler(new DoFailOnErrorHandler());
+            ParseTree tree = parser.main();
+            XpathProcessor processor = new XpathProcessor(elements);
+            XValue calRes = processor.visit(tree);
+            if (calRes.isElements()){
+                for (Element el:calRes.asElements()){
+                    finalRes.add(JXNode.e(el));
+                }
+            }else if (calRes.isList()){
+                for (String str:calRes.asList()){
+                    finalRes.add(JXNode.t(str));
+                }
             }
-            throw new XpathSyntaxErrorException(msg);
+        } catch (Exception e){
+            String msg = "Please check the syntax of your xpath expr, ";
+            throw new XpathSyntaxErrorException(msg+ExceptionUtils.getRootCauseMessage(e),e);
         }
+        return finalRes;
     }
     
     public Object selOne(String xpath) throws XpathSyntaxErrorException {

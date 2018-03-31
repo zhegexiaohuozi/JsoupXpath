@@ -17,7 +17,8 @@ branches:
 
 env:
   global:
-   - "MAVEN_OPTS=-Xms1024m -Xmx3072m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m"
+     - secure: ""
+     - "MAVEN_OPTS=-Xms1024m -Xmx3072m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m"
 
 addons:
   coverity_scan:
@@ -31,4 +32,4 @@ addons:
 
 cache:
   directories:
-  - $HOME/.m2
+    - $HOME/.m2
