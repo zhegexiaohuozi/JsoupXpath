@@ -15,7 +15,7 @@ import java.util.List;
  *  if the first argument string does not contain the second argument string.
  *  For example, substring-before("1999/04/01","/") returns 1999.
  *
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/26.
  */
 public class SubStringBefore implements Function{

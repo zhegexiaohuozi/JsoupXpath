@@ -13,7 +13,7 @@ import java.util.Set;
  * the following-sibling axis contains all the following siblings of the context node; if the context node is an
  * attribute node or namespace node, the following-sibling axis is empty
  *
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/27.
  */
 public class FollowingSiblingSelector implements AxisSelector {

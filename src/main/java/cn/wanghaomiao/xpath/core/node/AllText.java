@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * 获取当前节点下以及所有子孙节点中纯文本
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/26.
  */
 public class AllText implements NodeTest{

@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 /**
  * 提取自由文本中的数字，返回double
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/26.
  */
 public class Num implements NodeTest {
