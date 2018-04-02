@@ -74,6 +74,7 @@ for (Object o:rs){
 多数情况下是不建议直接粘贴Firefox或chrome里生成的Xpath，这些浏览器在渲染页面会根据标准自动补全一些标签，如table标签会自动加上tbody标签，这样生成的Xpath路径显然不是最通用的，所以很可能就取不到值。所以，要使用Xpath并感受Xpath的强大以及他所带来便捷与优雅最好就是学习下Xpath的标准语法，这样应对各种问题才能游刃有余，享受Xpath的真正威力！
 
 ## 函数 ##
+
 - `int position()` 返回当前节点在当前上下文中的位置
 - `int last()` 返回同级节点中的最后那个节点位置
 - `int first()` 返回同级节点中的第一个节点位置
@@ -90,6 +91,8 @@ for (Object o:rs){
 - `string substring-ex(string, number, number)` 第一个参数指定字符串，第二个指定起始位置(java里的习惯从0开始)，第三个结束的位置（支持负数），这个是JsoupXpath扩展的函数，方便java习惯的开发者使用。
 - `string substring-after(string, string)` 在第一个字符串中截取第二个字符串之后的部分
 - `string substring-before(string, string)` 在第一个字符串中截取第二个字符串之前的部分
+
+以上只是Xpath1.0标准中的函数，开发亦可以方便快捷的添加自定义函数，只需实现 `cn.wanghaomiao.xpath.core.Function.java`接口并且包路径为`package cn.wanghaomiao.xpath.core.function;`即可，不需要修改语法范式，JsoupXpath运行时即可自动识别并加载。
 
 ### NodeTest ###
 - `allText()`提取节点下全部文本，取代类似 `//div/h3//text()`这种递归取文本用法
