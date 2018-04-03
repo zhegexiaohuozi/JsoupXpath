@@ -17,7 +17,9 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * JXDocument Tester.
@@ -108,24 +110,36 @@ public class JXDocumentTest {
             String res = StringUtils.join(rs,"");
             logger.info(res);
             Assert.assertEquals(expect,res);
-        }else {
-            logger.info(" -- ");
+        }else if (expect instanceof Number){
+            long size = (long) expect;
+            Assert.assertTrue(rs.size() == size);
         }
-
     }
 
     @Test
     @DataProvider(value = {
-            "//ul[@class='subject-list']/li"
+            "//ul[@class='subject-list']/li[position()<3]"
     })
     public void testJXNode(String xpath) throws XpathSyntaxErrorException {
         logger.info("current xpath: {}" , xpath);
         List<JXNode> jxNodeList = doubanTest.selN(xpath);
+        Set<String> expect = new HashSet<>();
+        //第一个 ul 中的
+        expect.add("失控 : 全人类的最终命运和结局");
+        expect.add("黑客与画家 : 硅谷创业之父Paul Graham文集");
+        //第二个 ul 中的
+        expect.add("T2-失控 : 全人类的最终命运和结局");
+        expect.add("T2-黑客与画家 : 硅谷创业之父Paul Graham文集");
+
+        Set<String> res = new HashSet<>();
         for (JXNode node : jxNodeList) {
             if (!node.isText()) {
-                logger.info(StringUtils.join(node.sel("/div/h2/a/text()"), ""));
+                String currentRes = StringUtils.join(node.sel("/div/h2/a//text()"), "");
+                logger.info(currentRes);
+                res.add(currentRes);
             }
         }
+        Assert.assertTrue(expect.equals(res));
     }
 
     @Test
@@ -136,6 +150,8 @@ public class JXDocumentTest {
         logger.info("current xpath: {}" , xpath);
         List<JXNode> jxNodeList = doubanTest.selN(xpath);
         logger.info("size = {}",jxNodeList.size());
+        // 有两个ul，下面的是为了测试特意复制添加的
+        Assert.assertTrue(jxNodeList.size() == 2);
     }
 
     @Test
