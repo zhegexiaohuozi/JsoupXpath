@@ -89,13 +89,13 @@ public class JXDocumentTest {
     @DataProvider
     public static Object[][] dataOfXpathAndexpect() {
         return new Object[][] {
-                { "//ul[@class='subject-list']/li[position()<3][last()]/div/h2/allText()", "黑客与画家 : 硅谷创业之父Paul Graham文集" },
-                { "//ul[@class='subject-list']/li[first()]/div/h2/allText()", "失控 : 全人类的最终命运和结局" },
-                { "//ul[@class='subject-list']/li[./div/div/span[@class='pl']/num()>10000][last()]/div/h2/allText()", "长尾理论" },
-                { "//ul[@class='subject-list']/li[self::li/div/div/span[@class='pl']/num()>10000][-1]/div/h2/allText()",   "长尾理论" },
-                { "//ul[@class='subject-list']/li[contains(self::li/div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集" },
-                { "//ul[@class='subject-list']/li[contains(./div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集" },
-                { "//*[@id=\"subject_list\"]/ul/li[2]/div[2]/h2/a//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集" },
+                { "//ul[@class='subject-list']/li[position()<3][last()]/div/h2/allText()", "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
+                { "//ul[@class='subject-list']/li[first()]/div/h2/allText()", "失控 : 全人类的最终命运和结局T2-失控 : 全人类的最终命运和结局" },
+                { "//ul[@class='subject-list']/li[./div/div/span[@class='pl']/num()>10000][last()][1]/div/h2/allText()", "长尾理论长尾理论" },
+                { "//ul[@class='subject-list']/li[self::li/div/div/span[@class='pl']/num()>10000][-1]/div/h2/allText()",   "长尾理论长尾理论" },
+                { "//ul[@class='subject-list']/li[contains(self::li/div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
+                { "//ul[@class='subject-list']/li[contains(./div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
+                { "//*[@id=\"subject_list\"]/ul/li[2]/div[2]/h2/a//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
         };
     }
 
@@ -140,7 +140,8 @@ public class JXDocumentTest {
 
     @Test
     public void testAs() throws XpathSyntaxErrorException {
-        List<JXNode> jxNodeList = custom.selN("//b[text()='性别：']/parent::*/text()");
+        List<JXNode> jxNodeList = custom.selN("//b[contains(text(),'性别')]/parent::*/text()");
+        Assert.assertEquals("男",StringUtils.join(jxNodeList,""));
         for (JXNode jxNode : jxNodeList) {
             logger.info(jxNode.getTextVal());
         }

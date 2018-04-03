@@ -23,6 +23,6 @@ public class Position implements Function {
 
     @Override
     public XValue call(Scope scope, List<XValue> params) {
-        return XValue.create(CommonUtil.getIndexInContext(scope.singleEl(),scope.getParent().context()));
+        return XValue.create(CommonUtil.getElIndexInSameTags(scope.singleEl(),scope.getParent()));
     }
 }

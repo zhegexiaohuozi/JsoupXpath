@@ -4,6 +4,7 @@ import cn.wanghaomiao.xpath.antlr.XpathBaseVisitor;
 import cn.wanghaomiao.xpath.antlr.XpathParser;
 import cn.wanghaomiao.xpath.exception.XpathMergeValueException;
 import cn.wanghaomiao.xpath.exception.XpathParserException;
+import cn.wanghaomiao.xpath.util.CommonUtil;
 import cn.wanghaomiao.xpath.util.Scanner;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -66,6 +67,8 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
             }else {
                 if ("//".equals(step.getText())){
                     currentScope().recursion();
+                }else {
+                    currentScope().notRecursion();
                 }
             }
         }
@@ -190,17 +193,16 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
     @Override
     public XValue visitPredicate(XpathParser.PredicateContext ctx) {
         Elements newContext = new Elements();
-        for (int i=0;i<currentScope().context().size();i++){
-            Element e = currentScope().context().get(i);
+        for (Element e:currentScope().context()){
             scopeStack.push(Scope.create(e).setParent(currentScope()));
             XValue exprVal = visit(ctx.expr());
             scopeStack.pop();
             if (exprVal.isNumber()){
                 long index = exprVal.asLong();
                 if (index < 0){
-                    index = currentScope().context().size() + index + 1;
+                    index = CommonUtil.sameTagElNums(e,currentScope()) + index + 1;
                 }
-                if (index == i+1){
+                if (index == CommonUtil.getElIndexInSameTags(e,currentScope())){
                     newContext.add(e);
                 }
             }else if (exprVal.isBoolean()){
