@@ -1,8 +1,8 @@
 package cn.wanghaomiao.xpath.core.function;
 
 import cn.wanghaomiao.xpath.core.Function;
+import cn.wanghaomiao.xpath.core.Scope;
 import cn.wanghaomiao.xpath.core.XValue;
-import org.jsoup.nodes.Element;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class First implements Function {
     }
 
     @Override
-    public XValue call(Element context, List<XValue> params) {
+    public XValue call(Scope scope, List<XValue> params) {
         return XValue.create(1);
     }
 }

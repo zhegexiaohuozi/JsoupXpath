@@ -1,9 +1,8 @@
 package cn.wanghaomiao.xpath.core.function;
 
 import cn.wanghaomiao.xpath.core.Function;
+import cn.wanghaomiao.xpath.core.Scope;
 import cn.wanghaomiao.xpath.core.XValue;
-import cn.wanghaomiao.xpath.util.CommonUtil;
-import org.jsoup.nodes.Element;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * e.g.
  *    para[last()] selects the last para child of the context node
  *
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/27.
  */
 public class Last implements Function {
@@ -23,7 +22,7 @@ public class Last implements Function {
     }
 
     @Override
-    public XValue call(Element context, List<XValue> params) {
-        return XValue.create(CommonUtil.getElIndexInSameTags(context));
+    public XValue call(Scope scope, List<XValue> params) {
+        return XValue.create(-1);
     }
 }

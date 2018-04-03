@@ -5,19 +5,21 @@ import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * JXDocument Tester.
@@ -26,7 +28,6 @@ import java.util.List;
  * @version 1.0
  */
 @RunWith(DataProviderRunner.class)
-@PowerMockRunnerDelegate(DataProviderRunner.class)
 public class JXDocumentTest {
 
     private JXDocument underTest;
@@ -66,6 +67,7 @@ public class JXDocumentTest {
     public void testNotMatchFilter() throws Exception {
         String xpath = "//div[@class!~'xiao']/text()";
         List<Object> res = underTest.sel(xpath);
+        Assert.assertTrue(res.size() == 1);
         logger.info(StringUtils.join(res, ","));
     }
 
@@ -73,13 +75,6 @@ public class JXDocumentTest {
     @DataProvider(value = {
             "//a/@href",
             "//div[@class='paginator']/span[@class='next']/a/@href",
-            "//ul[@class='subject-list']/li[position()<3]/div/h2/allText()",
-            "//ul[@class='subject-list']/li[first()]/div/h2/allText()",
-            "//ul[@class='subject-list']/li[./div/div/span[@class='pl']/num()>10000]/div/h2/allText()", //查找评论大于10000的条目（当然只是为了演示复杂xpath了，谓语中可以各种嵌套，这样才能测试的更全面）
-            "//ul[@class='subject-list']/li[self::li/div/div/span[@class='pl']/num()>10000]/div/h2/allText()",
-            "//ul[@class='subject-list']/li[contains(self::li/div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",
-            "//ul[@class='subject-list']/li[contains(./div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",
-            "//*[@id='content']/div/div[1]/ul/li[14]/div[2]/h2/a/text()" //chrome拷贝
     })
     public void testXpath(String xpath) throws XpathSyntaxErrorException {
         logger.info("current xpath: {}" , xpath);
@@ -93,18 +88,58 @@ public class JXDocumentTest {
         }
     }
 
+    @DataProvider
+    public static Object[][] dataOfXpathAndexpect() {
+        return new Object[][] {
+                { "//ul[@class='subject-list']/li[position()<3][last()]/div/h2/allText()", "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
+                { "//ul[@class='subject-list']/li[first()]/div/h2/allText()", "失控 : 全人类的最终命运和结局T2-失控 : 全人类的最终命运和结局" },
+                { "//ul[@class='subject-list']/li[./div/div/span[@class='pl']/num()>10000][last()][1]/div/h2/allText()", "长尾理论长尾理论" },
+                { "//ul[@class='subject-list']/li[self::li/div/div/span[@class='pl']/num()>10000][-1]/div/h2/allText()",   "长尾理论长尾理论" },
+                { "//ul[@class='subject-list']/li[contains(self::li/div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
+                { "//ul[@class='subject-list']/li[contains(./div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
+                { "//*[@id=\"subject_list\"]/ul/li[2]/div[2]/h2/a//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
+        };
+    }
+
+    @UseDataProvider("dataOfXpathAndexpect")
+    @Test
+    public void testXpathAndAssert(String xpath,Object expect) throws XpathSyntaxErrorException {
+        logger.info("current xpath: {}" , xpath);
+        List<JXNode> rs = doubanTest.selN(xpath);
+        if (expect instanceof String){
+            String res = StringUtils.join(rs,"");
+            logger.info(res);
+            Assert.assertEquals(expect,res);
+        }else if (expect instanceof Number){
+            long size = (long) expect;
+            Assert.assertTrue(rs.size() == size);
+        }
+    }
+
     @Test
     @DataProvider(value = {
-            "//ul[@class='subject-list']/li"
+            "//ul[@class='subject-list']/li[position()<3]"
     })
     public void testJXNode(String xpath) throws XpathSyntaxErrorException {
         logger.info("current xpath: {}" , xpath);
         List<JXNode> jxNodeList = doubanTest.selN(xpath);
+        Set<String> expect = new HashSet<>();
+        //第一个 ul 中的
+        expect.add("失控 : 全人类的最终命运和结局");
+        expect.add("黑客与画家 : 硅谷创业之父Paul Graham文集");
+        //第二个 ul 中的
+        expect.add("T2-失控 : 全人类的最终命运和结局");
+        expect.add("T2-黑客与画家 : 硅谷创业之父Paul Graham文集");
+
+        Set<String> res = new HashSet<>();
         for (JXNode node : jxNodeList) {
             if (!node.isText()) {
-                logger.info(StringUtils.join(node.sel("/div/h2/a/text()"), ""));
+                String currentRes = StringUtils.join(node.sel("/div/h2/a//text()"), "");
+                logger.info(currentRes);
+                res.add(currentRes);
             }
         }
+        Assert.assertTrue(expect.equals(res));
     }
 
     @Test
@@ -115,11 +150,14 @@ public class JXDocumentTest {
         logger.info("current xpath: {}" , xpath);
         List<JXNode> jxNodeList = doubanTest.selN(xpath);
         logger.info("size = {}",jxNodeList.size());
+        // 有两个ul，下面的是为了测试特意复制添加的
+        Assert.assertTrue(jxNodeList.size() == 2);
     }
 
     @Test
     public void testAs() throws XpathSyntaxErrorException {
-        List<JXNode> jxNodeList = custom.selN("//b[text()='性别：']/parent::*/text()");
+        List<JXNode> jxNodeList = custom.selN("//b[contains(text(),'性别')]/parent::*/text()");
+        Assert.assertEquals("男",StringUtils.join(jxNodeList,""));
         for (JXNode jxNode : jxNodeList) {
             logger.info(jxNode.getTextVal());
         }

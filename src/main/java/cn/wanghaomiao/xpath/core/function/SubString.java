@@ -1,7 +1,7 @@
 package cn.wanghaomiao.xpath.core.function;
 
+import cn.wanghaomiao.xpath.core.Scope;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.nodes.Element;
 import cn.wanghaomiao.xpath.core.Function;
 import cn.wanghaomiao.xpath.core.XValue;
 
@@ -16,12 +16,12 @@ import java.util.List;
  * second argument and continuing to the end of the string. For example, substring("12345",2) returns "2345".
  *
  * substring("12345", 1.5, 2.6) returns "234"
- * substring("12345", 0 div 0, 3) returns ""
- * substring("12345", 1, 0 div 0) returns ""
- * substring("12345", -42, 1 div 0) returns "12345"
- * substring("12345", -1 div 0, 1 div 0) returns ""
+ * substring("12345", 0 `div` 0, 3) returns ""
+ * substring("12345", 1, 0 `div` 0) returns ""
+ * substring("12345", -42, 1 `div` 0) returns "12345"
+ * substring("12345", -1 `div` 0, 1 `div` 0) returns ""
  *
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/26.
  */
 
@@ -32,7 +32,7 @@ public class SubString implements Function {
     }
 
     @Override
-    public XValue call(Element context, List<XValue> params) {
+    public XValue call(Scope scope, List<XValue> params) {
         String target = params.get(0).asString();
         int start = params.get(1).asLong().intValue();
         start = Math.max(start-1,0);

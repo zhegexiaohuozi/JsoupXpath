@@ -1,19 +1,17 @@
 package cn.wanghaomiao.xpath.core;
 
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import cn.wanghaomiao.xpath.antlr.XpathBaseVisitor;
 import cn.wanghaomiao.xpath.antlr.XpathParser;
 import cn.wanghaomiao.xpath.exception.XpathMergeValueException;
 import cn.wanghaomiao.xpath.exception.XpathParserException;
 import cn.wanghaomiao.xpath.util.CommonUtil;
 import cn.wanghaomiao.xpath.util.Scanner;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNode;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -29,7 +27,6 @@ import static cn.wanghaomiao.xpath.antlr.XpathParser.*;
  * @since 2017/8/30.
  */
 public class XpathProcessor extends XpathBaseVisitor<XValue> {
-    private Logger logger = LoggerFactory.getLogger(XpathProcessor.class);
     private Stack<Scope> scopeStack = new Stack<>();
     public XpathProcessor(Elements root){
         scopeStack.push(Scope.create(root));
@@ -70,6 +67,8 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
             }else {
                 if ("//".equals(step.getText())){
                     currentScope().recursion();
+                }else {
+                    currentScope().notRecursion();
                 }
             }
         }
@@ -195,11 +194,15 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
     public XValue visitPredicate(XpathParser.PredicateContext ctx) {
         Elements newContext = new Elements();
         for (Element e:currentScope().context()){
-            scopeStack.push(Scope.create(e));
+            scopeStack.push(Scope.create(e).setParent(currentScope()));
             XValue exprVal = visit(ctx.expr());
             scopeStack.pop();
             if (exprVal.isNumber()){
-                if (CommonUtil.getElIndexInSameTags(e) == exprVal.asLong()){
+                long index = exprVal.asLong();
+                if (index < 0){
+                    index = CommonUtil.sameTagElNums(e,currentScope()) + index + 1;
+                }
+                if (index == CommonUtil.getElIndexInSameTags(e,currentScope())){
                     newContext.add(e);
                 }
             }else if (exprVal.isBoolean()){
@@ -493,12 +496,12 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
         List<XValue> params = new LinkedList<>();
         XValue funcName = visit(ctx.functionName());
         for (XpathParser.ExprContext exprContext:ctx.expr()){
-            scopeStack.push(Scope.create(currentScope().context()));
+            scopeStack.push(Scope.create(currentScope()));
             params.add(visit(exprContext));
             scopeStack.pop();
         }
         Function function = Scanner.findFunctionByName(funcName.asString());
-        return function.call(currentScope().singleEl(),params);
+        return function.call(currentScope(),params);
     }
 
     @Override

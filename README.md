@@ -1,15 +1,16 @@
 JsoupXpath
 ==========
+[![Build Status](https://img.shields.io/travis/zhegexiaohuozi/JsoupXpath.svg)](https://travis-ci.org/zhegexiaohuozi/JsoupXpath)
+[![GitHub release](https://img.shields.io/github/release/zhegexiaohuozi/JsoupXpath.svg)](https://github.com/zhegexiaohuozi/JsoupXpath/releases)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-A html parser with xpath base on Jsoup.Maybe it is the best in java,Just try it.
-
-I will write more document later...
+A html parser with xpath base on Jsoup and Antlr4.Maybe it is the best in java,Just try it.
 
 ## 简介 ##
 
 **JsoupXpath** 是一款纯Java开发的使用xpath解析html的解析器，xpath的Lexer和Parser基于Antlr4构建，html的DOM树生成采用Jsoup，故命名为JsoupXpath.
 为了在java里也享受xpath的强大与方便但又苦于找不到一款足够好用的xpath解析器，故开发了JsoupXpath。JsoupXpath的实现逻辑清晰，扩展方便，
-支持完备的W3C XPATH 1.0标准语法，W3C规范：http://www.w3.org/TR/1999/REC-xpath-19991116 
+支持完备的W3C XPATH 1.0标准语法，W3C规范：http://www.w3.org/TR/1999/REC-xpath-19991116 ，JsoupXpath语法描述文件[Xpath.g4](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/src/main/resources/dsl/Xpath.g4)
 
 ## 20180330快讯 ##
 
@@ -62,7 +63,7 @@ for (Object o:rs){
 	System.out.println(o.toString());
 }
 ```
-其他可以参考 `cn.wanghaomiao.example`包下的例子
+其他可以参考 `cn.wanghaomiao.xpath.model.JXDocumentTest`，这里有大量的测试
 
 ## 语法 ##
 
@@ -70,55 +71,99 @@ for (Object o:rs){
 
 ### 关于使用Xpath的一些注意事项 ####
 
-非常不建议直接粘贴Firefox或chrome里生成的Xpath，这些浏览器在渲染页面会根据标准自动补全一些标签，如table标签会自动加上tbody标签，这样生成的Xpath路径显然不是最通用的，所以很可能就取不到值。所以，要使用Xpath并感受Xpath的强大以及他所带来便捷与优雅最好就是学习下Xpath的标准语法，这样应对各种问题才能游刃有余，享受Xpath的真正威力！
+多数情况下是不建议直接粘贴Firefox或chrome里生成的Xpath，这些浏览器在渲染页面会根据标准自动补全一些标签，如table标签会自动加上tbody标签，这样生成的Xpath路径显然不是最通用的，所以很可能就取不到值。所以，要使用Xpath并感受Xpath的强大以及他所带来便捷与优雅最好就是学习下Xpath的标准语法，这样应对各种问题才能游刃有余，享受Xpath的真正威力！
 
 ## 函数 ##
 
-- `text()` 提取节点的自有文本
-- `node()` 提取所有节点
-- `position()` 返回当前节点所处在同胞中的位置
-- `last()` 返回同级节点中的最后那个节点
-- `first()` 返回同级节点中的第一个节点
+- `int position()` 返回当前节点在当前上下文中的位置
+- `int last()` 返回同级节点中的最后那个节点位置
+- `int first()` 返回同级节点中的第一个节点位置
+- `string concat(string, string, string*)` 连接若干字符串
+- `boolean contains(string, string)` 判断第一个字符串是否包含第二个
+- `int count(node-set)` 计算给定的节点集合中节点个数
+- `boolean starts-with(string, string)` 判断第一个字符串是否以第二个开头
+- `int string-length(string?)` 如果给定了字符串则返回字符串长度，如果没有，那么则将当前节点转为字符串并返回长度
+- `string substring(string, number, number?)` 第一个参数指定字符串，第二个指定起始位置（xpath索引都是从1开始），第三指定要截取的长度，这里要注意在xpath的语法里这，不是结束的位置。
 
-### NodeTest扩展 ###
+  substring("12345", 1.5, 2.6) returns "234"
+  substring("12345", 2, 3) returns "234"
+
+- `string substring-ex(string, number, number)` 第一个参数指定字符串，第二个指定起始位置(java里的习惯从0开始)，第三个结束的位置（支持负数），这个是JsoupXpath扩展的函数，方便java习惯的开发者使用。
+- `string substring-after(string, string)` 在第一个字符串中截取第二个字符串之后的部分
+- `string substring-before(string, string)` 在第一个字符串中截取第二个字符串之前的部分
+
+以上只是Xpath1.0标准中的函数，开发亦可以方便快捷的添加自定义函数，只需实现 `cn.wanghaomiao.xpath.core.Function.java`接口并且包路径为`package cn.wanghaomiao.xpath.core.function;`即可，不需要修改语法范式，JsoupXpath运行时即可自动识别并加载。
+
+### NodeTest ###
 - `allText()`提取节点下全部文本，取代类似 `//div/h3//text()`这种递归取文本用法
 - `html()`获取全部节点的内部的html
 - `outerHtml()`获取全部节点的 包含节点本身在内的全部html
 - `num()`抽取节点自有文本中全部数字，如果知道节点的自有文本(即非子代节点所包含的文本)中只存在一个数字，如阅读数，评论数，价格等那么直接可以直接提取此数字出来。如果有多个数字将提取第一个匹配的连续数字。
+- `text()` 提取节点的自有文本
+- `node()` 提取所有节点
 
 ## 轴 ##
-- `self` 节点自身
-- `parent` 父节点
-- `child` 直接子节点
-- `ancestor` 全部祖先节点 父亲，爷爷 ， 爷爷的父亲...
-- `ancestor-or-self`全部祖先节点和自身节点
-- `descendant` 全部子代节点 儿子，孙子，孙子的儿子...
-- `descendant-or-self` 全部子代节点和自身
-- `preceding-sibling` 节点前面的全部同胞节点
-- `following-sibling` 节点后面的全部同胞节点
-
-### 轴实用扩展 ###
-- `preceding-sibling-one` 前一个同胞节点（扩展）
-- `following-sibling-one` 返回下一个同胞节点(扩展) 语法 
-- `sibling` 全部同胞（扩展）
+```
+AxisName:  'ancestor'         //在当前上下文中节点的祖先中选择
+  |  'ancestor-or-self'       //在当前上下文中节点的祖先及包括自身中选择
+  |  'attribute'              //标记做提取节点属性运算
+  |  'child'                  //在当前上下文中节点的子节点中选择 这是xpath默认的轴，如 /div/li 就是 /div/child::li 的简写
+  |  'descendant'             //在当前上下文中节点的后代中选择
+  |  'descendant-or-self'     //在当前上下文中节点的后代包括自身中选择
+  |  'following'              //在当前上下文中节点后面的全部节点中选择
+  |  'following-sibling'      //在当前上下文中节点后面的全部同胞节点中选择
+  |  'parent'                 //在当前上下文中节点的父亲节点中选择
+  |  'preceding'              //在当前上下文中节点前面的全部节点中选择
+  |  'preceding-sibling'      //在当前上下文中节点前面的全部同胞节点中选择
+  |  'self'                   //当前上下文中选择
+  |  'following-sibling-one'  //在上下文中节点的前一个同胞节点中选择（JsoupXpath扩展）
+  |  'preceding-sibling-one'  //在上下文中节点的下一个同胞节点选择(JsoupXpath扩展)
+  |  'sibling'                //全部同胞(JsoupXpath扩展)(开发中。。。)
+  ;
+```
 
 ## 操作符 ##
 
-- `a+b` 加 返回数值结果
-- `a-b` 减 返回数值结果
-- `a=b` 判断是否相等返回Boolean
-- `a!=b` 不等于 返回Boolean
-- `a>b` 大于 返回Boolean
-- `a>=b` 大于等于 返回Boolean
-- `a<b` 小于 返回Boolean
-- `a<=b` 小于等于 返回Boolean 
-
-### 操作符扩展 ###
-- `a^=b` 字符串a以字符串b开头 a startwith b
-- `a*=b` a包含b, a contains b
-- `a$=b` a以b结尾 a endwith b
-- `a~=b` a的内容符合 正则表达式b
-- `a!~b` a的内容不符合 正则表达式b
+```
+MINUS
+       :  '-';
+  PLUS
+       :  '+';
+  DOT
+       :  '.';
+  MUL
+       : '*';
+  DIVISION
+       : '`div`';
+  MODULO
+       : '`mod`';
+  DOTDOT
+       :  '..';
+  AT
+       : '@';
+  COMMA
+       : ',';
+  PIPE
+       :  '|';
+  LESS
+       :  '<';
+  MORE_
+       :  '>';
+  LE
+       :  '<=';
+  GE
+       :  '>=';
+  START_WITH
+       :  '^=';  // `a^=b` 字符串a以字符串b开头 a startwith b  （JsoupXpath扩展）
+  END_WITH
+       :  '$=';  // `a*=b` a包含b, a contains b   （JsoupXpath扩展）
+  CONTAIN_WITH
+       :  '*=';  // a包含b, a contains b  （JsoupXpath扩展）
+  REGEXP_WITH
+       :  '~=';  // a的内容符合 正则表达式b   （JsoupXpath扩展）
+  REGEXP_NOT_WITH
+       :  '!~';  //a的内容不符合 正则表达式b   （JsoupXpath扩展）
+```
 
 
 ## 应用的项目 ##
