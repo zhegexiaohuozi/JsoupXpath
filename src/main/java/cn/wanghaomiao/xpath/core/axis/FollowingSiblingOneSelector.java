@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * the following-sibling-one JsoupXpath自定义扩展,比较常用
  *
- * @author: https://github.com/hermitmmll
+ * @author https://github.com/hermitmmll
  * @since 2018/3/27.
  */
 public class FollowingSiblingOneSelector implements AxisSelector {

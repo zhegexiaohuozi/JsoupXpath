@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Function: string concat(string, string, string*)
  * The concat function returns the concatenation of its arguments.
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/26.
  */
 public class Concat implements Function {

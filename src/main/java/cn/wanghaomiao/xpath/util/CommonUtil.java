@@ -15,20 +15,58 @@ package cn.wanghaomiao.xpath.util;
    limitations under the License.
  */
 
+import cn.wanghaomiao.xpath.core.Scope;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.Objects;
 
 /**
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * Date: 14-3-15
  */
 public class CommonUtil {
 
-    public static int getIndexInContext(Element el,Elements context){
-        for (int i = 0;i<context.size();i++){
-            Element tmp = context.get(i);
+    /**
+     * 获取同名元素在同胞中的index
+     * @param e
+     * @return
+     */
+    public static int getElIndexInSameTags(Element e,Scope scope){
+        Elements chs = e.parent().children();
+        int index = 1;
+        for (Element cur : chs) {
+            if (e.tagName().equals(cur.tagName()) && scope.context().contains(cur)) {
+                if (e.equals(cur)) {
+                    break;
+                } else {
+                    index += 1;
+                }
+            }
+        }
+        return index;
+    }
+
+
+    /**
+     * 获取同胞中同名元素的数量
+     * @param e
+     * @return
+     */
+    public static int sameTagElNums(Element e,Scope scope){
+        Elements context = new Elements();
+        Elements els = e.parent().getElementsByTag(e.tagName());
+        for (Element el:els){
+            if (scope.context().contains(el)){
+                context.add(el);
+            }
+        }
+        return context.size();
+    }
+
+    public static int getIndexInContext(Scope scope,Element el){
+        for (int i = 0;i<scope.context().size();i++){
+            Element tmp = scope.context().get(i);
             if (Objects.equals(tmp,el)){
                 return i+1;
             }

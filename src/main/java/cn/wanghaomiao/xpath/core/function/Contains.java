@@ -10,7 +10,7 @@ import java.util.List;
  * Function: boolean contains(string, string)
  *
  * The contains function returns true if the first argument string contains the second argument string, and otherwise returns false.
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/26.
  */
 public class Contains implements Function {

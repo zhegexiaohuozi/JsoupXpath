@@ -12,7 +12,7 @@ import java.util.List;
  * e.g.
  *    para[last()] selects the last para child of the context node
  *
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/27.
  */
 public class Last implements Function {

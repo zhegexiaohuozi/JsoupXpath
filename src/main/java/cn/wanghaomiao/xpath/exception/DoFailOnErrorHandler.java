@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 /**
  * 如果语法解析异常，直接抛出并终止解析
- * @author: github.com/zhegexiaohuozi seimimaster@gmail.com
+ * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/3/23.
  */
 public class DoFailOnErrorHandler extends DefaultErrorStrategy {
