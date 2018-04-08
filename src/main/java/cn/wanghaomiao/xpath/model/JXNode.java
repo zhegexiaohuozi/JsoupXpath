@@ -15,17 +15,19 @@ package cn.wanghaomiao.xpath.model;
    limitations under the License.
  */
 
-import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
+import org.seimicrawler.xpath.exception.XpathSyntaxErrorException;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.List;
 
 /**
+ * 下一版将移除，推荐使用 {@link org.seimicrawler.xpath.JXNode}
  * XPath提取后的
  * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2016/5/12.
  */
+@Deprecated
 public class JXNode {
     private Element element;
     private boolean isText;
