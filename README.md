@@ -67,7 +67,16 @@ for (Object o:rs){
 
 ## 语法 ##
 
-支持完备的W3C XPATH 1.0标准语法，W3C规范：http://www.w3.org/TR/1999/REC-xpath-19991116 ,这里也提供了两个解析案例，由于图片较大，请移步 [XpathParseTree](https://github.com/zhegexiaohuozi/JsoupXpath/blob/develop/XpathParseTree.md)
+支持完备的W3C XPATH 1.0标准语法，W3C规范：http://www.w3.org/TR/1999/REC-xpath-19991116
+
+这里是JsoupXpath的基于Antlr4的语法解析树示例，方便大家更快速的一览JsoupXpath的语法处理能力与语法解析执行过程
+- `//ul[@class='subject-list']/li[./div/div/span[@class='pl']/num()>(1000+90*(2*50))][last()][1]/div/h2/allText()`
+这个主要是一些表达式嵌套的解析示例，点击图片可以查看原图
+[![muti_expr](http://img.wanghaomiao.cn/jsoupxpath/antlr4_parse_tree_muti_expr.png)](http://img.wanghaomiao.cn/jsoupxpath/antlr4_parse_tree_muti_expr.png)
+
+- `//ul[@class='subject-list']/li[not(contains(self::li/div/div/span[@class='pl']//text(),'14582'))]/div/h2//text()`
+这个是对内置函数支持的一个解析示例，点击图片可以查看原图
+[![functions](http://img.wanghaomiao.cn/jsoupxpath/antlr4_parse_tree_functions_v2.png)](http://img.wanghaomiao.cn/jsoupxpath/antlr4_parse_tree_functions_v2.png)
 
 ### 关于使用Xpath的一些注意事项 ####
 
