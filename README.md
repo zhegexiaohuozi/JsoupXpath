@@ -67,7 +67,7 @@ for (Object o:rs){
 
 ## 语法 ##
 
-支持完备的W3C XPATH 1.0标准语法，W3C规范：http://www.w3.org/TR/1999/REC-xpath-19991116
+支持完备的W3C XPATH 1.0标准语法，W3C规范：http://www.w3.org/TR/1999/REC-xpath-19991116 ,这里也提供了两个解析案例，由于图片较大，请移步 ![XpathParseTree](https://github.com/zhegexiaohuozi/JsoupXpath/blob/develop/XpathParseTree.md)
 
 ### 关于使用Xpath的一些注意事项 ####
 
@@ -75,9 +75,9 @@ for (Object o:rs){
 
 ## 函数 ##
 
-- `int position()` 返回当前节点在当前上下文中的位置
-- `int last()` 返回同级节点中的最后那个节点位置
-- `int first()` 返回同级节点中的第一个节点位置
+- `int position()` 返回当前节点在其所在上下文中的位置
+- `int last()` 返回所在上下文的最后那个节点位置
+- `int first()` 返回所在上下文的的第一个节点位置
 - `string concat(string, string, string*)` 连接若干字符串
 - `boolean contains(string, string)` 判断第一个字符串是否包含第二个
 - `int count(node-set)` 计算给定的节点集合中节点个数
@@ -86,13 +86,14 @@ for (Object o:rs){
 - `string substring(string, number, number?)` 第一个参数指定字符串，第二个指定起始位置（xpath索引都是从1开始），第三指定要截取的长度，这里要注意在xpath的语法里这，不是结束的位置。
 
   substring("12345", 1.5, 2.6) returns "234"
+
   substring("12345", 2, 3) returns "234"
 
 - `string substring-ex(string, number, number)` 第一个参数指定字符串，第二个指定起始位置(java里的习惯从0开始)，第三个结束的位置（支持负数），这个是JsoupXpath扩展的函数，方便java习惯的开发者使用。
 - `string substring-after(string, string)` 在第一个字符串中截取第二个字符串之后的部分
 - `string substring-before(string, string)` 在第一个字符串中截取第二个字符串之前的部分
 
-以上只是Xpath1.0标准中的函数，开发亦可以方便快捷的添加自定义函数，只需实现 `cn.wanghaomiao.xpath.core.Function.java`接口并且包路径为`package cn.wanghaomiao.xpath.core.function;`即可，不需要修改语法范式，JsoupXpath运行时即可自动识别并加载。
+以上只是Xpath1.0标准中的函数，开发亦可以方便快捷的添加自定义函数，只需实现 `org.seimicrawler.xpath.core.Function.java`接口并且包路径为`package org.seimicrawler.xpath.core.function;`即可，不需要修改语法范式，JsoupXpath运行时即可自动识别并加载。
 
 ### NodeTest ###
 - `allText()`提取节点下全部文本，取代类似 `//div/h3//text()`这种递归取文本用法
