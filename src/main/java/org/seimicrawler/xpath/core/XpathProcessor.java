@@ -1,17 +1,17 @@
 package org.seimicrawler.xpath.core;
 
-import org.seimicrawler.xpath.antlr.XpathBaseVisitor;
-import org.seimicrawler.xpath.antlr.XpathParser;
-import org.seimicrawler.xpath.exception.XpathMergeValueException;
-import org.seimicrawler.xpath.exception.XpathParserException;
-import org.seimicrawler.xpath.util.CommonUtil;
-import org.seimicrawler.xpath.util.Scanner;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.seimicrawler.xpath.antlr.XpathBaseVisitor;
+import org.seimicrawler.xpath.antlr.XpathParser;
+import org.seimicrawler.xpath.exception.XpathMergeValueException;
+import org.seimicrawler.xpath.exception.XpathParserException;
+import org.seimicrawler.xpath.util.CommonUtil;
+import org.seimicrawler.xpath.util.Scanner;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -207,6 +207,23 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                 }
             }else if (exprVal.isBoolean()){
                 if (exprVal.asBoolean()){
+                    newContext.add(e);
+                }
+            }else if (exprVal.isString()){
+                //根据表达式执行结果是否为空作为条件,如 //*[@foo]
+                if (StringUtils.isNotBlank(exprVal.asString())){
+                    newContext.add(e);
+                }
+            }else if (exprVal.isElements()){
+                //根据表达式执行结果是否为空进行过滤，如 //div[./a]
+                Elements els = exprVal.asElements();
+                if (els.size()>0){
+                    newContext.add(e);
+                }
+            }else if (exprVal.isList()){
+                //根据表达式执行结果是否为空进行过滤，如 //div[./a/text()]
+                List<String> stringList = exprVal.asList();
+                if (stringList.size()>0){
                     newContext.add(e);
                 }
             }else {
