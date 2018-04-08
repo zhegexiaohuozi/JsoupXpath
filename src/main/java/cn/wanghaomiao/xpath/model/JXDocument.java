@@ -1,20 +1,8 @@
 package cn.wanghaomiao.xpath.model;
 
-import cn.wanghaomiao.xpath.antlr.XpathLexer;
-import cn.wanghaomiao.xpath.antlr.XpathParser;
-import cn.wanghaomiao.xpath.core.XValue;
-import cn.wanghaomiao.xpath.core.XpathProcessor;
-import cn.wanghaomiao.xpath.exception.DoFailOnErrorHandler;
-import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.seimicrawler.xpath.exception.XpathSyntaxErrorException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -36,55 +24,35 @@ import java.util.List;
  */
 
 /**
+ * 下一个版本将移除，推荐使用 {@link org.seimicrawler.xpath.JXDocument}
  * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  */
+@Deprecated
 public class JXDocument {
-    private Elements elements;
+    private org.seimicrawler.xpath.JXDocument jxDoc;
     public JXDocument(Document doc){
-        elements = doc.children();
+        jxDoc = org.seimicrawler.xpath.JXDocument.create(doc);
     }
     public JXDocument(String html){
-        elements = Jsoup.parse(html).children();
+        jxDoc = org.seimicrawler.xpath.JXDocument.create(html);
     }
     public JXDocument(Elements els){
-        elements = els;
+        jxDoc = org.seimicrawler.xpath.JXDocument.create(els);
     }
     
     public List<Object> sel(String xpath) throws XpathSyntaxErrorException {
-        List<Object> res = new LinkedList<>();
-        for (JXNode node:selN(xpath)){
-            if (node.isText()){
-                res.add(node.getTextVal());
-            }else {
-                res.add(node.getElement());
-            }
-        }
-        return res;
+        return jxDoc.sel(xpath);
     }
 
     public List<JXNode> selN(String xpath) throws XpathSyntaxErrorException{
         List<JXNode> finalRes = new LinkedList<>();
-        try {
-            CharStream input = CharStreams.fromString(xpath);
-            XpathLexer lexer = new XpathLexer(input);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            XpathParser parser = new XpathParser(tokens);
-            parser.setErrorHandler(new DoFailOnErrorHandler());
-            ParseTree tree = parser.main();
-            XpathProcessor processor = new XpathProcessor(elements);
-            XValue calRes = processor.visit(tree);
-            if (calRes.isElements()){
-                for (Element el:calRes.asElements()){
-                    finalRes.add(JXNode.e(el));
-                }
-            }else if (calRes.isList()){
-                for (String str:calRes.asList()){
-                    finalRes.add(JXNode.t(str));
-                }
+        List<org.seimicrawler.xpath.JXNode> jxNodeList = jxDoc.selN(xpath);
+        for (org.seimicrawler.xpath.JXNode n:jxNodeList){
+            if (n.isText()){
+                finalRes.add(JXNode.t(n.getTextVal()));
+            }else {
+                finalRes.add(JXNode.e(n.getElement()));
             }
-        } catch (Exception e){
-            String msg = "Please check the syntax of your xpath expr, ";
-            throw new XpathSyntaxErrorException(msg+ExceptionUtils.getRootCauseMessage(e),e);
         }
         return finalRes;
     }

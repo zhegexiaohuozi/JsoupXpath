@@ -63,7 +63,7 @@ for (Object o:rs){
 	System.out.println(o.toString());
 }
 ```
-其他可以参考 `cn.wanghaomiao.xpath.model.JXDocumentTest`，这里有大量的测试
+其他可以参考 `org.seimicrawler.xpath.JXDocumentTest`，这里有大量的测试用例
 
 ## 语法 ##
 
