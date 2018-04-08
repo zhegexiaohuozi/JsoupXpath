@@ -98,6 +98,7 @@ public class JXDocumentTest {
                 { "//ul[@class='subject-list']/li[contains(self::li/div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
                 { "//ul[@class='subject-list']/li[contains(./div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
                 { "//*[@id=\"subject_list\"]/ul/li[2]/div[2]/h2/a//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
+                { "//ul[@class]",   "3" },
         };
     }
 
