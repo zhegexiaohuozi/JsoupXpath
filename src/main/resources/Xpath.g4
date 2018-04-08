@@ -32,6 +32,12 @@ Do with this code as you will.
     preceding-sibling-one
     sibling
 
+NodeTest扩展：
+    num            抽取数字
+    allText        提取节点下全部文本
+    outerHtml      获取全部节点的 包含节点本身在内的全部html
+    html           获取全部节点的内部的html
+
 */
 
 main  :  expr
@@ -154,9 +160,10 @@ NodeType:  'comment'
   |  'text'
   |  'processing-instruction'
   |  'node'
-  |  'num'                                              //自定义
-  |  'allText'                                          //自定义
-  |  'outerHtml'                                        //自定义
+  |  'num'                                              //抽取数字
+  |  'allText'                                          //提取节点下全部文本
+  |  'outerHtml'                                        //获取全部节点的 包含节点本身在内的全部html
+  |  'html'                                             //获取全部节点的内部的html
   ;
 
 Number  :  Digits ('.' Digits?)?
