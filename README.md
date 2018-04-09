@@ -22,7 +22,7 @@ JsoupXpath已经基本完成了基于Antlr4的重构，从而支持完备的W3C 
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>2.0-SNAPSHOT</version>
+   <version>2.0-alpha</version>
 </dependency>
 ```
 
@@ -39,12 +39,12 @@ https://github.com/zhegexiaohuozi/JsoupXpath/releases
 
 ## 快速开始 ##
 
-如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(中央maven库,最新版本0.3.2)：
+如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency：
 ```
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>2.0-SNAPSHOT</version>
+   <version>2.0-alpha</version>
 </dependency>
 ```
 
@@ -63,7 +63,7 @@ for (Object o:rs){
 	System.out.println(o.toString());
 }
 ```
-其他可以参考 `org.seimicrawler.xpath.JXDocumentTest`，这里有大量的测试用例
+其他可以参考 [`org.seimicrawler.xpath.JXDocumentTest`](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/src/test/java/org/seimicrawler/xpath/JXDocumentTest.java)，这里有大量的测试用例
 
 ## 语法 ##
 
@@ -102,7 +102,8 @@ for (Object o:rs){
 - `string substring-after(string, string)` 在第一个字符串中截取第二个字符串之后的部分
 - `string substring-before(string, string)` 在第一个字符串中截取第二个字符串之前的部分
 
-以上只是Xpath1.0标准中的函数，开发亦可以方便快捷的添加自定义函数，只需实现 `org.seimicrawler.xpath.core.Function.java`接口并且包路径为`package org.seimicrawler.xpath.core.function;`即可，不需要修改语法范式，JsoupXpath运行时即可自动识别并加载。
+### 开发者添加函数 ###
+以上只是Xpath1.0标准中的函数，开发亦可以方便快捷的添加自定义函数，只需实现 `org.seimicrawler.xpath.core.Function.java`接口并且包路径为`package org.seimicrawler.xpath.core.function;`即可，不需要修改语法范式，JsoupXpath运行时即可自动识别并加载（并不一定非要在一个jar中）。对于标准语法中目前JsoupXpath还未实现的函数，欢迎大家向主仓库提交Pull request，一起添砖添瓦。
 
 ### NodeTest ###
 - `allText()`提取节点下全部文本，取代类似 `//div/h3//text()`这种递归取文本用法

@@ -67,7 +67,7 @@ public class JXDocumentTest {
     public void testNotMatchFilter() throws Exception {
         String xpath = "//div[@class!~'xiao']/text()";
         List<Object> res = underTest.sel(xpath);
-        Assert.assertTrue(res.size() == 1);
+        Assert.assertEquals(1, res.size());
         logger.info(StringUtils.join(res, ","));
     }
 
@@ -113,7 +113,7 @@ public class JXDocumentTest {
             Assert.assertEquals(expect,res);
         }else if (expect instanceof Number){
             long size = (long) expect;
-            Assert.assertTrue(rs.size() == size);
+            Assert.assertEquals(size,rs.size());
         }
     }
 
@@ -140,7 +140,7 @@ public class JXDocumentTest {
                 res.add(currentRes);
             }
         }
-        Assert.assertTrue(expect.equals(res));
+        Assert.assertEquals(expect, res);
     }
 
     @Test
@@ -152,7 +152,7 @@ public class JXDocumentTest {
         List<JXNode> jxNodeList = doubanTest.selN(xpath);
         logger.info("size = {}",jxNodeList.size());
         // 有两个ul，下面的是为了测试特意复制添加的
-        Assert.assertTrue(jxNodeList.size() == 2);
+        Assert.assertEquals(2, jxNodeList.size());
     }
 
     @Test
