@@ -22,7 +22,7 @@ JsoupXpath已经基本完成了基于Antlr4的重构，从而支持完备的W3C 
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>2.0-SNAPSHOT</version>
+   <version>2.0-alpha</version>
 </dependency>
 ```
 
@@ -39,12 +39,12 @@ https://github.com/zhegexiaohuozi/JsoupXpath/releases
 
 ## 快速开始 ##
 
-如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency(中央maven库,最新版本0.3.2)：
+如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency：
 ```
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>2.0-SNAPSHOT</version>
+   <version>2.0-alpha</version>
 </dependency>
 ```
 
