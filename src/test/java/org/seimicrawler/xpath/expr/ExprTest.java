@@ -41,7 +41,7 @@ public class ExprTest extends BaseTest {
 
     @Test
     public void exp(){
-        String xpath = "count(//*[@class])";
+        String xpath = "//a[@id]/@href";
         CharStream input = CharStreams.fromString(xpath);
         XpathLexer lexer = new XpathLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
