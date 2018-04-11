@@ -64,7 +64,6 @@ public class Scanner {
                         }
                     }
                 })
-                // Actually perform the scan (nothing will happen without this call)
                 .scan();
     }
 
