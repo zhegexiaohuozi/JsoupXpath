@@ -12,11 +12,6 @@ A html parser with xpath base on Jsoup and Antlr4.Maybe it is the best in java,J
 为了在java里也享受xpath的强大与方便但又苦于找不到一款足够好用的xpath解析器，故开发了JsoupXpath。JsoupXpath的实现逻辑清晰，扩展方便，
 支持完备的W3C XPATH 1.0标准语法，W3C规范：http://www.w3.org/TR/1999/REC-xpath-19991116 ，JsoupXpath语法描述文件[Xpath.g4](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/src/main/resources/dsl/Xpath.g4)
 
-## 20180330快讯 ##
-
-JsoupXpath已经基本完成了基于Antlr4的重构，从而支持完备的W3C XPATH 1.0标准语法，为大家带来更加爽快的体验！
-
-
 # Change Log #
 
 https://github.com/zhegexiaohuozi/JsoupXpath/releases
@@ -34,7 +29,7 @@ https://github.com/zhegexiaohuozi/JsoupXpath/releases
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>2.0.1-alpha</version>
+   <version>2.0.2-alpha</version>
 </dependency>
 ```
 
