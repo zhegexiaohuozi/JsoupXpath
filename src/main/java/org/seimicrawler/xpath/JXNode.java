@@ -27,63 +27,54 @@ import java.util.List;
  * @since 2016/5/12.
  */
 public class JXNode {
-    private Element element;
-    private boolean isText;
-    private String textVal;
+    private Object value;
 
-    public Element getElement() {
-        return element;
+    public JXNode(Object val){
+        this.value = val;
     }
 
-    public JXNode setElement(Element element) {
-        this.element = element;
-        return this;
+    public boolean isElement(){
+        return value instanceof Element;
     }
 
-    public boolean isText() {
-        return isText;
+    public Element asElement() {
+        return (Element) value;
     }
 
-    public JXNode setText(boolean text) {
-        isText = text;
-        return this;
+    public boolean isString(){
+        return value instanceof String;
     }
 
-    public String getTextVal() {
-        return textVal;
+    public String asString(){
+        return (String) value;
     }
 
-    public JXNode setTextVal(String textVal) {
-        this.textVal = textVal;
-        return this;
+    public boolean isNumber(){
+        return value instanceof Number;
+    }
+
+    public Double asDouble(){
+        return (Double) value;
     }
 
     public List<JXNode> sel(String xpath) throws XpathSyntaxErrorException {
-        if (element ==null){
+        if (!isElement()){
             return null;
         }
-        JXDocument doc = new JXDocument(new Elements(element));
+        JXDocument doc = new JXDocument(new Elements(asElement()));
         return doc.selN(xpath);
     }
 
-    public static JXNode e(Element element){
-        JXNode n = new JXNode();
-        n.setElement(element).setText(false);
-        return n;
-    }
-
-    public static JXNode t(String txt){
-        JXNode n = new JXNode();
-        n.setTextVal(txt).setText(true);
-        return n;
+    public static JXNode create(Object val){
+        return new JXNode(val);
     }
 
     @Override
     public String toString() {
-        if (isText){
-            return textVal;
+        if (isElement()){
+            return asElement().toString();
         }else {
-            return element.toString();
+            return String.valueOf(value);
         }
     }
 }

@@ -48,10 +48,10 @@ public class JXDocument {
         List<JXNode> finalRes = new LinkedList<>();
         List<org.seimicrawler.xpath.JXNode> jxNodeList = jxDoc.selN(xpath);
         for (org.seimicrawler.xpath.JXNode n:jxNodeList){
-            if (n.isText()){
-                finalRes.add(JXNode.t(n.getTextVal()));
+            if (n.isString()){
+                finalRes.add(JXNode.t(n.asString()));
             }else {
-                finalRes.add(JXNode.e(n.getElement()));
+                finalRes.add(JXNode.e(n.asElement()));
             }
         }
         return finalRes;

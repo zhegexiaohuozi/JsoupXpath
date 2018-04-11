@@ -80,14 +80,19 @@ public class JXDocumentTest {
         logger.info("current xpath: {}" , xpath);
         List<JXNode> rs = doubanTest.selN(xpath);
         for (JXNode n : rs) {
-            if (!n.isText()) {
-                int index = n.getElement().siblingIndex();
+            if (!n.isString()) {
+                int index = n.asElement().siblingIndex();
                 logger.info("index = {}",index);
             }
             logger.info(n.toString());
         }
     }
 
+    /**
+     * d_test.html 来源于 https://book.douban.com/tag/%E4%BA%92%E8%81%94%E7%BD%91
+     *
+     * 为了测试各种可能情况，ul[@class='subject-list']节点以及其下内容被复制了一份出来，并修改部分书名前缀为'T2-'以便区分
+     */
     @DataProvider
     public static Object[][] dataOfXpathAndexpect() {
         return new Object[][] {
@@ -136,7 +141,7 @@ public class JXDocumentTest {
 
         Set<String> res = new HashSet<>();
         for (JXNode node : jxNodeList) {
-            if (!node.isText()) {
+            if (!node.isString()) {
                 String currentRes = StringUtils.join(node.sel("/div/h2/a//text()"), "");
                 logger.info(currentRes);
                 res.add(currentRes);
@@ -162,7 +167,7 @@ public class JXDocumentTest {
         List<JXNode> jxNodeList = custom.selN("//b[contains(text(),'性别')]/parent::*/text()");
         Assert.assertEquals("男",StringUtils.join(jxNodeList,""));
         for (JXNode jxNode : jxNodeList) {
-            logger.info(jxNode.getTextVal());
+            logger.info(jxNode.toString());
         }
     }
 
