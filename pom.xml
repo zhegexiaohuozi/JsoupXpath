@@ -7,7 +7,7 @@
     </parent>
     <groupId>cn.wanghaomiao</groupId>
     <artifactId>JsoupXpath</artifactId>
-    <version>2.0-alpha</version>
+    <version>2.0.2-alpha</version>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <name>JsoupXpath</name>
@@ -51,9 +51,9 @@
             <version>4.7</version>
         </dependency>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>20.0</version>
+            <groupId>io.github.lukehutch</groupId>
+            <artifactId>fast-classpath-scanner</artifactId>
+            <version>2.18.1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -87,6 +87,12 @@
             <groupId>com.tngtech.java</groupId>
             <artifactId>junit-dataprovider</artifactId>
             <version>1.10.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

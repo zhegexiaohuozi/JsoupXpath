@@ -1,10 +1,9 @@
 package org.seimicrawler.xpath;
 
-import com.google.common.io.Files;
-import com.google.common.io.Resources;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,7 +34,7 @@ public class JXDocumentTest {
     private JXDocument doubanTest;
 
     private JXDocument custom;
-
+    private ClassLoader loader = getClass().getClassLoader();
     private Logger logger = LoggerFactory.getLogger(JXDocumentTest.class);
 
     @Before
@@ -43,9 +42,10 @@ public class JXDocumentTest {
         String html = "<html><body><script>console.log('aaaaa')</script><div class='test'>搜易贷致力于普惠金融，专注于互联网投资理财与小额贷款，搭建中国最大、用户体验最好的个人及中小企业的互联网信贷平台</div><div class='xiao'>Two</div></body></html>";
         underTest = JXDocument.create(html);
         if (doubanTest == null) {
-            URL t = Resources.getResource("d_test.html");
+            URL t = loader.getResource("d_test.html");
+            assert t != null;
             File dBook = new File(t.toURI());
-            String context = Files.toString(dBook, Charset.forName("utf8"));
+            String context = FileUtils.readFileToString(dBook, Charset.forName("utf8"));
             doubanTest = JXDocument.create(context);
         }
         custom = JXDocument.create("<li><b>性别：</b>男</li>");

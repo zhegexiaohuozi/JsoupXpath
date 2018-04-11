@@ -1,15 +1,13 @@
 package org.seimicrawler.xpath.core;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.seimicrawler.xpath.exception.XpathParserException;
-import com.google.common.base.Joiner;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
-import com.google.common.collect.ComparisonChain;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.select.Elements;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author github.com/zhegexiaohuozi seimimaster@gmail.com
@@ -79,7 +77,7 @@ public class XValue implements Comparable<XValue> {
 
     public String asString() {
         if (value instanceof List){
-            return Joiner.on(',').join((List)value);
+            return StringUtils.join((List)value,",");
         }else {
             return ((String)value).trim();
         }
@@ -113,10 +111,10 @@ public class XValue implements Comparable<XValue> {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("value", value)
-                .add("isAttr", isAttr)
-                .add("isExprStr", isExprStr)
+        return new ToStringBuilder(this)
+                .append("value", value)
+                .append("isAttr", isAttr)
+                .append("isExprStr", isExprStr)
                 .toString();
     }
 
@@ -129,7 +127,7 @@ public class XValue implements Comparable<XValue> {
             return false;
         }
         XValue value1 = (XValue) o;
-        return Objects.equal(value, value1.value);
+        return Objects.equals(value, value1.value);
     }
 
     @Override
@@ -149,11 +147,11 @@ public class XValue implements Comparable<XValue> {
         if (this.value == null){
             return -1;
         }
-        ComparisonChain chain = ComparisonChain.start();
+
         if (isString()){
-            return chain.compare(asString(),o.asString()).result();
+            return asString().compareTo(o.asString());
         }else if (isNumber()){
-            return chain.compare(asDouble(),o.asDouble()).result();
+            return asDouble().compareTo(o.asDouble());
         }else {
             throw new XpathParserException("Unsupported comparable XValue = "+toString());
         }
