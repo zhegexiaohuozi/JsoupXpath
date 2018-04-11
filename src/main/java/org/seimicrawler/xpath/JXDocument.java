@@ -101,6 +101,10 @@ public class JXDocument {
                 for (String str:calRes.asList()){
                     finalRes.add(JXNode.t(str));
                 }
+            }else if (calRes.isString()){
+                finalRes.add(JXNode.t(calRes.asString()));
+            }else if (calRes.isNumber()){
+                finalRes.add(JXNode.t(calRes.asDouble().toString()));
             }
         } catch (Exception e){
             String msg = "Please check the syntax of your xpath expr, ";
