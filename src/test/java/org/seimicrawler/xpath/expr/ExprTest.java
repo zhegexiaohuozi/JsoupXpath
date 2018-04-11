@@ -1,13 +1,12 @@
 package org.seimicrawler.xpath.expr;
 
+import org.apache.commons.io.FileUtils;
 import org.seimicrawler.xpath.BaseTest;
 import org.seimicrawler.xpath.antlr.XpathLexer;
 import org.seimicrawler.xpath.antlr.XpathParser;
 import org.seimicrawler.xpath.core.XValue;
 import org.seimicrawler.xpath.core.XpathProcessor;
 import org.seimicrawler.xpath.exception.DoFailOnErrorHandler;
-import com.google.common.io.Files;
-import com.google.common.io.Resources;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -30,12 +29,14 @@ import java.nio.charset.Charset;
 public class ExprTest extends BaseTest {
 
     private Elements root;
+    private ClassLoader loader = getClass().getClassLoader();
     @Before
     public void init() throws Exception {
         //  https://book.douban.com/tag/%E4%BA%92%E8%81%94%E7%BD%91
-        URL t = Resources.getResource("d_test.html");
+        URL t = loader.getResource("d_test.html");
+        assert t!=null;
         File dBook = new File(t.toURI());
-        String context = Files.toString(dBook, Charset.forName("utf8"));
+        String context = FileUtils.readFileToString(dBook, Charset.forName("utf8"));
         root = Jsoup.parse(context).children();
     }
 
