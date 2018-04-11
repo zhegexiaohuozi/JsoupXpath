@@ -100,6 +100,7 @@ public class JXDocumentTest {
                 { "//*[@id=\"subject_list\"]/ul/li[2]/div[2]/h2/a//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
                 { "//ul[@class]",   3L },
                 { "//a[@id]/@href",   "https://www.douban.com/doumail/" },
+                { "//*[@id=\"subject_list\"]/ul[1]/li[8]/div[2]/div[2]/span[3]/num()",   "3734.0" },
         };
     }
 
