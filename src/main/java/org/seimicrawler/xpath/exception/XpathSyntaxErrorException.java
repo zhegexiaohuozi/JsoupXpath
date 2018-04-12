@@ -18,7 +18,7 @@ package org.seimicrawler.xpath.exception;
  * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 14-3-19
  */
-public class XpathSyntaxErrorException extends Exception {
+public class XpathSyntaxErrorException extends RuntimeException {
     public XpathSyntaxErrorException(String msg){
         super(msg);
     }
