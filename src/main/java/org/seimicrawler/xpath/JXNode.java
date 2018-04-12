@@ -17,7 +17,6 @@ package org.seimicrawler.xpath;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.seimicrawler.xpath.exception.XpathSyntaxErrorException;
 
 import java.util.List;
 
@@ -57,7 +56,7 @@ public class JXNode {
         return (Double) value;
     }
 
-    public List<JXNode> sel(String xpath) throws XpathSyntaxErrorException {
+    public List<JXNode> sel(String xpath) {
         if (!isElement()){
             return null;
         }

@@ -70,7 +70,7 @@ public class JXDocument {
         return new JXDocument(els);
     }
 
-    public List<Object> sel(String xpath) throws XpathSyntaxErrorException {
+    public List<Object> sel(String xpath) {
         List<Object> res = new LinkedList<>();
         for (JXNode node:selN(xpath)){
             if (node.isElement()){
@@ -82,7 +82,7 @@ public class JXDocument {
         return res;
     }
 
-    public List<JXNode> selN(String xpath) throws XpathSyntaxErrorException{
+    public List<JXNode> selN(String xpath){
         List<JXNode> finalRes = new LinkedList<>();
         try {
             CharStream input = CharStreams.fromString(xpath);
@@ -107,13 +107,13 @@ public class JXDocument {
                 finalRes.add(JXNode.create(calRes.asDouble()));
             }
         } catch (Exception e){
-            String msg = "Please check the syntax of your xpath expr, ";
+            String msg = "Please check the syntax of your xpath expr or commit a ";
             throw new XpathSyntaxErrorException(msg+ExceptionUtils.getRootCauseMessage(e),e);
         }
         return finalRes;
     }
 
-    public Object selOne(String xpath) throws XpathSyntaxErrorException {
+    public Object selOne(String xpath) {
     	JXNode jxNode = selNOne(xpath);
     	if(jxNode != null) {
     		if (jxNode.isElement()){
@@ -125,7 +125,7 @@ public class JXDocument {
     	return null;
     }
 
-    public JXNode selNOne(String xpath) throws XpathSyntaxErrorException {
+    public JXNode selNOne(String xpath){
     	List<JXNode> jxNodeList = selN(xpath);
     	if(jxNodeList != null && jxNodeList.size() > 0) {
     		return jxNodeList.get(0);
