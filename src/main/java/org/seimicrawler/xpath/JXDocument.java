@@ -70,19 +70,19 @@ public class JXDocument {
         return new JXDocument(els);
     }
 
-    public List<Object> sel(String xpath) throws XpathSyntaxErrorException {
+    public List<Object> sel(String xpath) {
         List<Object> res = new LinkedList<>();
         for (JXNode node:selN(xpath)){
-            if (node.isText()){
-                res.add(node.getTextVal());
+            if (node.isElement()){
+                res.add(node.asElement());
             }else {
-                res.add(node.getElement());
+                res.add(node.toString());
             }
         }
         return res;
     }
 
-    public List<JXNode> selN(String xpath) throws XpathSyntaxErrorException{
+    public List<JXNode> selN(String xpath){
         List<JXNode> finalRes = new LinkedList<>();
         try {
             CharStream input = CharStreams.fromString(xpath);
@@ -95,37 +95,37 @@ public class JXDocument {
             XValue calRes = processor.visit(tree);
             if (calRes.isElements()){
                 for (Element el:calRes.asElements()){
-                    finalRes.add(JXNode.e(el));
+                    finalRes.add(JXNode.create(el));
                 }
             }else if (calRes.isList()){
                 for (String str:calRes.asList()){
-                    finalRes.add(JXNode.t(str));
+                    finalRes.add(JXNode.create(str));
                 }
             }else if (calRes.isString()){
-                finalRes.add(JXNode.t(calRes.asString()));
+                finalRes.add(JXNode.create(calRes.asString()));
             }else if (calRes.isNumber()){
-                finalRes.add(JXNode.t(calRes.asDouble().toString()));
+                finalRes.add(JXNode.create(calRes.asDouble()));
             }
         } catch (Exception e){
-            String msg = "Please check the syntax of your xpath expr, ";
+            String msg = "Please check the syntax of your xpath expr or commit a ";
             throw new XpathSyntaxErrorException(msg+ExceptionUtils.getRootCauseMessage(e),e);
         }
         return finalRes;
     }
 
-    public Object selOne(String xpath) throws XpathSyntaxErrorException {
+    public Object selOne(String xpath) {
     	JXNode jxNode = selNOne(xpath);
     	if(jxNode != null) {
-    		if (jxNode.isText()){
-                return jxNode.getTextVal();
+    		if (jxNode.isElement()){
+                return jxNode.asElement();
             }else {
-                return jxNode.getElement();
+                return jxNode.toString();
             }
     	}
     	return null;
     }
 
-    public JXNode selNOne(String xpath) throws XpathSyntaxErrorException {
+    public JXNode selNOne(String xpath){
     	List<JXNode> jxNodeList = selN(xpath);
     	if(jxNodeList != null && jxNodeList.size() > 0) {
     		return jxNodeList.get(0);
