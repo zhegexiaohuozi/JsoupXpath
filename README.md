@@ -8,7 +8,7 @@ A html parser with xpath base on Jsoup and Antlr4.Maybe it is the best in java,J
 
 ## 简介 ##
 
-**JsoupXpath** 是一款纯Java开发的使用xpath解析html的解析器，xpath的Lexer和Parser基于Antlr4构建，html的DOM树生成采用Jsoup，故命名为JsoupXpath.
+**JsoupXpath** 是一款纯Java开发的使用xpath解析提取html数据的解析器，针对html解析完全重新实现了W3C XPATH 1.0标准语法，xpath的Lexer和Parser基于Antlr4构建，html的DOM树生成采用Jsoup，故命名为JsoupXpath.
 为了在java里也享受xpath的强大与方便但又苦于找不到一款足够好用的xpath解析器，故开发了JsoupXpath。JsoupXpath的实现逻辑清晰，扩展方便，
 支持完备的W3C XPATH 1.0标准语法，W3C规范：http://www.w3.org/TR/1999/REC-xpath-19991116 ，JsoupXpath语法描述文件[Xpath.g4](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/src/main/resources/Xpath.g4)
 
@@ -24,16 +24,16 @@ https://github.com/zhegexiaohuozi/JsoupXpath/releases
 
 ## 快速开始 ##
 
-如果不方便使用maven，可以直接使用lib下的依赖包跑起来试试，如方便可直接使用如下dependency：
+maven依赖：
 ```
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>2.0.2-alpha</version>
+   <version>${latest-release-version}</version>
 </dependency>
 ```
 
-依赖配置好后，就可以使用如下例子进行体验了！
+示例：
 
 ```
 String xpath="//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
