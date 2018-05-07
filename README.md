@@ -24,7 +24,7 @@ https://github.com/zhegexiaohuozi/JsoupXpath/releases
 
 ## 快速开始 ##
 
-maven依赖：
+maven依赖,全版本请参见[release信息](https://github.com/zhegexiaohuozi/JsoupXpath/releases)或[中央maven库](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22cn.wanghaomiao%22%20AND%20a%3A%22JsoupXpath%22)：
 ```
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
