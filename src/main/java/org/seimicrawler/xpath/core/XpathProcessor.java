@@ -470,7 +470,7 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                 throw new XpathMergeValueException("can not merge val1="+pathExprNoRoot.asDouble()+",val2="+unionExprNoRoot.asString());
             }
         }else {
-            throw new XpathMergeValueException("can not merge val1="+pathExprNoRoot.asString()+",val2="+unionExprNoRoot.asString());
+            return XValue.create(pathExprNoRoot.asString()+","+unionExprNoRoot.asString());
         }
     }
 

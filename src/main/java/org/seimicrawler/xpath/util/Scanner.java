@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 考虑更广泛的兼容性，替换掉 FastClasspathScanner，采用手工注册
  * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/2/28.
  */
@@ -30,38 +31,19 @@ public class Scanner {
                 .matchClassesImplementing(Function.class, new ImplementingClassMatchProcessor<Function>() {
                     @Override
                     public void processMatch(Class<? extends Function> funcClass) {
-                        Function function;
-                        try {
-                            function = funcClass.newInstance();
-                            functionMap.put(function.name(), function);
-                        } catch (Exception e) {
-                            logger.info(ExceptionUtils.getRootCauseMessage(e),e);
-                        }
+                        registerFunction(funcClass);
                     }
                 })
                 .matchClassesImplementing(NodeTest.class, new ImplementingClassMatchProcessor<NodeTest>() {
                     @Override
                     public void processMatch(Class<? extends NodeTest> nodeTestClass) {
-                        NodeTest nodeTest;
-                        try {
-                            nodeTest = nodeTestClass.newInstance();
-                            nodeTestMap.put(nodeTest.name(), nodeTest);
-                        }  catch (Exception e) {
-                            logger.info(ExceptionUtils.getRootCauseMessage(e),e);
-                        }
-
+                        registerNodeTest(nodeTestClass);
                     }
                 })
                 .matchClassesImplementing(AxisSelector.class, new ImplementingClassMatchProcessor<AxisSelector>() {
                     @Override
                     public void processMatch(Class<? extends AxisSelector> axisSelectorClass) {
-                        AxisSelector axisSelector;
-                        try {
-                            axisSelector = axisSelectorClass.newInstance();
-                            axisSelectorMap.put(axisSelector.name(), axisSelector);
-                        }  catch (Exception e) {
-                            logger.info(ExceptionUtils.getRootCauseMessage(e),e);
-                        }
+                        registerAxisSelector(axisSelectorClass);
                     }
                 })
                 .scan();
@@ -89,6 +71,36 @@ public class Scanner {
             throw new NoSuchFunctionException("not support function: " + funcName);
         }
         return function;
+    }
+
+    public static void registerFunction(Class<? extends Function> func){
+        Function function;
+        try {
+            function = func.newInstance();
+            functionMap.put(function.name(), function);
+        } catch (Exception e) {
+            logger.info(ExceptionUtils.getRootCauseMessage(e),e);
+        }
+    }
+
+    public static void registerNodeTest(Class<? extends NodeTest> nodeTestClass){
+        NodeTest nodeTest;
+        try {
+            nodeTest = nodeTestClass.newInstance();
+            nodeTestMap.put(nodeTest.name(), nodeTest);
+        }  catch (Exception e) {
+            logger.info(ExceptionUtils.getRootCauseMessage(e),e);
+        }
+    }
+
+    public static void registerAxisSelector(Class<? extends AxisSelector> axisSelectorClass){
+        AxisSelector axisSelector;
+        try {
+            axisSelector = axisSelectorClass.newInstance();
+            axisSelectorMap.put(axisSelector.name(), axisSelector);
+        }  catch (Exception e) {
+            logger.info(ExceptionUtils.getRootCauseMessage(e),e);
+        }
     }
 
 }
