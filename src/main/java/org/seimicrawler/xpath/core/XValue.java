@@ -79,7 +79,7 @@ public class XValue implements Comparable<XValue> {
         if (value instanceof List){
             return StringUtils.join((List)value,",");
         }else {
-            return ((String)value).trim();
+            return String.valueOf(value).trim();
         }
     }
 

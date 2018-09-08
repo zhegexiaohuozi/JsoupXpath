@@ -106,6 +106,7 @@ public class JXDocumentTest {
                 { "//ul[@class]",   3L },
                 { "//a[@id]/@href",   "https://www.douban.com/doumail/" },
                 { "//*[@id=\"subject_list\"]/ul[1]/li[8]/div[2]/div[2]/span[3]/num()",   "3734.0" },
+                { "//a[@id]/@href | //*[@id=\"subject_list\"]/ul[1]/li[8]/div[2]/div[2]/span[3]/num()",   "https://www.douban.com/doumail/3734.0" },
         };
     }
 
@@ -160,6 +161,17 @@ public class JXDocumentTest {
         logger.info("size = {}",jxNodeList.size());
         // 有两个ul，下面的是为了测试特意复制添加的
         Assert.assertEquals(2, jxNodeList.size());
+    }
+
+    @Test
+    @DataProvider(value = {
+            "//body/div/div/h1/text()",
+            "/body/div/div/h1/text()"
+    })
+    public void absolutePathTest(String xpath) throws XpathSyntaxErrorException {
+        logger.info("current xpath: {}" , xpath);
+        List<JXNode> jxNodeList = doubanTest.selN(xpath);
+        logger.info("size = {}，res ={}",jxNodeList.size(),jxNodeList);
     }
 
     @Test

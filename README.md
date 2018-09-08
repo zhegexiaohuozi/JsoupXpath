@@ -88,7 +88,7 @@ for (Object o:rs){
 - `string substring-before(string, string)` 在第一个字符串中截取第二个字符串之前的部分
 
 ### 开发者添加函数 ###
-以上只是Xpath1.0标准中的函数，开发亦可以方便快捷的添加自定义函数，只需实现 `org.seimicrawler.xpath.core.Function.java`接口并且包路径为`package org.seimicrawler.xpath.core.function;`即可，不需要修改语法范式，JsoupXpath运行时即可自动识别并加载（并不一定非要在一个jar中）。对于标准语法中目前JsoupXpath还未实现的函数，欢迎大家向主仓库提交Pull request，一起添砖添瓦。
+以上只是Xpath1.0标准中的函数，开发亦可以方便快捷的添加自定义函数，只需实现 `org.seimicrawler.xpath.core.Function.java`接口，并在你的系统初始化的时候调用`Scanner.registerFunction(Class<? extends Function> func)`，不需要修改语法范式，JsoupXpath运行时即可识别并加载。对于标准语法中目前JsoupXpath还未实现的函数，欢迎大家向主仓库提交Pull request，一起添砖添瓦。
 
 ### NodeTest ###
 - `allText()`提取节点下全部文本，取代类似 `//div/h3//text()`这种递归取文本用法
