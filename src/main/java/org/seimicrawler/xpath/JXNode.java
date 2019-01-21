@@ -56,6 +56,10 @@ public class JXNode {
         return (Double) value;
     }
 
+    public boolean isBoolean(){ return value instanceof Boolean;}
+
+    public Boolean asBoolean(){ return (Boolean) value; }
+
     public List<JXNode> sel(String xpath) {
         if (!isElement()){
             return null;
