@@ -28,8 +28,10 @@ import static org.seimicrawler.xpath.antlr.XpathParser.*;
  */
 public class XpathProcessor extends XpathBaseVisitor<XValue> {
     private Stack<Scope> scopeStack = new Stack<>();
+    private Scope rootScope;
     public XpathProcessor(Elements root){
-        scopeStack.push(Scope.create(root));
+        rootScope = Scope.create(root);
+        scopeStack.push(Scope.create(root).setParent(rootScope));
     }
 
     @Override
@@ -426,7 +428,9 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
         if (ctx.op == null){
             return pathExprNoRoot;
         }
+        scopeStack.push(Scope.create(currentScope().getParent()));
         XValue unionExprNoRoot = visit(ctx.unionExprNoRoot());
+        scopeStack.pop();
         if (pathExprNoRoot.isElements()){
             if (unionExprNoRoot.isElements()){
                 pathExprNoRoot.asElements().addAll(unionExprNoRoot.asElements());

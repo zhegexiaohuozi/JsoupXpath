@@ -1,11 +1,42 @@
 package org.seimicrawler.xpath.util;
 
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import io.github.lukehutch.fastclasspathscanner.matchprocessor.ImplementingClassMatchProcessor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.seimicrawler.xpath.core.AxisSelector;
 import org.seimicrawler.xpath.core.Function;
 import org.seimicrawler.xpath.core.NodeTest;
+import org.seimicrawler.xpath.core.axis.AncestorOrSelfSelector;
+import org.seimicrawler.xpath.core.axis.AncestorSelector;
+import org.seimicrawler.xpath.core.axis.AttributeSelector;
+import org.seimicrawler.xpath.core.axis.ChildSelector;
+import org.seimicrawler.xpath.core.axis.DescendantOrSelfSelector;
+import org.seimicrawler.xpath.core.axis.DescendantSelector;
+import org.seimicrawler.xpath.core.axis.FollowingSelector;
+import org.seimicrawler.xpath.core.axis.FollowingSiblingOneSelector;
+import org.seimicrawler.xpath.core.axis.FollowingSiblingSelector;
+import org.seimicrawler.xpath.core.axis.ParentSelector;
+import org.seimicrawler.xpath.core.axis.PrecedingSelector;
+import org.seimicrawler.xpath.core.axis.PrecedingSiblingOneSelector;
+import org.seimicrawler.xpath.core.axis.PrecedingSiblingSelector;
+import org.seimicrawler.xpath.core.axis.SelfSelector;
+import org.seimicrawler.xpath.core.function.Concat;
+import org.seimicrawler.xpath.core.function.Contains;
+import org.seimicrawler.xpath.core.function.Count;
+import org.seimicrawler.xpath.core.function.First;
+import org.seimicrawler.xpath.core.function.Last;
+import org.seimicrawler.xpath.core.function.Not;
+import org.seimicrawler.xpath.core.function.Position;
+import org.seimicrawler.xpath.core.function.StartsWith;
+import org.seimicrawler.xpath.core.function.StringLength;
+import org.seimicrawler.xpath.core.function.SubString;
+import org.seimicrawler.xpath.core.function.SubStringAfter;
+import org.seimicrawler.xpath.core.function.SubStringBefore;
+import org.seimicrawler.xpath.core.function.SubStringEx;
+import org.seimicrawler.xpath.core.node.AllText;
+import org.seimicrawler.xpath.core.node.Html;
+import org.seimicrawler.xpath.core.node.Node;
+import org.seimicrawler.xpath.core.node.Num;
+import org.seimicrawler.xpath.core.node.OuterHtml;
+import org.seimicrawler.xpath.core.node.Text;
 import org.seimicrawler.xpath.exception.NoSuchAxisException;
 import org.seimicrawler.xpath.exception.NoSuchFunctionException;
 import org.slf4j.Logger;
@@ -26,27 +57,9 @@ public class Scanner {
     private static Logger logger = LoggerFactory.getLogger(Scanner.class);
 
     static {
-        new FastClasspathScanner(Function.class.getPackage().getName())
-//                .verbose()
-                .matchClassesImplementing(Function.class, new ImplementingClassMatchProcessor<Function>() {
-                    @Override
-                    public void processMatch(Class<? extends Function> funcClass) {
-                        registerFunction(funcClass);
-                    }
-                })
-                .matchClassesImplementing(NodeTest.class, new ImplementingClassMatchProcessor<NodeTest>() {
-                    @Override
-                    public void processMatch(Class<? extends NodeTest> nodeTestClass) {
-                        registerNodeTest(nodeTestClass);
-                    }
-                })
-                .matchClassesImplementing(AxisSelector.class, new ImplementingClassMatchProcessor<AxisSelector>() {
-                    @Override
-                    public void processMatch(Class<? extends AxisSelector> axisSelectorClass) {
-                        registerAxisSelector(axisSelectorClass);
-                    }
-                })
-                .scan();
+        initAxis(AncestorOrSelfSelector.class,AncestorSelector.class,AttributeSelector.class,ChildSelector.class,DescendantOrSelfSelector.class,DescendantSelector.class,FollowingSelector.class,FollowingSiblingOneSelector.class,FollowingSiblingSelector.class,ParentSelector.class,PrecedingSelector.class,PrecedingSiblingOneSelector.class,PrecedingSiblingSelector.class,SelfSelector.class);
+        initFunction(Concat.class,Contains.class,Count.class,First.class,Last.class,Not.class,Position.class,StartsWith.class,StringLength.class,SubString.class,SubStringAfter.class,SubStringBefore.class,SubStringEx.class);
+        initNode(AllText.class,Html.class,Node.class,Num.class,OuterHtml.class,Text.class);
     }
 
     public static AxisSelector findSelectorByName(String selectorName) {
@@ -100,6 +113,24 @@ public class Scanner {
             axisSelectorMap.put(axisSelector.name(), axisSelector);
         }  catch (Exception e) {
             logger.info(ExceptionUtils.getRootCauseMessage(e),e);
+        }
+    }
+
+    public static void initAxis(Class<? extends AxisSelector>... cls){
+        for (Class<? extends AxisSelector> axis:cls){
+            registerAxisSelector(axis);
+        }
+    }
+
+    public static void initFunction(Class<? extends Function>... cls){
+        for (Class<? extends Function> func:cls){
+            registerFunction(func);
+        }
+    }
+
+    public static void initNode(Class<? extends NodeTest>... cls){
+        for (Class<? extends NodeTest> node:cls){
+            registerNodeTest(node);
         }
     }
 
