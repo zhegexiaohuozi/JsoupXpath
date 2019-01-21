@@ -105,6 +105,8 @@ public class JXDocument {
                 finalRes.add(JXNode.create(calRes.asString()));
             }else if (calRes.isNumber()){
                 finalRes.add(JXNode.create(calRes.asDouble()));
+            }else if (calRes.isBoolean()){
+                finalRes.add(JXNode.create(calRes.asBoolean()));
             }
         } catch (Exception e){
             String msg = "Please check the syntax of your xpath expr or commit a ";
