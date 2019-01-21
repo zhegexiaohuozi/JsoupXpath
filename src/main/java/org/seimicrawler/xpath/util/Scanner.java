@@ -18,19 +18,7 @@ import org.seimicrawler.xpath.core.axis.PrecedingSelector;
 import org.seimicrawler.xpath.core.axis.PrecedingSiblingOneSelector;
 import org.seimicrawler.xpath.core.axis.PrecedingSiblingSelector;
 import org.seimicrawler.xpath.core.axis.SelfSelector;
-import org.seimicrawler.xpath.core.function.Concat;
-import org.seimicrawler.xpath.core.function.Contains;
-import org.seimicrawler.xpath.core.function.Count;
-import org.seimicrawler.xpath.core.function.First;
-import org.seimicrawler.xpath.core.function.Last;
-import org.seimicrawler.xpath.core.function.Not;
-import org.seimicrawler.xpath.core.function.Position;
-import org.seimicrawler.xpath.core.function.StartsWith;
-import org.seimicrawler.xpath.core.function.StringLength;
-import org.seimicrawler.xpath.core.function.SubString;
-import org.seimicrawler.xpath.core.function.SubStringAfter;
-import org.seimicrawler.xpath.core.function.SubStringBefore;
-import org.seimicrawler.xpath.core.function.SubStringEx;
+import org.seimicrawler.xpath.core.function.*;
 import org.seimicrawler.xpath.core.node.AllText;
 import org.seimicrawler.xpath.core.node.Html;
 import org.seimicrawler.xpath.core.node.Node;
@@ -58,7 +46,7 @@ public class Scanner {
 
     static {
         initAxis(AncestorOrSelfSelector.class,AncestorSelector.class,AttributeSelector.class,ChildSelector.class,DescendantOrSelfSelector.class,DescendantSelector.class,FollowingSelector.class,FollowingSiblingOneSelector.class,FollowingSiblingSelector.class,ParentSelector.class,PrecedingSelector.class,PrecedingSiblingOneSelector.class,PrecedingSiblingSelector.class,SelfSelector.class);
-        initFunction(Concat.class,Contains.class,Count.class,First.class,Last.class,Not.class,Position.class,StartsWith.class,StringLength.class,SubString.class,SubStringAfter.class,SubStringBefore.class,SubStringEx.class);
+        initFunction(Concat.class,Contains.class,Count.class,First.class,Last.class,Not.class,Position.class,StartsWith.class,StringLength.class,SubString.class,SubStringAfter.class,SubStringBefore.class,SubStringEx.class, FormatDate.class);
         initNode(AllText.class,Html.class,Node.class,Num.class,OuterHtml.class,Text.class);
     }
 

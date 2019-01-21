@@ -134,4 +134,13 @@
             </resource>
         </resources>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>vancloud</id>
+            <name>vancloud</name>
+            <url>http://maven.vancloud.com.cn:8091/nexus/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
+
 </project>
