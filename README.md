@@ -2,6 +2,7 @@ JsoupXpath
 ==========
 [![Build Status](https://img.shields.io/travis/zhegexiaohuozi/JsoupXpath.svg)](https://travis-ci.org/zhegexiaohuozi/JsoupXpath)
 [![GitHub release](https://img.shields.io/github/release/zhegexiaohuozi/JsoupXpath.svg)](https://github.com/zhegexiaohuozi/JsoupXpath/releases)
+[![Maven](https://maven-badges.herokuapp.com/maven-central/cn.wanghaomiao/JsoupXpath/badge.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22cn.wanghaomiao%22%20AND%20a%3A%22JsoupXpath%22)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 A html parser with xpath base on Jsoup and Antlr4.Maybe it is the best in java,Just try it.
@@ -29,7 +30,7 @@ maven依赖,全版本请参见[release信息](https://github.com/zhegexiaohuozi/
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>2.2</version>
+   <version>2.2.1</version>
 </dependency>
 ```
 
@@ -49,6 +50,8 @@ for (Object o:rs){
 }
 ```
 其他可以参考 [`org.seimicrawler.xpath.JXDocumentTest`](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/src/test/java/org/seimicrawler/xpath/JXDocumentTest.java)，这里有大量的测试用例
+
+或者Issue中比较[典型的例子](https://github.com/zhegexiaohuozi/JsoupXpath/issues?q=is%3Aissue+is%3Aclosed+label%3A%E6%96%B0%E6%89%8B%E5%8F%82%E8%80%83)
 
 ## 语法 ##
 
