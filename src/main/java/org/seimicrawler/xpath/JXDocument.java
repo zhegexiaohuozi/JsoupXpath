@@ -84,7 +84,7 @@ public class JXDocument {
 
     public List<JXNode> selN(String xpath){
         List<JXNode> finalRes = new LinkedList<>();
-        try {
+        try{
             CharStream input = CharStreams.fromString(xpath);
             XpathLexer lexer = new XpathLexer(input);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -93,21 +93,36 @@ public class JXDocument {
             ParseTree tree = parser.main();
             XpathProcessor processor = new XpathProcessor(elements);
             XValue calRes = processor.visit(tree);
+
             if (calRes.isElements()){
                 for (Element el:calRes.asElements()){
                     finalRes.add(JXNode.create(el));
                 }
-            }else if (calRes.isList()){
+                return finalRes;
+            }
+            if (calRes.isList()){
                 for (String str:calRes.asList()){
                     finalRes.add(JXNode.create(str));
                 }
-            }else if (calRes.isString()){
-                finalRes.add(JXNode.create(calRes.asString()));
-            }else if (calRes.isNumber()){
-                finalRes.add(JXNode.create(calRes.asDouble()));
-            }else if (calRes.isBoolean()){
-                finalRes.add(JXNode.create(calRes.asBoolean()));
+                return finalRes;
             }
+            if (calRes.isString()){
+                finalRes.add(JXNode.create(calRes.asString()));
+                return finalRes;
+            }
+            if (calRes.isNumber()) {
+                finalRes.add(JXNode.create(calRes.asDouble()));
+                return finalRes;
+            }
+            if (calRes.isBoolean()){
+                finalRes.add(JXNode.create(calRes.asBoolean()));
+                return finalRes;
+            }
+            if(calRes.isDate()){
+                finalRes.add(JXNode.create(calRes.asDate()));
+                return finalRes;
+            }
+            finalRes.add(JXNode.create(calRes.asString()));
         } catch (Exception e){
             String msg = "Please check the syntax of your xpath expr or commit a ";
             throw new XpathSyntaxErrorException(msg+ExceptionUtils.getRootCauseMessage(e),e);

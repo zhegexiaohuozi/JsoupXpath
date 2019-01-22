@@ -18,6 +18,7 @@ package org.seimicrawler.xpath;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,6 +61,10 @@ public class JXNode {
 
     public Boolean asBoolean(){ return (Boolean) value; }
 
+    public boolean isDate(){return value instanceof Date;}
+
+    public Date asDate(){return (Date)value;}
+
     public List<JXNode> sel(String xpath) {
         if (!isElement()){
             return null;
@@ -79,5 +84,21 @@ public class JXNode {
         }else {
             return String.valueOf(value);
         }
+    }
+
+    public Object value(){
+        if(isElement()){
+            return asElement();
+        }
+        if(isBoolean()){
+            return asBoolean();
+        }
+        if(isNumber()){
+            return asDouble();
+        }
+        if(isDate()){
+            return asDate();
+        }
+        return asString();
     }
 }

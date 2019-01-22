@@ -1,11 +1,17 @@
 package org.seimicrawler.xpath.core;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateParser;
 import org.seimicrawler.xpath.exception.XpathParserException;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.select.Elements;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,8 +52,22 @@ public class XValue implements Comparable<XValue> {
         return value instanceof List;
     }
 
-    public Boolean asBoolean() {
-        return (Boolean)value;
+    public boolean isDate(){return value instanceof Date;}
+
+    public Boolean asBoolean() {return (Boolean)value;}
+
+    public Date asDate(){
+        if(value instanceof String){
+            try {
+                return DateFormatUtils.ISO_DATETIME_TIME_ZONE_FORMAT.parse((String)value);
+            } catch (ParseException e) {
+                throw new XpathParserException("cast to date fail. vale = "+value);
+            }
+        }
+        if(value instanceof Date){
+            return (Date)value;
+        }
+        throw new XpathParserException("cast to date fail. vale = "+value);
     }
 
     public Double asDouble() {
