@@ -16,13 +16,14 @@ import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 /**
- * Function: string format-date(string, string)
- * The format-date function returns the substring of the first argument string that follows
- * the first occurrence of the second argument string in the first argument string, or the empty string if
- * the first argument string does not contain the second argument string.
- * For example, substring-after("1999/04/01","/") returns 04/01, and substring-after("1999/04/01","19") returns 99/04/01.
+ * Function: string format-date(string, string, string)
+ * The format-date function returns Date object
+ * The first parameter is the date and time
+ * The second parameter is the time format of the first parameter.
+ * The third parameter is not required, and is required if the date format of the first parameter requires that the time zone must be specified
+ * For example, format-date("1999/04/01","yyyy/MM/dd") returns Date Object, and format-date("1999/04/01 07:55:23 pm","yyyy/MM/dd hh:mm:ss a",'en') returns Date Object.
  * @author github.com/zzldn@163.com
- * @since 2018/3/26.
+ * @since 2019/1/22.
  */
 public class FormatDate implements Function {
     @Override
