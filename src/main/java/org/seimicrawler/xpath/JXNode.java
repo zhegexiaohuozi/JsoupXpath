@@ -85,4 +85,20 @@ public class JXNode {
             return String.valueOf(value);
         }
     }
+
+    public Object value(){
+        if(isElement()){
+            return asElement();
+        }
+        if(isBoolean()){
+            return asBoolean();
+        }
+        if(isNumber()){
+            return asDouble();
+        }
+        if(isDate()){
+            return asDate();
+        }
+        return asString();
+    }
 }
