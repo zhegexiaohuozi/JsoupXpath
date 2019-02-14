@@ -1,13 +1,14 @@
 package org.seimicrawler.xpath.core.axis;
 
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.seimicrawler.xpath.core.AxisSelector;
 import org.seimicrawler.xpath.core.XValue;
 import org.seimicrawler.xpath.util.CommonUtil;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
+
 
 /**
  * the following axis contains all nodes in the same document as the context node that are after the context node in
@@ -24,7 +25,7 @@ public class FollowingSelector implements AxisSelector {
     @Override
     public XValue apply(Elements context) {
         Elements following = new Elements();
-        Set<Element> total = new HashSet<>();
+        List<Element> total = new LinkedList<>();
         for (Element el:context){
             Elements p = el.parents();
             for (Element pe: p){

@@ -1,13 +1,13 @@
 package org.seimicrawler.xpath.core.axis;
 
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.seimicrawler.xpath.core.AxisSelector;
 import org.seimicrawler.xpath.core.XValue;
 import org.seimicrawler.xpath.util.CommonUtil;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * the following-sibling axis contains all the following siblings of the context node; if the context node is an
@@ -34,7 +34,7 @@ public class FollowingSiblingSelector implements AxisSelector {
      */
     @Override
     public XValue apply(Elements context) {
-        Set<Element> total = new HashSet<>();
+        List<Element> total = new LinkedList<>();
         for (Element el : context){
             Elements fs = CommonUtil.followingSibling(el);
             if (fs == null){

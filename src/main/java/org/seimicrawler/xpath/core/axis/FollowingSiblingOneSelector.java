@@ -1,12 +1,12 @@
 package org.seimicrawler.xpath.core.axis;
 
-import org.seimicrawler.xpath.core.AxisSelector;
-import org.seimicrawler.xpath.core.XValue;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.seimicrawler.xpath.core.AxisSelector;
+import org.seimicrawler.xpath.core.XValue;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * the following-sibling-one JsoupXpath自定义扩展,比较常用
@@ -32,7 +32,7 @@ public class FollowingSiblingOneSelector implements AxisSelector {
      */
     @Override
     public XValue apply(Elements context) {
-        Set<Element> total = new HashSet<>();
+        List<Element> total = new LinkedList<>();
         for (Element el : context){
             if (el.nextElementSibling()!=null){
                 total.add(el.nextElementSibling());
