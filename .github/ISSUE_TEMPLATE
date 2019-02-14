@@ -1,15 +1,15 @@
 Please answer these questions before submitting your issue. Thanks!
 
-1. What did you do?
+1. What did you do（使用的表达式与使用场景，确保能够复现）?
 If possible, provide a recipe for reproducing the error.
 
 
-2. What did you expect to see?
+2. What did you expect to see（期望看到什么）?
 
 
 
-3. What did you see instead?
+3. What did you see instead（JsoupXpath给出的结果）?
 
 
 
-4. What version of JsoupXpath are you using?
+4. What version of JsoupXpath are you using（当前版本）?
