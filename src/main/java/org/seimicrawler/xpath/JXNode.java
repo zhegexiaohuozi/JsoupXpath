@@ -73,6 +73,14 @@ public class JXNode {
         return doc.selN(xpath);
     }
 
+    public JXNode selOne(String xpath){
+        List<JXNode> jxNodeList = sel(xpath);
+        if(jxNodeList != null && jxNodeList.size() > 0) {
+            return jxNodeList.get(0);
+        }
+        return null;
+    }
+
     public static JXNode create(Object val){
         return new JXNode(val);
     }

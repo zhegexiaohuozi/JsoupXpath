@@ -88,7 +88,10 @@ for (Object o:rs){
 
 - `string substring-ex(string, number, number)` 第一个参数指定字符串，第二个指定起始位置(java里的习惯从0开始)，第三个结束的位置（支持负数），这个是JsoupXpath扩展的函数，方便java习惯的开发者使用。
 - `string substring-after(string, string)` 在第一个字符串中截取第二个字符串之后的部分
+- `string substring-after-last(string, string)` 在第一个字符串中截取第二个字符串最后出现位置之后的部分
 - `string substring-before(string, string)` 在第一个字符串中截取第二个字符串之前的部分
+- `string substring-before-last(string, string)` 在第一个字符串中截取第二个字符串最后出现位置之前的部分
+- `date format-date(string, string ,string)` 第一个参数是表达式，第二个参数是表达式值的时间格式，第三个参数是时区locale，非必填
 
 ### 开发者添加函数 ###
 以上只是Xpath1.0标准中的函数，开发亦可以方便快捷的添加自定义函数，只需实现 `org.seimicrawler.xpath.core.Function.java`接口，并在你的系统初始化的时候调用`Scanner.registerFunction(Class<? extends Function> func)`，不需要修改语法范式，JsoupXpath运行时即可识别并加载。对于标准语法中目前JsoupXpath还未实现的函数，欢迎大家向主仓库提交Pull request，一起添砖添瓦。
