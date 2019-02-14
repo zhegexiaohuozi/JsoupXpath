@@ -474,7 +474,14 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                 throw new XpathMergeValueException("can not merge val1="+pathExprNoRoot.asDouble()+",val2="+unionExprNoRoot.asString());
             }
         }else {
-            return XValue.create(pathExprNoRoot.asString()+","+unionExprNoRoot.asString());
+            List<String> tmpVal = new LinkedList<>();
+            if (StringUtils.isNotBlank(pathExprNoRoot.asString())){
+                tmpVal.add(pathExprNoRoot.asString());
+            }
+            if (StringUtils.isNotBlank(unionExprNoRoot.asString())){
+                tmpVal.add(unionExprNoRoot.asString());
+            }
+            return XValue.create(StringUtils.join(tmpVal,","));
         }
     }
 
