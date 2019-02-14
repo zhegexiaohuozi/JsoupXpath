@@ -5,8 +5,8 @@ import org.jsoup.select.Elements;
 import org.seimicrawler.xpath.core.AxisSelector;
 import org.seimicrawler.xpath.core.XValue;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * the parent axis contains the parent of the context node, if there is one
@@ -22,7 +22,7 @@ public class ParentSelector implements AxisSelector {
 
     @Override
     public XValue apply(Elements context) {
-        Set<Element> total = new HashSet<>();
+        List<Element> total = new LinkedList<>();
         Elements parents = new Elements();
         for (Element el:context){
             total.add(el.parent());

@@ -1,12 +1,12 @@
 package org.seimicrawler.xpath.core.axis;
 
-import org.seimicrawler.xpath.core.AxisSelector;
-import org.seimicrawler.xpath.core.XValue;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.seimicrawler.xpath.core.AxisSelector;
+import org.seimicrawler.xpath.core.XValue;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * the ancestor axis contains the ancestors of the context node; the ancestors of the context node consist of
@@ -24,12 +24,10 @@ public class AncestorSelector implements AxisSelector {
 
     @Override
     public XValue apply(Elements context) {
-        Set<Element> total = new HashSet<>();
-        Elements ancestor = new Elements();
+        List<Element> total = new LinkedList<>();
         for (Element el:context){
             total.addAll(el.parents());
         }
-        ancestor.addAll(total);
-        return XValue.create(ancestor);
+        return XValue.create(new Elements(total));
     }
 }

@@ -1,13 +1,13 @@
 package org.seimicrawler.xpath.core.axis;
 
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.seimicrawler.xpath.core.AxisSelector;
 import org.seimicrawler.xpath.core.XValue;
 import org.seimicrawler.xpath.util.CommonUtil;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * the preceding-sibling axis contains all the preceding siblings of the context node; if the context node is
@@ -33,7 +33,7 @@ public class PrecedingSiblingSelector implements AxisSelector {
      */
     @Override
     public XValue apply(Elements context) {
-        Set<Element> total = new HashSet<>();
+        List<Element> total = new LinkedList<>();
         for (Element el : context){
             Elements ps = CommonUtil.precedingSibling(el);
             if (ps == null){

@@ -1,12 +1,12 @@
 package org.seimicrawler.xpath.core.axis;
 
-import org.seimicrawler.xpath.core.AxisSelector;
-import org.seimicrawler.xpath.core.XValue;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.seimicrawler.xpath.core.AxisSelector;
+import org.seimicrawler.xpath.core.XValue;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * the preceding-sibling-one axis JsoupXpath自定义扩展，用于选取节点的前一个兄弟节点，如果存在的话。
@@ -31,7 +31,7 @@ public class PrecedingSiblingOneSelector implements AxisSelector {
      */
     @Override
     public XValue apply(Elements context) {
-        Set<Element> total = new HashSet<>();
+        List<Element> total = new LinkedList<>();
         for (Element el : context){
             if (el.previousElementSibling()!=null){
                 total.add(el);

@@ -24,7 +24,6 @@ public class FollowingSelector implements AxisSelector {
 
     @Override
     public XValue apply(Elements context) {
-        Elements following = new Elements();
         List<Element> total = new LinkedList<>();
         for (Element el:context){
             Elements p = el.parents();
@@ -33,15 +32,19 @@ public class FollowingSelector implements AxisSelector {
                 if (fs==null){
                     continue;
                 }
-                total.addAll(fs);
+                for(Element pse:fs){
+                    //include pse
+                    total.addAll(pse.getAllElements());
+                }
             }
             Elements fs = CommonUtil.followingSibling(el);
             if (fs==null){
                 continue;
             }
-            total.addAll(fs);
+            for (Element se:fs){
+                total.addAll(se.getAllElements());
+            }
         }
-        following.addAll(total);
-        return XValue.create(following);
+        return XValue.create(new Elements(total));
     }
 }

@@ -1,9 +1,9 @@
 package org.seimicrawler.xpath.core.axis;
 
-import org.seimicrawler.xpath.core.AxisSelector;
-import org.seimicrawler.xpath.core.XValue;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.seimicrawler.xpath.core.AxisSelector;
+import org.seimicrawler.xpath.core.XValue;
 
 /**
  * the child axis contains the children of the context node

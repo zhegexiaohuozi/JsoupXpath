@@ -1,8 +1,8 @@
 package org.seimicrawler.xpath.core.axis;
 
+import org.jsoup.select.Elements;
 import org.seimicrawler.xpath.core.AxisSelector;
 import org.seimicrawler.xpath.core.XValue;
-import org.jsoup.select.Elements;
 
 /**
  * the attribute axis contains the attributes of the context node; the axis will be empty unless the context node is an element
