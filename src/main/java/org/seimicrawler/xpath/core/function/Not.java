@@ -20,7 +20,7 @@ public class Not implements Function{
 
     @Override
     public XValue call(Scope scope, List<XValue> params) {
-        if (params.size()==1&&params.get(0).isBoolean()){
+        if (params.size()==1){
             return XValue.create(!params.get(0).asBoolean());
         }else {
             throw new XpathParserException("error param in not(bool) function.Please check.");

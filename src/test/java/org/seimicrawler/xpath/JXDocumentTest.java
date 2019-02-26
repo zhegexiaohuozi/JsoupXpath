@@ -183,4 +183,14 @@ public class JXDocumentTest {
         }
     }
 
+    @Test
+    public void testNotObj(){
+        JXDocument doc = JXDocument.createByUrl("https://www.gxwztv.com/61/61514/");
+//        List<JXNode> nodes = doc.selN("//*[@id=\"chapters-list\"]/li[@style]");
+        List<JXNode> nodes = doc.selN("//*[@id=\"chapters-list\"]/li[not(@style)]");
+        for (JXNode node:nodes){
+            logger.info("r = {}",node);
+        }
+    }
+
 }
