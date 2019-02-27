@@ -186,7 +186,7 @@ public class JXDocumentTest {
     /**
      * fix https://github.com/zhegexiaohuozi/JsoupXpath/issues/33
      */
-    @Test
+//    @Test
     public void testNotObj(){
         JXDocument doc = JXDocument.createByUrl("https://www.gxwztv.com/61/61514/");
 //        List<JXNode> nodes = doc.selN("//*[@id=\"chapters-list\"]/li[@style]");
