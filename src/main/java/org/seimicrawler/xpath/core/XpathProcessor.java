@@ -100,16 +100,39 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
             if (filterByAttr){
                 Elements context = currentScope().context();
                 String attrName = nodeTest.asString();
-                if (context.size() == 1){
-                    Element el = currentScope().singleEl();
-                    return XValue.create(el.attr(attrName));
-                }else {
-                    List<String> attrs = new LinkedList<>();
-                    for (Element el:context){
-                        attrs.add(el.attr(attrName));
+                if (currentScope().isRecursion()){
+                    if (context.size() == 1){
+                        Element el = currentScope().singleEl();
+                        Elements findRes = el.select("["+attrName+"]");
+                        List<String> attrs = new LinkedList<>();
+                        for (Element e:findRes){
+                            attrs.add(e.attr(attrName));
+                        }
+                        return XValue.create(attrs);
+                    }else {
+                        Elements findRes = new Elements();
+                        for (Element el:context){
+                            findRes.addAll(el.select("["+attrName+"]"));
+                        }
+                        List<String> attrs = new LinkedList<>();
+                        for (Element e:findRes){
+                            attrs.add(e.attr(attrName));
+                        }
+                        return XValue.create(attrs);
                     }
-                    return XValue.create(attrs);
+                }else {
+                    if (context.size() == 1){
+                        Element el = currentScope().singleEl();
+                        return XValue.create(el.attr(attrName));
+                    }else {
+                        List<String> attrs = new LinkedList<>();
+                        for (Element el:context){
+                            attrs.add(el.attr(attrName));
+                        }
+                        return XValue.create(attrs);
+                    }
                 }
+
             }else {
                 if (nodeTest.isExprStr()){
                     String tagName = nodeTest.asString();

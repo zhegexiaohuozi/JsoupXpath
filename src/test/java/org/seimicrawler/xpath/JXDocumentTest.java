@@ -183,11 +183,32 @@ public class JXDocumentTest {
         }
     }
 
+    /**
+     * fix https://github.com/zhegexiaohuozi/JsoupXpath/issues/33
+     */
     @Test
     public void testNotObj(){
         JXDocument doc = JXDocument.createByUrl("https://www.gxwztv.com/61/61514/");
 //        List<JXNode> nodes = doc.selN("//*[@id=\"chapters-list\"]/li[@style]");
         List<JXNode> nodes = doc.selN("//*[@id=\"chapters-list\"]/li[not(@style)]");
+        for (JXNode node:nodes){
+            logger.info("r = {}",node);
+        }
+    }
+
+    /**
+     * fix https://github.com/zhegexiaohuozi/JsoupXpath/issues/34
+     */
+    @Test
+    public void testAttrAtRoot(){
+        String content = "<html>\n" +
+                " <head></head>\n" +
+                " <body>\n" +
+                "  <a href=\"/124/124818/162585930.html\">第2章 神奇交流群</a>\n" +
+                " </body>\n" +
+                "</html>";
+        JXDocument doc = JXDocument.create(content);
+        List<JXNode> nodes = doc.selN("//@href");
         for (JXNode node:nodes){
             logger.info("r = {}",node);
         }
