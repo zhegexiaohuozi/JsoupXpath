@@ -181,4 +181,11 @@ public class XValue implements Comparable<XValue> {
             throw new XpathParserException("Unsupported comparable XValue = "+toString());
         }
     }
+
+    public Class valType(){
+        if (value == null){
+            return Object.class;
+        }
+        return value.getClass();
+    }
 }

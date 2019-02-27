@@ -214,4 +214,14 @@ public class JXDocumentTest {
         }
     }
 
+    @Test
+    public void testA(){
+        String content = "<span style=\"color: #5191ce;\" >网页设计师</span>";
+        JXDocument doc = JXDocument.create(content);
+        List<JXNode> nodes = doc.selN("//*[text()='网页设计师']");
+        for (JXNode node:nodes){
+            logger.info("r = {}",node);
+        }
+    }
+
 }

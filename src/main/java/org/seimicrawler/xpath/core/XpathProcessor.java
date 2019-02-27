@@ -342,9 +342,17 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
             XValue left = visit(relationalExprContexts.get(0));
             XValue right = visit(relationalExprContexts.get(1));
             if ("=".equals(ctx.op.getText())){
-                return XValue.create(Objects.equals(left ,right));
+                if (left.valType().equals(right.valType())){
+                    return XValue.create(Objects.equals(left ,right));
+                }else {
+                    return XValue.create(Objects.equals(left.asString() ,right.asString()));
+                }
             }else {
-                return XValue.create(!Objects.equals(left,right));
+                if (left.valType().equals(right.valType())){
+                    return XValue.create(!Objects.equals(left ,right));
+                }else {
+                    return XValue.create(!Objects.equals(left.asString() ,right.asString()));
+                }
             }
         }else {
             throw new XpathParserException("error equalityExpr near:"+ctx.getText());
