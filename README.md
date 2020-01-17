@@ -7,6 +7,8 @@ JsoupXpath
 
 A html parser with xpath base on Jsoup and Antlr4.Maybe it is the best in java,Just try it.
 
+[English Doc](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/README_EN.md)
+
 ## 简介 ##
 
 **JsoupXpath** 是一款纯Java开发的使用xpath解析提取html数据的解析器，针对html解析完全重新实现了W3C XPATH 1.0标准语法，xpath的Lexer和Parser基于Antlr4构建，html的DOM树生成采用Jsoup，故命名为JsoupXpath.
