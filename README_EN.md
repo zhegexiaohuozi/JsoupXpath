@@ -59,6 +59,13 @@ Or a more typical example in Issue.
 ## Syntax ##
 
 Supports complete W3C XPATH 1.0 standard syntax. W3C specifications: http://www.w3.org/TR/1999/REC-xpath-19991116
+## syntax tree ##
+
+- `//ul[@class='subject-list']/li[./div/div/span[@class='pl']/num()>(1000+90*(2*50))][last()][1]/div/h2/allText()`
+[![muti_expr](http://img.wanghaomiao.cn/jsoupxpath/antlr4_parse_tree_muti_expr.png)](http://img.wanghaomiao.cn/jsoupxpath/antlr4_parse_tree_muti_expr.png)
+
+- `//ul[@class='subject-list']/li[not(contains(self::li/div/div/span[@class='pl']//text(),'14582'))]/div/h2//text()`
+[![functions](http://img.wanghaomiao.cn/jsoupxpath/antlr4_parse_tree_functions_v2.png)](http://img.wanghaomiao.cn/jsoupxpath/antlr4_parse_tree_functions_v2.png)
 
 
 ### Some notes about using Xpath ###
@@ -85,9 +92,9 @@ In most cases, it is not recommended to directly paste the Xpath generated in Fi
 
 - `string substring(string, number, number?)`  The first parameter specifies the string, the second specifies the starting position (xpath indexes all start from 1), and the third specifies the length to be truncated. Here we must pay attention to the syntax of xpath, this is not the end position.
 
-substring ("12345", 1.5, 2.6) returns "234"
+`substring("12345", 1.5, 2.6)` returns "234"
 
-substring ("12345", 2, 3) returns "234"
+`substring("12345", 2, 3)` returns "234"
 
 - `string substring-ex(string, number, number)` The first parameter specifies the string, the second specifies the starting position (java indexes are used to start from 0), and the third specifies the ending position (supports negative numbers). This is JsoupXpath extended functions, convenient for developers who are used to java.
 
@@ -122,8 +129,8 @@ AxisName: 'ancestor'         // Select from the ancestors of the node in the cur
   | 'preceding'                     // Select from all nodes before the node in the current context
   | 'preceding-sibling'          // Select from all sibling nodes before the node in the current context
   | 'self'                               // Select in current context
-  | 'following-sibling-one'    // Select from the previous sibling node of the node in the context (JsoupXpath expansion)
-  | 'preceding-sibling-one'  // Select the next sibling node of the node in the context (JsoupXpath extension)
+  | 'following-sibling-one'     // Select from the previous sibling node of the node in the context (JsoupXpath expansion)
+  | 'preceding-sibling-one'     // Select the next sibling node of the node in the context (JsoupXpath extension)
   | 'sibling'                           // All siblings (JsoupXpath extension) (under development ...)
   ;
 ```
