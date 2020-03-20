@@ -39,17 +39,11 @@ maven依赖,全版本请参见[release信息](https://github.com/zhegexiaohuozi/
 示例：
 
 ```
-String xpath="//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
-String doc = "...";
-JXDocument jxDocument = new JXDocument(doc);
-List<Object> rs = jxDocument.sel(xpath);
-for (Object o:rs){
-	if (o instanceof Element){
-		int index = ((Element) o).siblingIndex();
-		System.out.println(index);
-	}
-	System.out.println(o.toString());
-}
+String html = "<html><body><script>console.log('aaaaa')</script><div class='test'>some body</div><div class='xiao'>Two</div></body></html>";
+JXDocument underTest = JXDocument.create(html);
+String xpath = "//div[contains(@class,'xiao')]/text()";
+JXNode node = underTest.selNOne(xpath);
+Assert.assertEquals("Two",node.asString());
 ```
 其他可以参考 [`org.seimicrawler.xpath.JXDocumentTest`](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/src/test/java/org/seimicrawler/xpath/JXDocumentTest.java)，这里有大量的测试用例
 
