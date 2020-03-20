@@ -7,6 +7,8 @@ JsoupXpath
 
 A html parser with xpath base on Jsoup and Antlr4.Maybe it is the best in java,Just try it.
 
+[English Doc](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/README_EN.md)
+
 ## 简介 ##
 
 **JsoupXpath** 是一款纯Java开发的使用xpath解析提取html数据的解析器，针对html解析完全重新实现了W3C XPATH 1.0标准语法，xpath的Lexer和Parser基于Antlr4构建，html的DOM树生成采用Jsoup，故命名为JsoupXpath.
@@ -37,17 +39,11 @@ maven依赖,全版本请参见[release信息](https://github.com/zhegexiaohuozi/
 示例：
 
 ```
-String xpath="//div[@id='post_list']/div[./div/div/span[@class='article_view']/a/num()>1000]/div/h3/allText()";
-String doc = "...";
-JXDocument jxDocument = new JXDocument(doc);
-List<Object> rs = jxDocument.sel(xpath);
-for (Object o:rs){
-	if (o instanceof Element){
-		int index = ((Element) o).siblingIndex();
-		System.out.println(index);
-	}
-	System.out.println(o.toString());
-}
+String html = "<html><body><script>console.log('aaaaa')</script><div class='test'>some body</div><div class='xiao'>Two</div></body></html>";
+JXDocument underTest = JXDocument.create(html);
+String xpath = "//div[contains(@class,'xiao')]/text()";
+JXNode node = underTest.selNOne(xpath);
+Assert.assertEquals("Two",node.asString());
 ```
 其他可以参考 [`org.seimicrawler.xpath.JXDocumentTest`](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/src/test/java/org/seimicrawler/xpath/JXDocumentTest.java)，这里有大量的测试用例
 
