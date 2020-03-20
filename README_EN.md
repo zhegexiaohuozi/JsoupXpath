@@ -53,7 +53,7 @@ for (Object o:rs){
 	System.out.println(o.toString());
 }
 ```
-Others can refer to org.seimicrawler.xpath.JXDocumentTest, there are a lot of test cases here.
+Others can refer to [`org.seimicrawler.xpath.JXDocumentTest`](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/src/test/java/org/seimicrawler/xpath/JXDocumentTest.java), there are a lot of test cases here.
 
 Or a more typical example in Issue.
 
