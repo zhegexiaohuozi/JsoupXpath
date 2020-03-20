@@ -39,7 +39,7 @@ public class JXDocumentTest {
 
     @Before
     public void before() throws Exception {
-        String html = "<html><body><script>console.log('aaaaa')</script><div class='test'>搜易贷致力于普惠金融，专注于互联网投资理财与小额贷款，搭建中国最大、用户体验最好的个人及中小企业的互联网信贷平台</div><div class='xiao'>Two</div></body></html>";
+        String html = "<html><body><script>console.log('aaaaa')</script><div class='test'>some body</div><div class='xiao'>Two</div></body></html>";
         underTest = JXDocument.create(html);
         if (doubanTest == null) {
             URL t = loader.getResource("d_test.html");
@@ -57,18 +57,16 @@ public class JXDocumentTest {
     @Test
     public void testSel() throws Exception {
         String xpath = "//script[1]/text()";
-        List<Object> res = underTest.sel(xpath);
+        JXNode res = underTest.selNOne(xpath);
         Assert.assertNotNull(res);
-        Assert.assertTrue(res.size() > 0);
-        logger.info(StringUtils.join(res, ","));
+        Assert.assertEquals("console.log('aaaaa')",res.asString());
     }
 
     @Test
     public void testNotMatchFilter() throws Exception {
-        String xpath = "//div[@class!~'xiao']/text()";
-        List<Object> res = underTest.sel(xpath);
-        Assert.assertEquals(1, res.size());
-        logger.info(StringUtils.join(res, ","));
+        String xpath = "//div[contains(@class,'xiao')]/text()";
+        JXNode node = underTest.selNOne(xpath);
+        Assert.assertEquals("Two",node.asString());
     }
 
     @Test
