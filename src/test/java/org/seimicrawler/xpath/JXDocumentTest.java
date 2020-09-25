@@ -98,9 +98,9 @@ public class JXDocumentTest {
                 { "//ul[@class='subject-list']/li[first()]/div/h2/allText()", "失控 : 全人类的最终命运和结局T2-失控 : 全人类的最终命运和结局" },
                 { "//ul[@class='subject-list']/li[./div/div/span[@class='pl']/num()>(1000+90*(2*50))][last()][1]/div/h2/allText()", "长尾理论长尾理论" },
                 { "//ul[@class='subject-list']/li[self::li/div/div/span[@class='pl']/num()>10000][-1]/div/h2/allText()",   "长尾理论长尾理论" },
-                { "//ul[@class='subject-list']/li[contains(self::li/div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
-                { "//ul[@class='subject-list']/li[contains(./div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
-                { "//*[@id=\"subject_list\"]/ul/li[2]/div[2]/h2/a//text()",   "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
+                { "//ul[@class='subject-list']/li[contains(self::li/div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家: 硅谷创业之父Paul Graham文集T2-黑客与画家: 硅谷创业之父Paul Graham文集" },
+                { "//ul[@class='subject-list']/li[contains(./div/div/span[@class='pl']//text(),'14582')]/div/h2//text()",   "黑客与画家: 硅谷创业之父Paul Graham文集T2-黑客与画家: 硅谷创业之父Paul Graham文集" },
+                { "//*[@id=\"subject_list\"]/ul/li[2]/div[2]/h2/a//text()",   "黑客与画家: 硅谷创业之父Paul Graham文集T2-黑客与画家: 硅谷创业之父Paul Graham文集" },
                 { "//ul[@class]",   3L },
                 { "//a[@id]/@href",   "https://www.douban.com/doumail/" },
                 { "//*[@id=\"subject_list\"]/ul[1]/li[8]/div[2]/div[2]/span[3]/num()",   "3734.0" },
@@ -132,11 +132,11 @@ public class JXDocumentTest {
         List<JXNode> jxNodeList = doubanTest.selN(xpath);
         Set<String> expect = new HashSet<>();
         //第一个 ul 中的
-        expect.add("失控 : 全人类的最终命运和结局");
-        expect.add("黑客与画家 : 硅谷创业之父Paul Graham文集");
+        expect.add("失控: 全人类的最终命运和结局");
+        expect.add("黑客与画家: 硅谷创业之父Paul Graham文集");
         //第二个 ul 中的
-        expect.add("T2-失控 : 全人类的最终命运和结局");
-        expect.add("T2-黑客与画家 : 硅谷创业之父Paul Graham文集");
+        expect.add("T2-失控: 全人类的最终命运和结局");
+        expect.add("T2-黑客与画家: 硅谷创业之父Paul Graham文集");
 
         Set<String> res = new HashSet<>();
         for (JXNode node : jxNodeList) {
@@ -220,6 +220,16 @@ public class JXDocumentTest {
         for (JXNode node:nodes){
             logger.info("r = {}",node);
         }
+    }
+
+    @Test
+    public void FixTextBehaviorTest(){
+        String html = "<p><span class=\"text-muted\">分类：</span>动漫<span class=\"split-line\"></span><span class=\"text-muted hidden-xs\">地区：</span>日本<span class=\"split-line\"></span><span class=\"text-muted hidden-xs\">年份：</span>2010</p>";
+        JXDocument jxDocument = JXDocument.create(html);
+        List<JXNode> jxNodes = jxDocument.selN("//text()[3]");
+        String actual = StringUtils.join(jxNodes,"");
+        logger.info("actual = {}",actual);
+        Assert.assertEquals("2010", actual);
     }
 
 }

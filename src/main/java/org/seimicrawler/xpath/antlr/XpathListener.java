@@ -1,4 +1,4 @@
-// Generated from Xpath.g4 by ANTLR 4.7
+// Generated from resources/Xpath.g4 by ANTLR 4.7.2
 package org.seimicrawler.xpath.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

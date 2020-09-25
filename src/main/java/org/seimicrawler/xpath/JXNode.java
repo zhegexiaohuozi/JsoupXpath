@@ -17,9 +17,11 @@ package org.seimicrawler.xpath;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.seimicrawler.xpath.core.Constants;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * XPath提取后的
@@ -46,7 +48,18 @@ public class JXNode {
     }
 
     public String asString(){
-        return (String) value;
+        if (isString()){
+            return (String) value;
+        }else if (isElement()){
+            Element e = (Element) value;
+            if (Objects.equals(e.tagName(), Constants.DEF_TEXT_TAG_NAME)){
+                return e.ownText();
+            }else {
+                return e.toString();
+            }
+        }else {
+            return String.valueOf(value);
+        }
     }
 
     public boolean isNumber(){
@@ -87,11 +100,7 @@ public class JXNode {
 
     @Override
     public String toString() {
-        if (isElement()){
-            return asElement().toString();
-        }else {
-            return String.valueOf(value);
-        }
+        return asString();
     }
 
     public Object value(){

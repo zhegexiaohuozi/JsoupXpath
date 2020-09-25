@@ -32,6 +32,16 @@ public class XValue implements Comparable<XValue> {
     private boolean isAttr = false;
     private boolean isExprStr = false;
 
+    /**
+     * 同类型节点的顺序
+     */
+    private int siblingIndex;
+
+    /**
+     * 满足特殊场景计算筛选需求
+     */
+    private List<XValue> xValues;
+
     public boolean isBoolean() {
         return value instanceof Boolean;
     }
@@ -132,6 +142,22 @@ public class XValue implements Comparable<XValue> {
 
     public boolean isExprStr() {
         return isExprStr;
+    }
+
+    public int getSiblingIndex() {
+        return siblingIndex;
+    }
+
+    public void setSiblingIndex(int siblingIndex) {
+        this.siblingIndex = siblingIndex;
+    }
+
+    public List<XValue> getxValues() {
+        return xValues;
+    }
+
+    public void setxValues(List<XValue> xValues) {
+        this.xValues = xValues;
     }
 
     @Override
