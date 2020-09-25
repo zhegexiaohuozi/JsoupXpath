@@ -222,8 +222,11 @@ public class JXDocumentTest {
         }
     }
 
+    /**
+     * fix https://github.com/zhegexiaohuozi/JsoupXpath/issues/52
+     */
     @Test
-    public void FixTextBehaviorTest(){
+    public void fixTextBehaviorTest(){
         String html = "<p><span class=\"text-muted\">分类：</span>动漫<span class=\"split-line\"></span><span class=\"text-muted hidden-xs\">地区：</span>日本<span class=\"split-line\"></span><span class=\"text-muted hidden-xs\">年份：</span>2010</p>";
         JXDocument jxDocument = JXDocument.create(html);
         List<JXNode> jxNodes = jxDocument.selN("//text()[3]");
@@ -233,6 +236,24 @@ public class JXDocumentTest {
         List<JXNode> nodes = jxDocument.selN("//text()");
         String allText = StringUtils.join(nodes,"");
         logger.info("all = {}",allText);
+    }
+
+    /**
+     * fix https://github.com/zhegexiaohuozi/JsoupXpath/issues/44
+     */
+    @Test
+    public void fixTextElNoParentTest(){
+        String test="<div class='a'> a <div>need</div> <div class='e'> not need</div> c </div>";
+        JXDocument j = JXDocument.create(test);
+        List<JXNode> l = j.selN("//div[@class='a']//text()[not(ancestor::div[@class='e'])]");
+        Set<String> finalRes = new HashSet<>();
+        for (JXNode i : l){
+            logger.info("{}",i.toString());
+            finalRes.add(i.asString());
+        }
+        Assert.assertFalse(finalRes.contains("not need"));
+        Assert.assertTrue(finalRes.contains("need"));
+        Assert.assertEquals(4, finalRes.size());
     }
 
 }
