@@ -1,28 +1,17 @@
-// Generated from Xpath.g4 by ANTLR 4.7
+// Generated from resources/Xpath.g4 by ANTLR 4.7.2
 package org.seimicrawler.xpath.antlr;
-import org.antlr.v4.runtime.NoViableAltException;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.RuntimeMetaData;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.Vocabulary;
-import org.antlr.v4.runtime.VocabularyImpl;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.ParserATNSimulator;
-import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
-import org.antlr.v4.runtime.tree.ParseTreeVisitor;
-import org.antlr.v4.runtime.tree.TerminalNode;
-
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class XpathParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.7", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.7.2", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -44,30 +33,39 @@ public class XpathParser extends Parser {
 		RULE_multiplicativeExpr = 20, RULE_unaryExprNoRoot = 21, RULE_qName = 22, 
 		RULE_functionName = 23, RULE_variableReference = 24, RULE_nameTest = 25, 
 		RULE_nCName = 26;
-	public static final String[] ruleNames = {
-		"main", "locationPath", "absoluteLocationPathNoroot", "relativeLocationPath", 
-		"step", "axisSpecifier", "nodeTest", "predicate", "abbreviatedStep", "expr", 
-		"primaryExpr", "functionCall", "unionExprNoRoot", "pathExprNoRoot", "filterExpr", 
-		"orExpr", "andExpr", "equalityExpr", "relationalExpr", "additiveExpr", 
-		"multiplicativeExpr", "unaryExprNoRoot", "qName", "functionName", "variableReference", 
-		"nameTest", "nCName"
-	};
+	private static String[] makeRuleNames() {
+		return new String[] {
+			"main", "locationPath", "absoluteLocationPathNoroot", "relativeLocationPath", 
+			"step", "axisSpecifier", "nodeTest", "predicate", "abbreviatedStep", 
+			"expr", "primaryExpr", "functionCall", "unionExprNoRoot", "pathExprNoRoot", 
+			"filterExpr", "orExpr", "andExpr", "equalityExpr", "relationalExpr", 
+			"additiveExpr", "multiplicativeExpr", "unaryExprNoRoot", "qName", "functionName", 
+			"variableReference", "nameTest", "nCName"
+		};
+	}
+	public static final String[] ruleNames = makeRuleNames();
 
-	private static final String[] _LITERAL_NAMES = {
-		null, "'processing-instruction'", "'or'", "'and'", "'$'", null, null, 
-		null, "'/'", "'//'", "'('", "')'", "'['", "']'", "'-'", "'+'", "'.'", 
-		"'*'", "'`div`'", "'`mod`'", "'..'", "'@'", "','", "'|'", "'<'", "'>'", 
-		"'<='", "'>='", "'='", "'!='", "'^='", "'$='", "'*='", "'~='", "'!~'", 
-		"':'", "'::'", "'''", "'\"'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, "NodeType", "Number", "AxisName", "PATHSEP", 
-		"ABRPATH", "LPAR", "RPAR", "LBRAC", "RBRAC", "MINUS", "PLUS", "DOT", "MUL", 
-		"DIVISION", "MODULO", "DOTDOT", "AT", "COMMA", "PIPE", "LESS", "MORE_", 
-		"LE", "GE", "EQUALITY", "INEQUALITY", "START_WITH", "END_WITH", "CONTAIN_WITH", 
-		"REGEXP_WITH", "REGEXP_NOT_WITH", "COLON", "CC", "APOS", "QUOT", "Literal", 
-		"Whitespace", "NCName"
-	};
+	private static String[] makeLiteralNames() {
+		return new String[] {
+			null, "'processing-instruction'", "'or'", "'and'", "'$'", null, null, 
+			null, "'/'", "'//'", "'('", "')'", "'['", "']'", "'-'", "'+'", "'.'", 
+			"'*'", "'`div`'", "'`mod`'", "'..'", "'@'", "','", "'|'", "'<'", "'>'", 
+			"'<='", "'>='", "'='", "'!='", "'^='", "'$='", "'*='", "'~='", "'!~'", 
+			"':'", "'::'", "'''", "'\"'"
+		};
+	}
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
+	private static String[] makeSymbolicNames() {
+		return new String[] {
+			null, null, null, null, null, "NodeType", "Number", "AxisName", "PATHSEP", 
+			"ABRPATH", "LPAR", "RPAR", "LBRAC", "RBRAC", "MINUS", "PLUS", "DOT", 
+			"MUL", "DIVISION", "MODULO", "DOTDOT", "AT", "COMMA", "PIPE", "LESS", 
+			"MORE_", "LE", "GE", "EQUALITY", "INEQUALITY", "START_WITH", "END_WITH", 
+			"CONTAIN_WITH", "REGEXP_WITH", "REGEXP_NOT_WITH", "COLON", "CC", "APOS", 
+			"QUOT", "Literal", "Whitespace", "NCName"
+		};
+	}
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**
@@ -117,6 +115,7 @@ public class XpathParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
+
 	public static class MainContext extends ParserRuleContext {
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
@@ -468,6 +467,8 @@ public class XpathParser extends Parser {
 
 	public static class AxisSpecifierContext extends ParserRuleContext {
 		public TerminalNode AxisName() { return getToken(XpathParser.AxisName, 0); }
+		public TerminalNode CC() { return getToken(XpathParser.CC, 0); }
+		public TerminalNode AT() { return getToken(XpathParser.AT, 0); }
 		public AxisSpecifierContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -537,6 +538,8 @@ public class XpathParser extends Parser {
 			return getRuleContext(NameTestContext.class,0);
 		}
 		public TerminalNode NodeType() { return getToken(XpathParser.NodeType, 0); }
+		public TerminalNode LPAR() { return getToken(XpathParser.LPAR, 0); }
+		public TerminalNode RPAR() { return getToken(XpathParser.RPAR, 0); }
 		public TerminalNode Literal() { return getToken(XpathParser.Literal, 0); }
 		public NodeTestContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -613,9 +616,11 @@ public class XpathParser extends Parser {
 	}
 
 	public static class PredicateContext extends ParserRuleContext {
+		public TerminalNode LBRAC() { return getToken(XpathParser.LBRAC, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
+		public TerminalNode RBRAC() { return getToken(XpathParser.RBRAC, 0); }
 		public PredicateContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -661,6 +666,8 @@ public class XpathParser extends Parser {
 	}
 
 	public static class AbbreviatedStepContext extends ParserRuleContext {
+		public TerminalNode DOT() { return getToken(XpathParser.DOT, 0); }
+		public TerminalNode DOTDOT() { return getToken(XpathParser.DOTDOT, 0); }
 		public AbbreviatedStepContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -758,9 +765,11 @@ public class XpathParser extends Parser {
 		public VariableReferenceContext variableReference() {
 			return getRuleContext(VariableReferenceContext.class,0);
 		}
+		public TerminalNode LPAR() { return getToken(XpathParser.LPAR, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
+		public TerminalNode RPAR() { return getToken(XpathParser.RPAR, 0); }
 		public TerminalNode Literal() { return getToken(XpathParser.Literal, 0); }
 		public TerminalNode Number() { return getToken(XpathParser.Number, 0); }
 		public FunctionCallContext functionCall() {
@@ -851,11 +860,17 @@ public class XpathParser extends Parser {
 		public FunctionNameContext functionName() {
 			return getRuleContext(FunctionNameContext.class,0);
 		}
+		public TerminalNode LPAR() { return getToken(XpathParser.LPAR, 0); }
+		public TerminalNode RPAR() { return getToken(XpathParser.RPAR, 0); }
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
+		}
+		public List<TerminalNode> COMMA() { return getTokens(XpathParser.COMMA); }
+		public TerminalNode COMMA(int i) {
+			return getToken(XpathParser.COMMA, i);
 		}
 		public FunctionCallContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1696,6 +1711,7 @@ public class XpathParser extends Parser {
 		public NCNameContext nCName(int i) {
 			return getRuleContext(NCNameContext.class,i);
 		}
+		public TerminalNode COLON() { return getToken(XpathParser.COLON, 0); }
 		public QNameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1840,9 +1856,11 @@ public class XpathParser extends Parser {
 	}
 
 	public static class NameTestContext extends ParserRuleContext {
+		public TerminalNode MUL() { return getToken(XpathParser.MUL, 0); }
 		public NCNameContext nCName() {
 			return getRuleContext(NCNameContext.class,0);
 		}
+		public TerminalNode COLON() { return getToken(XpathParser.COLON, 0); }
 		public QNameContext qName() {
 			return getRuleContext(QNameContext.class,0);
 		}

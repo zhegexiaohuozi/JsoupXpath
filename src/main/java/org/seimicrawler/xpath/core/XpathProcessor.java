@@ -12,6 +12,8 @@ import org.seimicrawler.xpath.exception.XpathMergeValueException;
 import org.seimicrawler.xpath.exception.XpathParserException;
 import org.seimicrawler.xpath.util.CommonUtil;
 import org.seimicrawler.xpath.util.Scanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -27,6 +29,7 @@ import static org.seimicrawler.xpath.antlr.XpathParser.*;
  * @since 2017/8/30.
  */
 public class XpathProcessor extends XpathBaseVisitor<XValue> {
+    private Logger logger = LoggerFactory.getLogger(XpathProcessor.class);
     private Stack<Scope> scopeStack = new Stack<>();
     private Scope rootScope;
     public XpathProcessor(Elements root){
@@ -159,7 +162,11 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                     }
                 }else {
                     // nodeType 计算结果，直接返给上层
-                    return nodeTest;
+                    if (nodeTest.isElements()){
+                        updateCurrentContext(nodeTest.asElements());
+                    }else {
+                        return nodeTest;
+                    }
                 }
             }
         }
@@ -207,7 +214,8 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
     public XValue visitNodeTest(XpathParser.NodeTestContext ctx) {
         if (ctx.nameTest()!=null){
             return visit(ctx.nameTest());
-        }if (ctx.NodeType()!=null){
+        }
+        if (ctx.NodeType()!=null){
             NodeTest nodeTest = Scanner.findNodeTestByName(ctx.NodeType().getText());
             return nodeTest.call(currentScope());
         }
@@ -225,11 +233,25 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
             if (exprVal.isNumber()){
                 long index = exprVal.asLong();
                 if (index < 0){
-                    index = CommonUtil.sameTagElNums(e,currentScope()) + index + 1;
+                    if (Objects.equals(e.tagName(),Constants.DEF_TEXT_TAG_NAME)){
+                        index = CommonUtil.getJxSameTagIndexInSiblings(e) + index + 1;
+                    }else {
+                        index = CommonUtil.sameTagElNums(e,currentScope()) + index + 1;
+                    }
+                    if (index < 0){
+                        index = 1;
+                    }
                 }
-                if (index == CommonUtil.getElIndexInSameTags(e,currentScope())){
-                    newContext.add(e);
+                if (Objects.equals(e.tagName(),Constants.DEF_TEXT_TAG_NAME)){
+                    if (index == CommonUtil.getJxSameTagIndexInSiblings(e)){
+                        newContext.add(e);
+                    }
+                }else {
+                    if (index == CommonUtil.getElIndexInSameTags(e,currentScope())){
+                        newContext.add(e);
+                    }
                 }
+
             }else if (exprVal.isBoolean()){
                 if (exprVal.asBoolean()){
                     newContext.add(e);

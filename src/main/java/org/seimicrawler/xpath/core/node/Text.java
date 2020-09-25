@@ -1,8 +1,11 @@
 package org.seimicrawler.xpath.core.node;
 
+import org.jsoup.nodes.TextNode;
+import org.seimicrawler.xpath.core.Constants;
 import org.seimicrawler.xpath.core.NodeTest;
 import org.seimicrawler.xpath.core.Scope;
 import org.seimicrawler.xpath.core.XValue;
+import org.seimicrawler.xpath.util.CommonUtil;
 import org.seimicrawler.xpath.util.Scanner;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -32,17 +35,38 @@ public class Text implements NodeTest {
     @Override
     public XValue call(Scope scope) {
         Elements context = scope.context();
-        List<String> res = new LinkedList<>();
+        Elements res = new Elements();
         if (context!=null&&context.size()>0){
             if (scope.isRecursion()){
-                NodeTest allTextFun = Scanner.findNodeTestByName("allText");
-                return allTextFun.call(scope);
+                for (Element e:context){
+                    Elements all = e.getAllElements();
+                    for (Element c:all){
+                        List<TextNode> textNodes =  c.textNodes();
+                        for (int i=0;i<textNodes.size();i++){
+                            TextNode textNode = textNodes.get(i);
+                            Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
+                            data.text(textNode.getWholeText());
+                            CommonUtil.setSameTagIndexInSiblings(data,i+1);
+                            res.add(data);
+                        }
+                    }
+                }
             }else {
                 for (Element e:context){
                     if ("script".equals(e.nodeName())){
-                        res.add(e.data());
+                        Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
+                        data.text(e.data());
+                        CommonUtil.setSameTagIndexInSiblings(data,1);
+                        res.add(data);
                     }else {
-                        res.add(e.ownText());
+                        List<TextNode> textNodes =  e.textNodes();
+                        for (int i=0;i<textNodes.size();i++){
+                            TextNode textNode = textNodes.get(i);
+                            Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
+                            data.text(textNode.getWholeText());
+                            CommonUtil.setSameTagIndexInSiblings(data,i+1);
+                            res.add(data);
+                        }
                     }
                 }
             }

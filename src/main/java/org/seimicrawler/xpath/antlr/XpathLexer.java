@@ -1,19 +1,17 @@
-// Generated from Xpath.g4 by ANTLR 4.7
+// Generated from resources/Xpath.g4 by ANTLR 4.7.2
 package org.seimicrawler.xpath.antlr;
-import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.RuntimeMetaData;
-import org.antlr.v4.runtime.Vocabulary;
-import org.antlr.v4.runtime.VocabularyImpl;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.LexerATNSimulator;
-import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class XpathLexer extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.7", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.7.2", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -33,30 +31,40 @@ public class XpathLexer extends Lexer {
 		"DEFAULT_MODE"
 	};
 
-	public static final String[] ruleNames = {
-		"T__0", "T__1", "T__2", "T__3", "NodeType", "Number", "Digits", "AxisName", 
-		"PATHSEP", "ABRPATH", "LPAR", "RPAR", "LBRAC", "RBRAC", "MINUS", "PLUS", 
-		"DOT", "MUL", "DIVISION", "MODULO", "DOTDOT", "AT", "COMMA", "PIPE", "LESS", 
-		"MORE_", "LE", "GE", "EQUALITY", "INEQUALITY", "START_WITH", "END_WITH", 
-		"CONTAIN_WITH", "REGEXP_WITH", "REGEXP_NOT_WITH", "COLON", "CC", "APOS", 
-		"QUOT", "Literal", "Whitespace", "NCName", "NCNameStartChar", "NCNameChar"
-	};
+	private static String[] makeRuleNames() {
+		return new String[] {
+			"T__0", "T__1", "T__2", "T__3", "NodeType", "Number", "Digits", "AxisName", 
+			"PATHSEP", "ABRPATH", "LPAR", "RPAR", "LBRAC", "RBRAC", "MINUS", "PLUS", 
+			"DOT", "MUL", "DIVISION", "MODULO", "DOTDOT", "AT", "COMMA", "PIPE", 
+			"LESS", "MORE_", "LE", "GE", "EQUALITY", "INEQUALITY", "START_WITH", 
+			"END_WITH", "CONTAIN_WITH", "REGEXP_WITH", "REGEXP_NOT_WITH", "COLON", 
+			"CC", "APOS", "QUOT", "Literal", "Whitespace", "NCName", "NCNameStartChar", 
+			"NCNameChar"
+		};
+	}
+	public static final String[] ruleNames = makeRuleNames();
 
-	private static final String[] _LITERAL_NAMES = {
-		null, "'processing-instruction'", "'or'", "'and'", "'$'", null, null, 
-		null, "'/'", "'//'", "'('", "')'", "'['", "']'", "'-'", "'+'", "'.'", 
-		"'*'", "'`div`'", "'`mod`'", "'..'", "'@'", "','", "'|'", "'<'", "'>'", 
-		"'<='", "'>='", "'='", "'!='", "'^='", "'$='", "'*='", "'~='", "'!~'", 
-		"':'", "'::'", "'''", "'\"'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, "NodeType", "Number", "AxisName", "PATHSEP", 
-		"ABRPATH", "LPAR", "RPAR", "LBRAC", "RBRAC", "MINUS", "PLUS", "DOT", "MUL", 
-		"DIVISION", "MODULO", "DOTDOT", "AT", "COMMA", "PIPE", "LESS", "MORE_", 
-		"LE", "GE", "EQUALITY", "INEQUALITY", "START_WITH", "END_WITH", "CONTAIN_WITH", 
-		"REGEXP_WITH", "REGEXP_NOT_WITH", "COLON", "CC", "APOS", "QUOT", "Literal", 
-		"Whitespace", "NCName"
-	};
+	private static String[] makeLiteralNames() {
+		return new String[] {
+			null, "'processing-instruction'", "'or'", "'and'", "'$'", null, null, 
+			null, "'/'", "'//'", "'('", "')'", "'['", "']'", "'-'", "'+'", "'.'", 
+			"'*'", "'`div`'", "'`mod`'", "'..'", "'@'", "','", "'|'", "'<'", "'>'", 
+			"'<='", "'>='", "'='", "'!='", "'^='", "'$='", "'*='", "'~='", "'!~'", 
+			"':'", "'::'", "'''", "'\"'"
+		};
+	}
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
+	private static String[] makeSymbolicNames() {
+		return new String[] {
+			null, null, null, null, null, "NodeType", "Number", "AxisName", "PATHSEP", 
+			"ABRPATH", "LPAR", "RPAR", "LBRAC", "RBRAC", "MINUS", "PLUS", "DOT", 
+			"MUL", "DIVISION", "MODULO", "DOTDOT", "AT", "COMMA", "PIPE", "LESS", 
+			"MORE_", "LE", "GE", "EQUALITY", "INEQUALITY", "START_WITH", "END_WITH", 
+			"CONTAIN_WITH", "REGEXP_WITH", "REGEXP_NOT_WITH", "COLON", "CC", "APOS", 
+			"QUOT", "Literal", "Whitespace", "NCName"
+		};
+	}
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**

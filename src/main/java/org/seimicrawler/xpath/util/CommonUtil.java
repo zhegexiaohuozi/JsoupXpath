@@ -15,6 +15,8 @@ package org.seimicrawler.xpath.util;
    limitations under the License.
  */
 
+import org.apache.commons.lang3.StringUtils;
+import org.seimicrawler.xpath.core.Constants;
 import org.seimicrawler.xpath.core.Scope;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -98,5 +100,20 @@ public class CommonUtil {
             return rs;
         }
         return null;
+    }
+
+    public static void setSameTagIndexInSiblings(Element ori,int index){
+        if (ori == null){
+            return;
+        }
+        ori.attr(Constants.EL_SAME_TAG_INDEX_KEY,String.valueOf(index));
+    }
+
+    public static int getJxSameTagIndexInSiblings(Element ori){
+        String val = ori.attr(Constants.EL_SAME_TAG_INDEX_KEY);
+        if (StringUtils.isBlank(val)){
+            return -1;
+        }
+        return Integer.parseInt(val);
     }
 }
