@@ -21,6 +21,12 @@ import java.util.Map;
 /**
  * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  * @since 2018/2/28.
+ * `text()`不再简单的返回节点下的所有文本，而是按照标准语义识别出多个文本块，返回文本块列表，如
+ * ```
+ * <p> one <span> two</span> three </p>
+ * ```
+ * - `//text()` 返回  `["one", "two", "three" ]`
+ * - `//text()[2]` 返回  `["three"]`
  */
 public class Text implements NodeTest {
     /**
