@@ -230,6 +230,9 @@ public class JXDocumentTest {
         String actual = StringUtils.join(jxNodes,"");
         logger.info("actual = {}",actual);
         Assert.assertEquals("2010", actual);
+        List<JXNode> nodes = jxDocument.selN("//text()");
+        String allText = StringUtils.join(nodes,"");
+        logger.info("all = {}",allText);
     }
 
 }

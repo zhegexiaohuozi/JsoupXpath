@@ -1,17 +1,20 @@
 package org.seimicrawler.xpath.core.node;
 
+import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
+import org.jsoup.select.NodeTraversor;
+import org.jsoup.select.NodeVisitor;
 import org.seimicrawler.xpath.core.Constants;
 import org.seimicrawler.xpath.core.NodeTest;
 import org.seimicrawler.xpath.core.Scope;
 import org.seimicrawler.xpath.core.XValue;
 import org.seimicrawler.xpath.util.CommonUtil;
-import org.seimicrawler.xpath.util.Scanner;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author github.com/zhegexiaohuozi seimimaster@gmail.com
@@ -35,21 +38,37 @@ public class Text implements NodeTest {
     @Override
     public XValue call(Scope scope) {
         Elements context = scope.context();
-        Elements res = new Elements();
+        final Elements res = new Elements();
         if (context!=null&&context.size()>0){
             if (scope.isRecursion()){
-                for (Element e:context){
-                    Elements all = e.getAllElements();
-                    for (Element c:all){
-                        List<TextNode> textNodes =  c.textNodes();
-                        for (int i=0;i<textNodes.size();i++){
-                            TextNode textNode = textNodes.get(i);
-                            Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
-                            data.text(textNode.getWholeText());
-                            CommonUtil.setSameTagIndexInSiblings(data,i+1);
-                            res.add(data);
+                for (final Element e:context){
+                    final Map<String,Integer> indexMap = new HashMap<>();
+                    new NodeTraversor(new NodeVisitor() {
+                        @Override
+                        public void head(Node node, int depth) {
+                            if (node instanceof TextNode) {
+                                TextNode textNode = (TextNode) node;
+                                String key = depth + "_" +textNode.parent().hashCode();
+                                Integer index = indexMap.get(key);
+                                if (index == null){
+                                    index = 1;
+                                    indexMap.put(key,index);
+                                }else {
+                                    index += 1;
+                                    indexMap.put(key,index);
+                                }
+                                Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
+                                data.text(textNode.getWholeText());
+                                CommonUtil.setSameTagIndexInSiblings(data,index);
+                                res.add(data);
+                            }
                         }
-                    }
+
+                        @Override
+                        public void tail(Node node, int depth) {
+
+                        }
+                    }).traverse(e);
                 }
             }else {
                 for (Element e:context){
