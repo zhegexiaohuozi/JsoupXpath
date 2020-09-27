@@ -235,6 +235,7 @@ public class JXDocumentTest {
         Assert.assertEquals("2010", actual);
         List<JXNode> nodes = jxDocument.selN("//text()");
         String allText = StringUtils.join(nodes,"");
+        Assert.assertEquals("分类：动漫地区：日本年份：2010",allText);
         logger.info("all = {}",allText);
     }
 
