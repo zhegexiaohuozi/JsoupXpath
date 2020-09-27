@@ -12,6 +12,8 @@ import org.seimicrawler.xpath.util.CommonUtil;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +67,13 @@ public class Text implements NodeTest {
                                 }
                                 Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
                                 data.text(textNode.getWholeText());
+                                try {
+                                    Method parent = Node.class.getDeclaredMethod("setParentNode",Node.class);
+                                    parent.setAccessible(true);
+                                    parent.invoke(data,textNode.parent());
+                                } catch (Exception e) {
+                                    //ignore
+                                }
                                 CommonUtil.setSameTagIndexInSiblings(data,index);
                                 res.add(data);
                             }
