@@ -97,7 +97,7 @@ Assert.assertEquals("Two",node.asString());
 - `html()`获取全部节点的内部的html
 - `outerHtml()`获取全部节点的 包含节点本身在内的全部html
 - `num()`抽取节点自有文本中全部数字，如果知道节点的自有文本(即非子代节点所包含的文本)中只存在一个数字，如阅读数，评论数，价格等那么直接可以直接提取此数字出来。如果有多个数字将提取第一个匹配的连续数字。
-- `text()` 提取节点的自有文本。更多介绍可参加 https://github.com/zhegexiaohuozi/JsoupXpath/releases/tag/v2.4.1
+- `text()` 提取节点的自有文本。更多介绍可参见 https://github.com/zhegexiaohuozi/JsoupXpath/releases/tag/v2.4.1
 - `node()` 提取所有节点
 
 ## 轴 ##
