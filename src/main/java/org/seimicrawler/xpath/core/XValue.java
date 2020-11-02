@@ -1,16 +1,14 @@
 package org.seimicrawler.xpath.core;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateParser;
-import org.seimicrawler.xpath.exception.XpathParserException;
-import org.apache.commons.lang3.StringUtils;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.seimicrawler.xpath.exception.XpathParserException;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -111,7 +109,15 @@ public class XValue implements Comparable<XValue> {
     }
 
     public String asString() {
-        if (value instanceof List){
+       if (isElements()){
+            StringBuilder accum = new StringBuilder();
+            for (Element e:asElements()){
+                accum.append(e.ownText());
+            }
+            return accum.toString();
+        }else if (value instanceof Element && Objects.equals(((Element) value).tagName(),Constants.DEF_TEXT_TAG_NAME)){
+            return ((Element) value).ownText();
+        }else if (value instanceof List){
             return StringUtils.join((List)value,",");
         }else {
             return String.valueOf(value).trim();
