@@ -257,4 +257,32 @@ public class JXDocumentTest {
         Assert.assertEquals(4, finalRes.size());
     }
 
+    /**
+     * fix https://github.com/zhegexiaohuozi/JsoupXpath/issues/53
+     */
+    @Test
+    public void fixIssue53(){
+        String content = "<li class=\"res-book-item\" data-bid=\"1018351389\" data-rid=\"1\"> \n" +
+                " <div class=\"book-img-box\"> <a href=\"//book.qidian.com/info/1018351389\" target=\"_blank\" data-eid=\"qd_S04\" data-algrid=\"0.0.0\" data-bid=\"1018351389\"><img src=\"//bookcover.yuewen.com/qdbimg/349573/1018351389/150\"></a> \n" +
+                " </div> \n" +
+                " <div class=\"book-mid-info\"> \n" +
+                "  <h4><a href=\"//book.qidian.com/info/1018351389\" target=\"_blank\" data-eid=\"qd_S05\" data-bid=\"1018351389\" data-algrid=\"0.0.0\"><cite class=\"red-kw\">我们</cite>平凡<cite class=\"red-kw\">我们</cite>忠诚</a></h4> \n" +
+                "  <p class=\"author\"> <img src=\"//qidian.gtimg.com/qd/images/ico/user.f22d3.png\"><a class=\"name\" data-eid=\"qd_S06\" href=\"//my.qidian.com/author/403791004\" target=\"_blank\">巡璃</a> <em>|</em><a href=\"//www.qidian.com/duanpian\" data-eid=\"qd_S07\" target=\"_blank\">短篇</a><em>|</em><span>连载</span> </p> \n" +
+                "  <p class=\"intro\"> 这是一位普通老兵的故事，这位老兵没有走上战场，也没有人歌颂他，但他的工作却是面对生与死，他是一名普通的军转干部，没有得到任何荣誉，却仍旧坚守着信仰，永远忠诚。除了他的家人，他的战友，他的故事不被任何人所知，但他的故事正是一代军人、一代军转干部的写照。所以，我来歌颂他，歌颂那一代人。 </p> \n" +
+                "  <p class=\"update\"><a href=\"//read.qidian.com/chapter/YiObT_DmJpXu4xLcYRGW6w2/Ulsr6ThvJS5p4rPq4Fd4KQ2\" target=\"_blank\" data-eid=\"qd_S08\" data-bid=\"1018351389\" data-cid=\"//read.qidian.com/chapter/YiObT_DmJpXu4xLcYRGW6w2/Ulsr6ThvJS5p4rPq4Fd4KQ2\">最新更新 第一次见识到生死</a><em>·</em><span>2020-02-19</span> </p> \n" +
+                " </div> \n" +
+                " <div class=\"book-right-info\"> \n" +
+                "  <div class=\"total\"> \n" +
+                "   <p><span> 4497</span>总字数</p> \n" +
+                "   <p><span> 0</span>总推荐</p> \n" +
+                "  </div> \n" +
+                "  <p class=\"btn\"> <a class=\"red-btn\" href=\"//book.qidian.com/info/1018351389\" data-eid=\"qd_S02\" target=\"_blank\">书籍详情</a> <a class=\"blue-btn add-book\" href=\"javascript:\" data-eid=\"qd_S03\" data-bookid=\"1018351389\" data-bid=\"1018351389\">加入书架</a> </p> \n" +
+                " </div> </li>";
+        JXDocument j = JXDocument.create(content);
+        List<JXNode> l = j.selN("//*[text()='总字数']//text()");
+        Assert.assertEquals(2,l.size());
+        Assert.assertEquals("4497",l.get(0).asString());
+        Assert.assertEquals("总字数",l.get(1).asString());
+    }
+
 }
