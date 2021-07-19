@@ -47,34 +47,33 @@ public class Text implements NodeTest {
     public XValue call(Scope scope) {
         Elements context = scope.context();
         final Elements res = new Elements();
-        if (context!=null&&context.size()>0){
-            if (scope.isRecursion()){
-                for (final Element e:context){
-                    final Map<String,Integer> indexMap = new HashMap<>();
-                    new NodeTraversor(new NodeVisitor() {
+        if (context != null && context.size() > 0) {
+            if (scope.isRecursion()) {
+                for (final Element e : context) {
+                    final Map<String, Integer> indexMap = new HashMap<>();
+                    NodeTraversor.traverse(new NodeVisitor() {
                         @Override
                         public void head(Node node, int depth) {
                             if (node instanceof TextNode) {
                                 TextNode textNode = (TextNode) node;
-                                String key = depth + "_" +textNode.parent().hashCode();
+                                String key = depth + "_" + textNode.parent().hashCode();
                                 Integer index = indexMap.get(key);
-                                if (index == null){
+                                if (index == null) {
                                     index = 1;
-                                    indexMap.put(key,index);
-                                }else {
+                                } else {
                                     index += 1;
-                                    indexMap.put(key,index);
                                 }
+                                indexMap.put(key, index);
                                 Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
                                 data.text(textNode.getWholeText());
                                 try {
-                                    Method parent = Node.class.getDeclaredMethod("setParentNode",Node.class);
+                                    Method parent = Node.class.getDeclaredMethod("setParentNode", Node.class);
                                     parent.setAccessible(true);
-                                    parent.invoke(data,textNode.parent());
+                                    parent.invoke(data, textNode.parent());
                                 } catch (Exception e) {
                                     //ignore
                                 }
-                                CommonUtil.setSameTagIndexInSiblings(data,index);
+                                CommonUtil.setSameTagIndexInSiblings(data, index);
                                 res.add(data);
                             }
                         }
@@ -83,22 +82,22 @@ public class Text implements NodeTest {
                         public void tail(Node node, int depth) {
 
                         }
-                    }).traverse(e);
+                    }, e);
                 }
-            }else {
-                for (Element e:context){
-                    if ("script".equals(e.nodeName())){
+            } else {
+                for (Element e : context) {
+                    if ("script".equals(e.nodeName())) {
                         Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
                         data.text(e.data());
-                        CommonUtil.setSameTagIndexInSiblings(data,1);
+                        CommonUtil.setSameTagIndexInSiblings(data, 1);
                         res.add(data);
-                    }else {
-                        List<TextNode> textNodes =  e.textNodes();
-                        for (int i=0;i<textNodes.size();i++){
+                    } else {
+                        List<TextNode> textNodes = e.textNodes();
+                        for (int i = 0; i < textNodes.size(); i++) {
                             TextNode textNode = textNodes.get(i);
                             Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
                             data.text(textNode.getWholeText());
-                            CommonUtil.setSameTagIndexInSiblings(data,i+1);
+                            CommonUtil.setSameTagIndexInSiblings(data, i + 1);
                             res.add(data);
                         }
                     }
