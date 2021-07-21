@@ -12,7 +12,6 @@ import org.seimicrawler.xpath.util.CommonUtil;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +50,7 @@ public class Text implements NodeTest {
             if (scope.isRecursion()){
                 for (final Element e:context){
                     final Map<String,Integer> indexMap = new HashMap<>();
-                    new NodeTraversor(new NodeVisitor() {
+                    NodeTraversor.traverse(new NodeVisitor() {
                         @Override
                         public void head(Node node, int depth) {
                             if (node instanceof TextNode) {
@@ -83,7 +82,7 @@ public class Text implements NodeTest {
                         public void tail(Node node, int depth) {
 
                         }
-                    }).traverse(e);
+                    },e);
                 }
             }else {
                 for (Element e:context){
