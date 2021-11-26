@@ -34,7 +34,7 @@ public class PrecedingSiblingOneSelector implements AxisSelector {
         List<Element> total = new LinkedList<>();
         for (Element el : context){
             if (el.previousElementSibling()!=null){
-                total.add(el);
+                total.add(el.previousElementSibling());
             }
         }
         Elements newContext = new Elements();
