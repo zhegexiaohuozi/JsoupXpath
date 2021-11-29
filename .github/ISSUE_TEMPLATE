@@ -1,14 +1,15 @@
+为了便于快速识别您的问题，请认真回答以下问题，谢谢！
 Please answer these questions before submitting your issue. Thanks!
 
-1. What did you do , If possible, provide a recipe for reproducing the error.（使用的表达式与使用场景，确保能够复现）?
+1. 使用的表达式与使用场景，确保能够复现（What did you do , If possible, provide a recipe for reproducing the error.）?
 
 
-2. What did you expect to see（期望看到什么）?
-
-
-
-3. What did you see instead（JsoupXpath给出的结果）?
+2. 期望看到什么（What did you expect to see）?
 
 
 
-4. What version of JsoupXpath are you using（当前版本）?
+3. JsoupXpath给出的结果是什么（What did you see instead）?
+
+
+
+4. 当前使用的版本（What version of JsoupXpath are you using）?
