@@ -32,7 +32,7 @@ maven依赖,全版本请参见[release信息](https://github.com/zhegexiaohuozi/
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>2.5.0</version>
+   <version>2.5.1</version>
 </dependency>
 ```
 
@@ -74,6 +74,7 @@ Assert.assertEquals("Two",node.asString());
 - `string concat(string, string, string*)` 连接若干字符串
 - `boolean contains(string, string)` 判断第一个字符串是否包含第二个
 - `int count(node-set)` 计算给定的节点集合中节点个数
+- `double/long sum(node-set)` 计算给定的节点集合中数字节点值的和，计算参数范围内包含非数字内容则计算无效。
 - `boolean starts-with(string, string)` 判断第一个字符串是否以第二个开头
 - `int string-length(string?)` 如果给定了字符串则返回字符串长度，如果没有，那么则将当前节点转为字符串并返回长度
 - `string substring(string, number, number?)` 第一个参数指定字符串，第二个指定起始位置（xpath索引都是从1开始），第三指定要截取的长度，这里要注意在xpath的语法里这，不是结束的位置。
