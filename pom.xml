@@ -7,7 +7,7 @@
     </parent>
     <groupId>cn.wanghaomiao</groupId>
     <artifactId>JsoupXpath</artifactId>
-    <version>2.5.0</version>
+    <version>2.5.1</version>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <name>JsoupXpath</name>
@@ -101,8 +101,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>

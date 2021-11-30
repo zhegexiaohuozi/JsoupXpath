@@ -124,8 +124,8 @@ AxisName: 'ancestor'         // Select from the ancestors of the node in the cur
   | 'preceding'                     // Select from all nodes before the node in the current context
   | 'preceding-sibling'          // Select from all sibling nodes before the node in the current context
   | 'self'                               // Select in current context
-  | 'following-sibling-one'     // Select from the previous sibling node of the node in the context (JsoupXpath expansion)
-  | 'preceding-sibling-one'     // Select the next sibling node of the node in the context (JsoupXpath extension)
+  | 'following-sibling-one'     // Select from the following sibling node of the node in the context (JsoupXpath expansion)
+  | 'preceding-sibling-one'     // Select the preceding sibling node of the node in the context (JsoupXpath extension)
   | 'sibling'                           // All siblings (JsoupXpath extension) (under development ...)
   ;
 ```

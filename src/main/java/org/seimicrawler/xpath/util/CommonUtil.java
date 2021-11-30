@@ -116,4 +116,19 @@ public class CommonUtil {
         }
         return Integer.parseInt(val);
     }
+
+    public static void setSameTagNumsInSiblings(Element ori,int nums){
+        if (ori == null){
+            return;
+        }
+        ori.attr(Constants.EL_SAME_TAG_ALL_NUM_KEY,String.valueOf(nums));
+    }
+
+    public static int getJxSameTagNumsInSiblings(Element ori){
+        String val = ori.attr(Constants.EL_SAME_TAG_ALL_NUM_KEY);
+        if (StringUtils.isBlank(val)){
+            return -1;
+        }
+        return Integer.parseInt(val);
+    }
 }

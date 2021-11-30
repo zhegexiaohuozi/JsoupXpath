@@ -1,5 +1,6 @@
 package org.seimicrawler.xpath.core.node;
 
+import org.seimicrawler.xpath.core.Constants;
 import org.seimicrawler.xpath.core.NodeTest;
 import org.seimicrawler.xpath.core.Scope;
 import org.seimicrawler.xpath.core.XValue;
@@ -17,7 +18,6 @@ import java.util.regex.Pattern;
  * @since 2018/3/26.
  */
 public class Num implements NodeTest {
-    private static Pattern numExt = Pattern.compile("\\d*\\.?\\d+");
     /**
      * 支持的函数名
      */
@@ -37,10 +37,13 @@ public class Num implements NodeTest {
         NodeTest textFun = Scanner.findNodeTestByName("allText");
         XValue textVal = textFun.call(scope);
         String whole = StringUtils.join(textVal.asList(),"");
-        Matcher matcher = numExt.matcher(whole);
+        Matcher matcher = Constants.NUM_PATTERN.matcher(whole);
         if (matcher.find()){
             String numStr = matcher.group();
             BigDecimal num = new BigDecimal(numStr);
+            if (num.compareTo(new BigDecimal(num.longValue()))==0){
+                return XValue.create(num.longValue());
+            }
             return XValue.create(num.doubleValue());
         }else {
             return XValue.create(null);
