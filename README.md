@@ -114,8 +114,8 @@ AxisName:  'ancestor'         //在当前上下文中节点的祖先中选择
   |  'preceding'              //在当前上下文中节点前面的全部节点中选择
   |  'preceding-sibling'      //在当前上下文中节点前面的全部同胞节点中选择
   |  'self'                   //当前上下文中选择
-  |  'following-sibling-one'  //在上下文中节点的前一个同胞节点中选择（JsoupXpath扩展）
-  |  'preceding-sibling-one'  //在上下文中节点的下一个同胞节点选择(JsoupXpath扩展)
+  |  'following-sibling-one'  //在上下文中节点的下一个同胞节点中选择（JsoupXpath扩展）
+  |  'preceding-sibling-one'  //在上下文中节点的前一个同胞节点选择(JsoupXpath扩展)
   |  'sibling'                //全部同胞(JsoupXpath扩展)(开发中。。。)
   ;
 ```

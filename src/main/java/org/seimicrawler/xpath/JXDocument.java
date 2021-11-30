@@ -93,7 +93,10 @@ public class JXDocument {
             ParseTree tree = parser.main();
             XpathProcessor processor = new XpathProcessor(elements);
             XValue calRes = processor.visit(tree);
-
+            if (calRes == null){
+                finalRes.add(JXNode.create(""));
+                return finalRes;
+            }
             if (calRes.isElements()){
                 for (Element el:calRes.asElements()){
                     finalRes.add(JXNode.create(el));
@@ -111,7 +114,12 @@ public class JXDocument {
                 return finalRes;
             }
             if (calRes.isNumber()) {
-                finalRes.add(JXNode.create(calRes.asDouble()));
+                Class vType = calRes.valType();
+                if (vType.isAssignableFrom(Long.class) || vType.isAssignableFrom(Integer.class) ){
+                    finalRes.add(JXNode.create(calRes.asLong()));
+                }else {
+                    finalRes.add(JXNode.create(calRes.asDouble()));
+                }
                 return finalRes;
             }
             if (calRes.isBoolean()){

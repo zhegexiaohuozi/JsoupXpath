@@ -52,11 +52,14 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
 
     @Override
     public XValue visitAbsoluteLocationPathNoroot(XpathParser.AbsoluteLocationPathNorootContext ctx) {
+        scopeStack.push(Scope.create(rootScope.context()).setParent(currentScope()));
         // '//'
         if (Objects.equals(ctx.op.getText(),"//")){
             currentScope().recursion();
         }
-        return visit(ctx.relativeLocationPath());
+        XValue value = visit(ctx.relativeLocationPath());
+        scopeStack.pop();
+        return value;
     }
 
     @Override
@@ -234,7 +237,7 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                 long index = exprVal.asLong();
                 if (index < 0){
                     if (Objects.equals(e.tagName(),Constants.DEF_TEXT_TAG_NAME)){
-                        index = CommonUtil.getJxSameTagIndexInSiblings(e) + index + 1;
+                        index = CommonUtil.getJxSameTagNumsInSiblings(e) + index + 1;
                     }else {
                         index = CommonUtil.sameTagElNums(e,currentScope()) + index + 1;
                     }

@@ -48,6 +48,9 @@ public class JXNode {
     }
 
     public String asString(){
+        if (value == null){
+            return "";
+        }
         if (isString()){
             return (String) value;
         }else if (isElement()){
@@ -68,6 +71,10 @@ public class JXNode {
 
     public Double asDouble(){
         return (Double) value;
+    }
+
+    public Long asLong(){
+        return (Long) value;
     }
 
     public boolean isBoolean(){ return value instanceof Boolean;}
@@ -111,7 +118,11 @@ public class JXNode {
             return asBoolean();
         }
         if(isNumber()){
-            return asDouble();
+            if (value instanceof Long || value instanceof Integer){
+                return asLong();
+            }else {
+                return asDouble();
+            }
         }
         if(isDate()){
             return asDate();
