@@ -72,7 +72,7 @@ nodeTest:  nameTest
   ;
 
 predicate
-  :  '[' expr ']'
+  :  '[' expr ']' ('[' Digits? ']')?
   ;
 
 abbreviatedStep
@@ -170,7 +170,7 @@ Number  :  Digits ('.' Digits?)?
   |  '.' Digits
   ;
 
-fragment
+
 Digits  :  ('0'..'9')+
   ;
 
@@ -193,45 +193,45 @@ AxisName:  'ancestor'
   ;
 
 
-  PATHSEP 
+  PATHSEP
        :'/';
   ABRPATH
        : '//';
-  LPAR   
+  LPAR
        : '(';
-  RPAR   
+  RPAR
        : ')';
-  LBRAC   
+  LBRAC
        :  '[';
-  RBRAC   
+  RBRAC
        :  ']';
-  MINUS   
+  MINUS
        :  '-';
-  PLUS   
+  PLUS
        :  '+';
-  DOT   
+  DOT
        :  '.';
-  MUL   
+  MUL
        : '*';
   DIVISION
        : '`div`';
   MODULO
        : '`mod`';
-  DOTDOT   
+  DOTDOT
        :  '..';
-  AT   
+  AT
        : '@';
-  COMMA  
+  COMMA
        : ',';
-  PIPE   
+  PIPE
        :  '|';
-  LESS   
+  LESS
        :  '<';
-  MORE_ 
+  MORE_
        :  '>';
-  LE   
+  LE
        :  '<=';
-  GE   
+  GE
        :  '>=';
   EQUALITY
        :  '=';
@@ -249,13 +249,13 @@ AxisName:  'ancestor'
        :  '!~';
   COLON
        :  ':';
-  CC   
+  CC
        :  '::';
-  APOS   
+  APOS
        :  '\'';
-  QUOT   
+  QUOT
        :  '"';
-  
+
 Literal  :  '"' ~'"'* '"'
   |  '\'' ~'\''* '\''
   ;

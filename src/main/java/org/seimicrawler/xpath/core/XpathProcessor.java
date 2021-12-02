@@ -32,7 +32,14 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
     private Logger logger = LoggerFactory.getLogger(XpathProcessor.class);
     private Stack<Scope> scopeStack = new Stack<>();
     private Scope rootScope;
+    // The maximum length of the node
+    private int nodeLimitLength = Integer.MAX_VALUE;
     public XpathProcessor(Elements root){
+        rootScope = Scope.create(root);
+        scopeStack.push(Scope.create(root).setParent(rootScope));
+    }
+    public XpathProcessor(Elements root, int nodeLimitLength) {
+        this.nodeLimitLength = nodeLimitLength;
         rootScope = Scope.create(root);
         scopeStack.push(Scope.create(root).setParent(rootScope));
     }
@@ -229,6 +236,7 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
     @Override
     public XValue visitPredicate(XpathParser.PredicateContext ctx) {
         Elements newContext = new Elements();
+        System.out.println(ctx.expr().getText());
         for (Element e:currentScope().context()){
             scopeStack.push(Scope.create(e).setParent(currentScope()));
             XValue exprVal = visit(ctx.expr());
