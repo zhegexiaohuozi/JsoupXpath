@@ -351,4 +351,11 @@ public class JXDocumentTest {
         Assert.assertEquals("",j.selNOne("sum(//bookstore/book/title)").asString());
     }
 
+    @Test
+    public void i42() throws Exception {
+        JXDocument j = JXDocument.create(FileUtils.readFileToString(new File(loader.getResource("issue66.html").toURI()), Charset.forName("utf8")));
+        logger.info("{}", j.selNOne("//bookstore/book[last()]/price"));
+        Assert.assertEquals(39.95, j.selNOne("//bookstore/book[last()]/price/num()").asDouble().doubleValue(),10);
+    }
+
 }

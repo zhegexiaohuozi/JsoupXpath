@@ -80,7 +80,7 @@ In most cases, it is not recommended to directly paste the Xpath generated in Fi
 - `boolean contains(string, string)`  determines whether the first string contains the second
 
 - `int count(node-set)`  counts the number of nodes in a given set of nodes
-
+- `double/long sum(node-set)` the sum function returns the sum, for each node in the argument node-set, of the result of converting the string-values of the node to a number
 - `boolean starts-with(string, string)`  determines whether the first string starts with the second
 
 - `int string-length(string?)`  returns the string length if a string is given, if not, converts the current node to a string and returns the length
