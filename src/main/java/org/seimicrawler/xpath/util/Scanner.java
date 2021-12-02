@@ -46,7 +46,7 @@ public class Scanner {
 
     static {
         initAxis(AncestorOrSelfSelector.class,AncestorSelector.class,AttributeSelector.class,ChildSelector.class,DescendantOrSelfSelector.class,DescendantSelector.class,FollowingSelector.class,FollowingSiblingOneSelector.class,FollowingSiblingSelector.class,ParentSelector.class,PrecedingSelector.class,PrecedingSiblingOneSelector.class,PrecedingSiblingSelector.class,SelfSelector.class);
-        initFunction(Concat.class,Contains.class,Count.class,First.class,Last.class,Not.class,Position.class,StartsWith.class,StringLength.class,SubString.class,SubStringAfter.class,SubStringBefore.class,SubStringEx.class, FormatDate.class,SubStringAfterLast.class,SubStringBeforeLast.class);
+        initFunction(Concat.class,Contains.class,Count.class,First.class,Last.class,Not.class,Position.class,StartsWith.class,StringLength.class,SubString.class,SubStringAfter.class,SubStringBefore.class,SubStringEx.class, FormatDate.class,SubStringAfterLast.class,SubStringBeforeLast.class,Sum.class);
         initNode(AllText.class,Html.class,Node.class,Num.class,OuterHtml.class,Text.class);
     }
 

@@ -95,6 +95,7 @@ public class JXDocumentTest {
     public static Object[][] dataOfXpathAndexpect() {
         return new Object[][] {
                 { "//ul[@class='subject-list']/li[position()<3][last()]/div/h2/allText()", "黑客与画家 : 硅谷创业之父Paul Graham文集T2-黑客与画家 : 硅谷创业之父Paul Graham文集" },
+                { "//ul[@class='subject-list']/li[2]/div/h2//text()", "黑客与画家: 硅谷创业之父Paul Graham文集T2-黑客与画家: 硅谷创业之父Paul Graham文集" },
                 { "//ul[@class='subject-list']/li[first()]/div/h2/allText()", "失控 : 全人类的最终命运和结局T2-失控 : 全人类的最终命运和结局" },
                 { "//ul[@class='subject-list']/li[./div/div/span[@class='pl']/num()>(1000+90*(2*50))][last()][1]/div/h2/allText()", "长尾理论长尾理论" },
                 { "//ul[@class='subject-list']/li[self::li/div/div/span[@class='pl']/num()>10000][-1]/div/h2/allText()",   "长尾理论长尾理论" },
@@ -103,8 +104,8 @@ public class JXDocumentTest {
                 { "//*[@id=\"subject_list\"]/ul/li[2]/div[2]/h2/a//text()",   "黑客与画家: 硅谷创业之父Paul Graham文集T2-黑客与画家: 硅谷创业之父Paul Graham文集" },
                 { "//ul[@class]",   3L },
                 { "//a[@id]/@href",   "https://www.douban.com/doumail/" },
-                { "//*[@id=\"subject_list\"]/ul[1]/li[8]/div[2]/div[2]/span[3]/num()",   "3734.0" },
-                { "//a[@id]/@href | //*[@id=\"subject_list\"]/ul[1]/li[8]/div[2]/div[2]/span[3]/num()",   "https://www.douban.com/doumail/3734.0" },
+                { "//*[@id='subject_list']/ul[1]/li[8]/div[2]/div[2]/span[3]/num()",   "3734" },
+                { "//a[@id]/@href | //*[@id='subject_list']/ul[1]/li[8]/div[2]/div[2]/span[3]/num()",   "https://www.douban.com/doumail/3734" },
         };
     }
 
@@ -305,6 +306,7 @@ public class JXDocumentTest {
                 " </div> </li>";
         JXDocument j = JXDocument.create(content);
         List<JXNode> l = j.selN("//*[text()='总字数']//text()[1]");
+        logger.info("{}",l);
         Assert.assertEquals(2, l.size());
         // xpath索引值从1开始
         List<JXNode> l2 = j.selN("//*[text()='总字数']//text()[0]");
@@ -312,6 +314,41 @@ public class JXDocumentTest {
         List<JXNode> l3 = j.selN("//*[text()='总字数']//text()[2]");
         Assert.assertEquals(0,l3.size());
 
+    }
+
+    @Test
+    public void textChildOrderTest(){
+        String content = "<p> one <span> two</span> three </p>";
+        JXDocument j = JXDocument.create(content);
+        Assert.assertEquals(StringUtils.join(j.selN("//text()[2]"),""), "three");
+    }
+
+    @Test
+    public void issue64And65(){
+        String content = "<div class='a'>1</div>\n" +
+                "<div>2</div>\n" +
+                "<div class='a'>3</div>\n" +
+                "<div>4</div>\n" +
+                "<div>5</div>";
+        JXDocument j = JXDocument.create(content);
+        Assert.assertEquals("2", j.selNOne("//div[text()='3']/preceding-sibling-one::div/text()").asString());
+        Assert.assertEquals("4", j.selNOne("//div[text()='3']/following-sibling-one::div/text()").asString());
+    }
+
+    @Test
+    public void issue66() throws Exception {
+        JXDocument j = JXDocument.create(FileUtils.readFileToString(new File(loader.getResource("issue66.html").toURI()), Charset.forName("utf8")));
+        logger.info("{}", j.selN("count(//bookstore/book)"));
+        logger.info("{}", j.selN("//bookstore/book[position()<count(//bookstore/book)]/price"));
+        logger.info("{}", j.selN("//bookstore/book[position()<count(//bookstore/book)-1]/price"));
+        logger.info("{}", j.selN("sum(//bookstore/book/year[num()<2005])"));
+        logger.info("{}", j.selN("sum(//bookstore/book/price)"));
+        logger.info("{}", j.selN("sum(//bookstore/book/title)"));
+        Assert.assertEquals(4,j.selNOne("count(//bookstore/book)").asLong().longValue());
+        Assert.assertEquals(3,j.selN("//bookstore/book[position()<count(//bookstore/book)]/price").size());
+        Assert.assertEquals(2,j.selN("//bookstore/book[position()<count(//bookstore/book)-1]/price").size());
+        Assert.assertEquals(4006,j.selNOne("sum(//bookstore/book/year[num()<2005])").asLong().longValue());
+        Assert.assertEquals("",j.selNOne("sum(//bookstore/book/title)").asString());
     }
 
 }

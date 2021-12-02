@@ -1,5 +1,6 @@
 package org.seimicrawler.xpath.core.node;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.NodeTraversor;
@@ -46,10 +47,10 @@ public class Text implements NodeTest {
     public XValue call(Scope scope) {
         Elements context = scope.context();
         final Elements res = new Elements();
+        final Map<String,Integer> indexMap = new HashMap<>();
         if (context!=null&&context.size()>0){
             if (scope.isRecursion()){
                 for (final Element e:context){
-                    final Map<String,Integer> indexMap = new HashMap<>();
                     NodeTraversor.traverse(new NodeVisitor() {
                         @Override
                         public void head(Node node, int depth) {
@@ -66,6 +67,7 @@ public class Text implements NodeTest {
                                 }
                                 Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
                                 data.text(textNode.getWholeText());
+                                data.attr(Constants.EL_DEPTH_KEY, key);
                                 try {
                                     Method parent = Node.class.getDeclaredMethod("setParentNode",Node.class);
                                     parent.setAccessible(true);
@@ -84,12 +86,23 @@ public class Text implements NodeTest {
                         }
                     }, e);
                 }
+                for (Element e:res){
+                    String depthKey = e.attr(Constants.EL_DEPTH_KEY);
+                    if (StringUtils.isNotBlank(depthKey)){
+                        Integer maxNumInChildren = indexMap.get(depthKey);
+                        if (maxNumInChildren == null){
+                            continue;
+                        }
+                        CommonUtil.setSameTagNumsInSiblings(e, maxNumInChildren);
+                    }
+                }
             }else {
                 for (Element e:context){
                     if ("script".equals(e.nodeName())){
                         Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
                         data.text(e.data());
                         CommonUtil.setSameTagIndexInSiblings(data,1);
+                        CommonUtil.setSameTagNumsInSiblings(data,1);
                         res.add(data);
                     }else {
                         List<TextNode> textNodes =  e.textNodes();
@@ -98,12 +111,14 @@ public class Text implements NodeTest {
                             Element data = new Element(Constants.DEF_TEXT_TAG_NAME);
                             data.text(textNode.getWholeText());
                             CommonUtil.setSameTagIndexInSiblings(data,i+1);
+                            CommonUtil.setSameTagNumsInSiblings(data,textNodes.size());
                             res.add(data);
                         }
                     }
                 }
             }
         }
+
         return XValue.create(res);
     }
 }
