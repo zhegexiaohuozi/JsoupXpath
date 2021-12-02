@@ -132,7 +132,7 @@ public class JXDocument {
             }
             finalRes.add(JXNode.create(calRes.asString()));
         } catch (Exception e){
-            String msg = "Please check the syntax of your xpath expr or commit a ";
+            String msg = "Please check the syntax of your xpath expr or commit a Issue. ";
             throw new XpathSyntaxErrorException(msg+ExceptionUtils.getRootCauseMessage(e),e);
         }
         return finalRes;
