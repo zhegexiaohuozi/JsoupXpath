@@ -72,7 +72,7 @@ nodeTest:  nameTest
   ;
 
 predicate
-  :  '[' expr ']' ('[' Digits? ']')?
+  :  ('[' expr ']')+
   ;
 
 abbreviatedStep
@@ -170,7 +170,7 @@ Number  :  Digits ('.' Digits?)?
   |  '.' Digits
   ;
 
-
+fragment
 Digits  :  ('0'..'9')+
   ;
 

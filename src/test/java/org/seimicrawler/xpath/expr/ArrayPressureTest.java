@@ -20,7 +20,7 @@ import java.util.List;
  * @version 1.0
  * @create 2021-12-02 16:14
  **/
-public class ArrTest extends BaseTest {
+public class ArrayPressureTest extends BaseTest {
 
     private Elements root;
     private ClassLoader loader = getClass().getClassLoader();
@@ -28,7 +28,7 @@ public class ArrTest extends BaseTest {
     @Before
     public void init() throws Exception {
         //  https://book.douban.com/tag/%E4%BA%92%E8%81%94%E7%BD%91
-        URL t = loader.getResource("arr_test.html");
+        URL t = loader.getResource("array_test.html");
         assert t != null;
         File dBook = new File(t.toURI());
         String context = FileUtils.readFileToString(dBook, Charset.forName("utf8"));
@@ -37,15 +37,16 @@ public class ArrTest extends BaseTest {
 
     @Test
     @Ignore
-    public void a1() {
+    public void pressureTest() {
         for (int i = 0; i < 20; i++) {
-            aaa();
+            singleTest();
         }
     }
 
 
     @Test
-    public void aaa() {
+    @Ignore
+    public void singleTest() {
         int maxNum = 1;
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < maxNum; i++) {
@@ -59,11 +60,17 @@ public class ArrTest extends BaseTest {
         }
         logger.info("selectOneExpr() size {} cost {}ms", maxNum, System.currentTimeMillis() - startTime);
 
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < maxNum; i++) {
+            arrayExpr();
+        }
+        logger.info("arrayExpr size {} cost {}ms", maxNum, System.currentTimeMillis() - startTime);
+
 //        startTime = System.currentTimeMillis();
 //        for (int i = 0; i < maxNum; i++) {
-//            arrExpr();
+//            positionExpr();
 //        }
-//        logger.info("arrExpr size {} cost {}ms", maxNum, System.currentTimeMillis() - startTime);
+//        logger.info("positionExpr size {} cost {}ms", maxNum, System.currentTimeMillis() - startTime);
     }
 
 
@@ -71,7 +78,7 @@ public class ArrTest extends BaseTest {
     @Ignore
     public void commonExpr() {
         long startTime = System.currentTimeMillis();
-        String xpath = "//div[child::h1[contains(text(),'t2')]]/h2/text()";
+        String xpath = "//div[child::h1[contains(text(),'t2')]]";
         JXDocument jxDocument = JXDocument.create(root);
         List<JXNode> result = jxDocument.selN(xpath);
 //        for (JXNode jxNode : result) {
@@ -84,7 +91,7 @@ public class ArrTest extends BaseTest {
     @Ignore
     public void selectOneExpr() {
         long startTime = System.currentTimeMillis();
-        String xpath = "//div[child::h1[contains(text(),'t2')]]/h2/text()";
+        String xpath = "//div[child::h1[contains(text(),'t2')]]";
         JXDocument jxDocument = JXDocument.create(root);
         JXNode result = jxDocument.selNOne(xpath);
 //        logger.info("content {}", result.asString());
@@ -93,9 +100,9 @@ public class ArrTest extends BaseTest {
 
     @Test
     @Ignore
-    public void arrExpr() {
+    public void arrayExpr() {
         long startTime = System.currentTimeMillis();
-        String xpath = "//div[child::h1[contains(text(),'t2')]][0]/h2/text()";
+        String xpath = "//div[child::h1[contains(text(),'t2')]][1]";
         JXDocument jxDocument = JXDocument.create(root);
         List<JXNode> result = jxDocument.selN(xpath);
 //        for (JXNode jxNode : result) {
@@ -109,7 +116,7 @@ public class ArrTest extends BaseTest {
 //    @Test
 //    public void positionExpr() {
 //        long startTime = System.currentTimeMillis();
-//        String xpath = "//div[child::h1[contains(text(),'t2')] and position() < 2]/h2/text()";
+//        String xpath = "//div[child::h1[contains(text(),'t2')] and position() < 2]";
 //        JXDocument jxDocument = JXDocument.create(root);
 //        List<JXNode> result = jxDocument.selN(xpath);
 //        logger.info("size {} cost {}ms", result.size(), System.currentTimeMillis() - startTime);

@@ -12,6 +12,8 @@ public class Scope {
     private Elements context;
     private boolean isRecursion = false;
     private Scope parent;
+    // max size of Elements to parse
+    private int limit = Integer.MAX_VALUE;
 
     private Scope(Elements context){
         super();
@@ -39,6 +41,14 @@ public class Scope {
     public Scope setParent(Scope scope){
         this.parent = scope;
         return this;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
     }
 
     public Scope getParent() {

@@ -22,6 +22,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * @author github.com/zhegexiaohuozi seimimaster@gmail.com
@@ -130,5 +131,16 @@ public class CommonUtil {
             return -1;
         }
         return Integer.parseInt(val);
+    }
+
+
+    /**
+     * 判断数字
+     * @param str
+     * @return
+     */
+    public static boolean isInteger(String str) {
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        return pattern.matcher(str).matches();
     }
 }
