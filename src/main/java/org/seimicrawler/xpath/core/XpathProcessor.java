@@ -248,9 +248,6 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
             for (Element e:currentScope().context()) {
                 // 获取下一位的数量限制，xx解3次 ，yy解2次，div[xx][3][yy][2]
                 if(limitIndex < limitConfig.length && limitConfig[limitIndex] != null) {
-                    if(limitConfig[limitIndex] <= 0) {
-                        break;
-                    }
                     if(limitConfig[limitIndex] > 0 && newContext.size() >= limitConfig[limitIndex]) {
                         break;
                     }
