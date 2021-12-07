@@ -230,11 +230,10 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
     public XValue visitPredicate(XpathParser.PredicateContext ctx) {
         Elements newContext = new Elements();
 
-        // 数组针对前一个 表达式做限定
+        // 获取表达式数量限定（数组）
         Integer[] limitConfig = new Integer[ctx.expr().size()];
         int limitIndex = 0;
         for (ExprContext context : ctx.expr()) {
-            System.out.println(limitIndex + ":" + context.getText());
             if (CommonUtil.isInteger(context.getText())) {
                 limitConfig[limitIndex] = Integer.parseInt(context.getText());
             }
@@ -242,9 +241,9 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
         }
         limitIndex = 0;
 
-        // 获取数组下标
         for (ExprContext context : ctx.expr()) {
-            newContext.clear();
+
+            newContext = new Elements();
             limitIndex++;
             for (Element e:currentScope().context()) {
                 // 获取下一位的数量限制，xx解3次 ，yy解2次，div[xx][3][yy][2]
@@ -308,6 +307,7 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                 }
             }
 
+            updateCurrentContext(newContext);
         }
 
         return XValue.create(newContext);

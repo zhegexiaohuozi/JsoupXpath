@@ -90,7 +90,7 @@ public class ArrayExprTest extends BaseTest {
 
     @Test
     public void complexArrayTest() {
-        // target跳过第二条读书
+        // target跳过第二条读书，结果排序：豆瓣、电影、音乐、同城..
         String xpath = "//div[@id='db-global-nav']/div/div[@class='global-nav-items']/ul/li[child::a[contains(@target, '_blank')]][3]/a/text()";
         JXDocument jxDocument = JXDocument.create(root);
         List<JXNode> result = jxDocument.selN(xpath);
