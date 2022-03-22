@@ -52,8 +52,8 @@ public class CommonUtil {
 
     /**
      * 获取同胞中同名元素的数量
-     * @param e
-     * @return
+     * Jsoup文档模型中，空白行和元素均属于同胞也有自己独立的siblingIndex，这对于xpath语法统计，空白行等是没有任何意义的，不应该计入siblingIndex。所以需要自行独立统计，不能直接使用siblingIndex。
+     * @return --
      */
     public static int sameTagElNums(Element e,Scope scope){
         Elements context = new Elements();

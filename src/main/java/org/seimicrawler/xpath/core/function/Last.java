@@ -3,6 +3,7 @@ package org.seimicrawler.xpath.core.function;
 import org.seimicrawler.xpath.core.Function;
 import org.seimicrawler.xpath.core.Scope;
 import org.seimicrawler.xpath.core.XValue;
+import org.seimicrawler.xpath.util.CommonUtil;
 
 import java.util.List;
 
@@ -23,6 +24,6 @@ public class Last implements Function {
 
     @Override
     public XValue call(Scope scope, List<XValue> params) {
-        return XValue.create(-1);
+        return XValue.create(CommonUtil.sameTagElNums(scope.singleEl(),scope.getParent()));
     }
 }
