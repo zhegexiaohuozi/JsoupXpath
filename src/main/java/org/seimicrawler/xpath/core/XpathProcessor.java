@@ -229,57 +229,84 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
     @Override
     public XValue visitPredicate(XpathParser.PredicateContext ctx) {
         Elements newContext = new Elements();
-        for (Element e:currentScope().context()){
-            scopeStack.push(Scope.create(e).setParent(currentScope()));
-            XValue exprVal = visit(ctx.expr());
-            scopeStack.pop();
-            if (exprVal.isNumber()){
-                long index = exprVal.asLong();
-                if (index < 0){
-                    if (Objects.equals(e.tagName(),Constants.DEF_TEXT_TAG_NAME)){
-                        index = CommonUtil.getJxSameTagNumsInSiblings(e) + index + 1;
-                    }else {
-                        index = CommonUtil.sameTagElNums(e,currentScope()) + index + 1;
-                    }
-                    if (index < 0){
-                        index = 1;
-                    }
-                }
-                if (Objects.equals(e.tagName(),Constants.DEF_TEXT_TAG_NAME)){
-                    if (index == CommonUtil.getJxSameTagIndexInSiblings(e)){
-                        newContext.add(e);
-                    }
-                }else {
-                    if (index == CommonUtil.getElIndexInSameTags(e,currentScope())){
-                        newContext.add(e);
+
+        // 获取表达式数量限定（数组）
+        Integer[] limitConfig = new Integer[ctx.expr().size()];
+        int limitIndex = 0;
+        for (ExprContext context : ctx.expr()) {
+            if (CommonUtil.isInteger(context.getText())) {
+                limitConfig[limitIndex] = Integer.parseInt(context.getText());
+            }
+            limitIndex++;
+        }
+        limitIndex = 0;
+
+        for (ExprContext context : ctx.expr()) {
+
+            newContext = new Elements();
+            limitIndex++;
+            for (Element e:currentScope().context()) {
+                // 获取下一位的数量限制，xx解3次 ，yy解2次，div[xx][3][yy][2]
+                if(limitIndex < limitConfig.length && limitConfig[limitIndex] != null) {
+                    if(limitConfig[limitIndex] > 0 && newContext.size() >= limitConfig[limitIndex]) {
+                        break;
                     }
                 }
 
-            }else if (exprVal.isBoolean()){
-                if (exprVal.asBoolean()){
-                    newContext.add(e);
+                scopeStack.push(Scope.create(e).setParent(currentScope()));
+                XValue exprVal = visit(context);
+                scopeStack.pop();
+                if (exprVal.isNumber()){
+                    long index = exprVal.asLong();
+                    if (index < 0){
+                        if (Objects.equals(e.tagName(),Constants.DEF_TEXT_TAG_NAME)){
+                            index = CommonUtil.getJxSameTagNumsInSiblings(e) + index + 1;
+                        }else {
+                            index = CommonUtil.sameTagElNums(e,currentScope()) + index + 1;
+                        }
+                        if (index < 0){
+                            index = 1;
+                        }
+                    }
+                    if (Objects.equals(e.tagName(),Constants.DEF_TEXT_TAG_NAME)){
+                        if (index == CommonUtil.getJxSameTagIndexInSiblings(e)){
+                            newContext.add(e);
+                        }
+                    }else {
+                        if (index == CommonUtil.getElIndexInSameTags(e,currentScope())){
+                            newContext.add(e);
+                        }
+                    }
+
+                }else if (exprVal.isBoolean()){
+                    if (exprVal.asBoolean()){
+                        newContext.add(e);
+                    }
+                }else if (exprVal.isString()){
+                    //根据表达式执行结果是否为空作为条件,如 //*[@foo]
+                    if (StringUtils.isNotBlank(exprVal.asString())){
+                        newContext.add(e);
+                    }
+                }else if (exprVal.isElements()){
+                    //根据表达式执行结果是否为空进行过滤，如 //div[./a]
+                    Elements els = exprVal.asElements();
+                    if (els.size()>0){
+                        newContext.add(e);
+                    }
+                }else if (exprVal.isList()){
+                    //根据表达式执行结果是否为空进行过滤，如 //div[./a/text()]
+                    List<String> stringList = exprVal.asList();
+                    if (stringList.size()>0){
+                        newContext.add(e);
+                    }
+                }else {
+                    throw new XpathParserException("unknown expr val:"+exprVal);
                 }
-            }else if (exprVal.isString()){
-                //根据表达式执行结果是否为空作为条件,如 //*[@foo]
-                if (StringUtils.isNotBlank(exprVal.asString())){
-                    newContext.add(e);
-                }
-            }else if (exprVal.isElements()){
-                //根据表达式执行结果是否为空进行过滤，如 //div[./a]
-                Elements els = exprVal.asElements();
-                if (els.size()>0){
-                    newContext.add(e);
-                }
-            }else if (exprVal.isList()){
-                //根据表达式执行结果是否为空进行过滤，如 //div[./a/text()]
-                List<String> stringList = exprVal.asList();
-                if (stringList.size()>0){
-                    newContext.add(e);
-                }
-            }else {
-                throw new XpathParserException("unknown expr val:"+exprVal);
             }
+
+            updateCurrentContext(newContext);
         }
+
         return XValue.create(newContext);
     }
 
