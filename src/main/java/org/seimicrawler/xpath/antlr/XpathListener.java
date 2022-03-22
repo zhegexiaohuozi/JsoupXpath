@@ -1,4 +1,4 @@
-// Generated from C:/work/workspace/JsoupXpath/src/main/resources\Xpath.g4 by ANTLR 4.9.2
+// Generated from resources/Xpath.g4 by ANTLR 4.9.2
 package org.seimicrawler.xpath.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
