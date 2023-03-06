@@ -14,13 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * JXDocument Tester.
@@ -327,12 +327,12 @@ public class JXDocumentTest {
 
     @Test
     public void issue64And65(){
-        String content = "<div class='a'>1</div>\n" +
+        String content = "<div class='a'>1</div>" +
                 "<div>2</div>\n" +
                 "<div class='a'>3</div>\n" +
                 "<div>4</div>\n" +
                 "<div>5</div>11" +
-                "<tag>6</tag>" +
+                "<tag>6</tag>12" +
                 "<div>7</div>" +
                 "";
         JXDocument j = JXDocument.create(content);
@@ -341,6 +341,13 @@ public class JXDocumentTest {
         Assert.assertEquals("7", j.selNOne("//div[text()='5']/following-sibling::div/text()").asString());
         Assert.assertEquals("6", j.selNOne("//div[text()='5']/following-sibling::tag/text()").asString());
         Assert.assertEquals("11", j.selNOne("//div[text()='5']/following-sibling::text()").asString());
+        Assert.assertEquals("12", j.selNOne("//div[text()='7']/preceding-sibling::text()").asString());
+        Assert.assertEquals("5", j.selNOne("//div[text()='7']/preceding-sibling::div/text()").asString());
+        Assert.assertEquals("6", j.selNOne("//div[text()='7']/preceding-sibling::tag/text()").asString());
+        Assert.assertEquals("6", j.selNOne("//div[text()='7']/preceding-sibling::tag/text()").asString());
+        Assert.assertEquals("11 6 12 7", j.selN("//div[text()='5']/following::text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
+        Assert.assertEquals("2 1", j.selN("//div[text()='3']/preceding::text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
+        Assert.assertEquals("3  2 1", j.selN("//div[text()='4']/preceding::text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
     }
 
     @Test

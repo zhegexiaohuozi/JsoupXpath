@@ -6,7 +6,6 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 import org.seimicrawler.xpath.core.AxisSelector;
 import org.seimicrawler.xpath.core.XValue;
-import org.seimicrawler.xpath.util.CommonUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -49,8 +48,6 @@ public class FollowingSiblingSelector implements AxisSelector {
                 }
                 tmp = tmp.nextSibling();
             }
-
-
         }
         Elements newContext = new Elements();
         newContext.addAll(total);
