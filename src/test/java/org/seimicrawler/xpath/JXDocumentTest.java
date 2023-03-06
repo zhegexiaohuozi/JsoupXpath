@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.HashSet;
@@ -329,15 +331,21 @@ public class JXDocumentTest {
                 "<div>2</div>\n" +
                 "<div class='a'>3</div>\n" +
                 "<div>4</div>\n" +
-                "<div>5</div>";
+                "<div>5</div>11" +
+                "<tag>6</tag>" +
+                "<div>7</div>" +
+                "";
         JXDocument j = JXDocument.create(content);
         Assert.assertEquals("2", j.selNOne("//div[text()='3']/preceding-sibling-one::div/text()").asString());
         Assert.assertEquals("4", j.selNOne("//div[text()='3']/following-sibling-one::div/text()").asString());
+        Assert.assertEquals("7", j.selNOne("//div[text()='5']/following-sibling::div/text()").asString());
+        Assert.assertEquals("6", j.selNOne("//div[text()='5']/following-sibling::tag/text()").asString());
+        Assert.assertEquals("11", j.selNOne("//div[text()='5']/following-sibling::text()").asString());
     }
 
     @Test
     public void issue66() throws Exception {
-        JXDocument j = JXDocument.create(FileUtils.readFileToString(new File(loader.getResource("issue66.html").toURI()), Charset.forName("utf8")));
+        JXDocument j = createFromResource("issue66.html");
         logger.info("{}", j.selN("count(//bookstore/book)"));
         logger.info("{}", j.selN("//bookstore/book[position()<count(//bookstore/book)]/price"));
         logger.info("{}", j.selN("//bookstore/book[position()<count(//bookstore/book)-1]/price"));
@@ -353,9 +361,35 @@ public class JXDocumentTest {
 
     @Test
     public void i42() throws Exception {
-        JXDocument j = JXDocument.create(FileUtils.readFileToString(new File(loader.getResource("issue66.html").toURI()), Charset.forName("utf8")));
+        JXDocument j = createFromResource("issue66.html");
         logger.info("{}", j.selNOne("//bookstore/book[last()]/price"));
         Assert.assertEquals(39.95, j.selNOne("//bookstore/book[last()]/price/num()").asDouble().doubleValue(),10);
+    }
+
+    @Test
+    public void testDoubanDetailInfoExtra() throws Exception{
+        JXDocument doc = createFromResource("d_detail_page.html");
+        JXNode score = doc.selNOne("//*[@id=\"interest_sectl\"]/div/div[2]/strong/text()");
+        logger.info("{}", score.asString());
+        JXNode title = doc.selNOne("//*[@id=\"wrapper\"]/h1/span/text()");
+        logger.info("{}", title.asString());
+        JXNode pageNum = doc.selNOne("//*[@id=\"info\"]/span[contains(text(),'页数')]/following-sibling::text()");
+        logger.info("{}", pageNum.asString());
+        Assert.assertEquals("956", pageNum.asString());
+        JXNode price = doc.selNOne("//*[@id=\"info\"]/span[contains(text(),'定价')]/following-sibling::text()");
+        logger.info("{}", price.asString());
+        Assert.assertEquals("139.00元", price.asString());
+    }
+
+    private JXDocument createFromResource(String fileName){
+        JXDocument jxDocument = null;
+        try {
+            jxDocument = JXDocument.create(FileUtils.readFileToString(new File(loader.getResource(fileName).toURI()), Charset.forName("utf8")));
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+        }
+        assert jxDocument!=null;
+        return jxDocument;
     }
 
 }
