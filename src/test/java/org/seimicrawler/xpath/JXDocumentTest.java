@@ -333,7 +333,7 @@ public class JXDocumentTest {
                 "<div>4</div>\n" +
                 "<div>5</div>11" +
                 "<tag>6</tag>12" +
-                "<div>7</div>" +
+                "<div>7<span>8</span></div>" +
                 "";
         JXDocument j = JXDocument.create(content);
         Assert.assertEquals("2", j.selNOne("//div[text()='3']/preceding-sibling-one::div/text()").asString());
@@ -345,7 +345,10 @@ public class JXDocumentTest {
         Assert.assertEquals("5", j.selNOne("//div[text()='7']/preceding-sibling::div/text()").asString());
         Assert.assertEquals("6", j.selNOne("//div[text()='7']/preceding-sibling::tag/text()").asString());
         Assert.assertEquals("6", j.selNOne("//div[text()='7']/preceding-sibling::tag/text()").asString());
-        Assert.assertEquals("11 6 12 7", j.selN("//div[text()='5']/following::text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
+        Assert.assertEquals("11 6 12 7 8", j.selN("//div[text()='5']/following::text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
+        Assert.assertEquals("6", j.selN("//div[text()='5']/following::tag/text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
+        Assert.assertEquals("8", j.selN("//div[text()='5']/following::span/text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
+        Assert.assertEquals("5 7", j.selN("//div[text()='4']/following::div/text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
         Assert.assertEquals("2 1", j.selN("//div[text()='3']/preceding::text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
         Assert.assertEquals("3  2 1", j.selN("//div[text()='4']/preceding::text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
     }
