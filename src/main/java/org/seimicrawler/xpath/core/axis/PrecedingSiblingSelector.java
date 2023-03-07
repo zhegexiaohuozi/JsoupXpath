@@ -1,6 +1,8 @@
 package org.seimicrawler.xpath.core.axis;
 
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 import org.seimicrawler.xpath.core.AxisSelector;
 import org.seimicrawler.xpath.core.XValue;
@@ -35,11 +37,17 @@ public class PrecedingSiblingSelector implements AxisSelector {
     public XValue apply(Elements context) {
         List<Element> total = new LinkedList<>();
         for (Element el : context){
-            Elements ps = CommonUtil.precedingSibling(el);
-            if (ps == null){
-                continue;
+            Node tmp = el.previousSibling();
+            while (tmp!=null){
+                if (tmp instanceof Element ){
+                    total.add((Element) tmp);
+                } else if (tmp instanceof TextNode) {
+                    Element txt = new Element("text");
+                    txt.text(((TextNode) tmp).text());
+                    total.add(txt);
+                }
+                tmp = tmp.previousSibling();
             }
-            total.addAll(ps);
         }
         Elements newContext = new Elements();
         newContext.addAll(total);

@@ -16,6 +16,8 @@ package org.seimicrawler.xpath.util;
  */
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
 import org.seimicrawler.xpath.core.Constants;
 import org.seimicrawler.xpath.core.Scope;
 import org.jsoup.nodes.Element;
@@ -78,10 +80,16 @@ public class CommonUtil {
 
      public static Elements followingSibling(Element el){
         Elements rs = new Elements();
-        Element tmp = el.nextElementSibling();
+        Node tmp = el.nextSibling();
         while (tmp!=null){
-            rs.add(tmp);
-            tmp = tmp.nextElementSibling();
+         if (tmp instanceof Element ){
+             rs.add((Element) tmp);
+         } else if (tmp instanceof TextNode) {
+             Element txt = new Element("text");
+             txt.text(((TextNode) tmp).text());
+             rs.add(txt);
+         }
+         tmp = tmp.nextSibling();
         }
         if (rs.size() > 0){
             return rs;
@@ -91,11 +99,18 @@ public class CommonUtil {
 
     public static Elements precedingSibling(Element el){
         Elements rs = new Elements();
-        Element tmp = el.previousElementSibling();
+        Node tmp = el.previousSibling();
         while (tmp!=null){
-            rs.add(tmp);
-            tmp = tmp.previousElementSibling();
+            if (tmp instanceof Element ){
+                rs.add((Element) tmp);
+            } else if (tmp instanceof TextNode) {
+                Element txt = new Element("text");
+                txt.text(((TextNode) tmp).text());
+                rs.add(txt);
+            }
+            tmp = tmp.previousSibling();
         }
+
         if (rs.size() > 0){
             return rs;
         }
