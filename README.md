@@ -30,7 +30,7 @@ maven依赖,全版本请参见[release信息](https://github.com/zhegexiaohuozi/
 <dependency>
    <groupId>cn.wanghaomiao</groupId>
    <artifactId>JsoupXpath</artifactId>
-   <version>2.5.2</version>
+   <version>2.5.3</version>
 </dependency>
 ```
 
