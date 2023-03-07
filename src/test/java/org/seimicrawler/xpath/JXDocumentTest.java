@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +47,7 @@ public class JXDocumentTest {
             URL t = loader.getResource("d_test.html");
             assert t != null;
             File dBook = new File(t.toURI());
-            String context = FileUtils.readFileToString(dBook, Charset.forName("utf8"));
+            String context = FileUtils.readFileToString(dBook, StandardCharsets.UTF_8);
             doubanTest = JXDocument.create(context);
         }
         custom = JXDocument.create("<li><b>性别：</b>男</li>");
@@ -357,14 +357,12 @@ public class JXDocumentTest {
     public void issue66() throws Exception {
         JXDocument j = createFromResource("issue66.html");
         logger.info("{}", j.selN("count(//bookstore/book)"));
-        logger.info("{}", j.selN("//bookstore/book[position()<count(//bookstore/book)]/price"));
-        logger.info("{}", j.selN("//bookstore/book[position()<count(//bookstore/book)-1]/price"));
         logger.info("{}", j.selN("sum(//bookstore/book/year[num()<2005])"));
         logger.info("{}", j.selN("sum(//bookstore/book/price)"));
         logger.info("{}", j.selN("sum(//bookstore/book/title)"));
         Assert.assertEquals(4,j.selNOne("count(//bookstore/book)").asLong().longValue());
-        Assert.assertEquals(3,j.selN("//bookstore/book[position()<count(//bookstore/book)]/price").size());
-        Assert.assertEquals(2,j.selN("//bookstore/book[position()<count(//bookstore/book)-1]/price").size());
+        Assert.assertEquals("30.00 29.99 49.99",j.selN("//bookstore/book[position()<count(//bookstore/book)]/price/text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
+        Assert.assertEquals("30.00 29.99",j.selN("//bookstore/book[position()<count(//bookstore/book)-1]/price/text()").stream().map(Objects::toString).collect(Collectors.joining(" ")).trim());
         Assert.assertEquals(4006,j.selNOne("sum(//bookstore/book/year[num()<2005])").asLong().longValue());
         Assert.assertEquals("",j.selNOne("sum(//bookstore/book/title)").asString());
     }
@@ -394,7 +392,7 @@ public class JXDocumentTest {
     private JXDocument createFromResource(String fileName){
         JXDocument jxDocument = null;
         try {
-            jxDocument = JXDocument.create(FileUtils.readFileToString(new File(loader.getResource(fileName).toURI()), Charset.forName("utf8")));
+            jxDocument = JXDocument.create(FileUtils.readFileToString(new File(loader.getResource(fileName).toURI()), StandardCharsets.UTF_8));
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
         }
