@@ -21,7 +21,16 @@ https://github.com/zhegexiaohuozi/JsoupXpath/releases
 
 # 社区讨论 #
 
+- Issue
+
 https://github.com/zhegexiaohuozi/JsoupXpath/issues
+
+- 微信订阅号
+
+![weixin](http://img.wanghaomiao.cn/seimiweixin_v2.jpeg)
+
+里面会发布一些使用案例等文章，以及seimi体系相关项目的最新更新动态等。也会有作者关于互联网后端技术一些文章和感悟。
+
 
 ## 快速开始 ##
 
