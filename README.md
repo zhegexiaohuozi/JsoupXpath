@@ -1,6 +1,6 @@
 JsoupXpath
 ==========
-[![Build Status](https://img.shields.io/travis/zhegexiaohuozi/JsoupXpath.svg)](https://travis-ci.org/zhegexiaohuozi/JsoupXpath)
+
 [![GitHub release](https://img.shields.io/github/release/zhegexiaohuozi/JsoupXpath.svg)](https://github.com/zhegexiaohuozi/JsoupXpath/releases)
 [![Maven](https://maven-badges.herokuapp.com/maven-central/cn.wanghaomiao/JsoupXpath/badge.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22cn.wanghaomiao%22%20AND%20a%3A%22JsoupXpath%22)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -27,7 +27,7 @@ https://github.com/zhegexiaohuozi/JsoupXpath/issues
 
 - 微信订阅号
 
-![weixin](http://img.wanghaomiao.cn/seimiweixin_v2.jpeg)
+![weixin](https://imgs.wanghaomiao.cn/seimiweixin_v2.jpeg)
 
 里面会发布一些使用案例等文章，以及seimi体系相关项目的最新更新动态等。也会有作者关于互联网后端技术一些文章和感悟。
 
