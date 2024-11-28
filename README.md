@@ -7,7 +7,8 @@ JsoupXpath
 
 纯Java实现的支持W3C Xpath 1.0标准语法的HTML解析器。A html parser with xpath base on Jsoup and Antlr4.Maybe it is the best in java,Just try it.
 
-[English Doc](https://github.com/zhegexiaohuozi/JsoupXpath/blob/master/README_EN.md)
+If you like this project, please give it a Star.
+Read detail document in [English](docs/English.md) | [日本語](docs/Japanese.md) | [한국어](docs/Korean.md) | [Русский](docs/Russian.md) | [Français](docs/French.md).
 
 ## 简介 ##
 
