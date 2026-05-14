@@ -23,6 +23,9 @@ import org.seimicrawler.xpath.core.Scope;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -168,5 +171,69 @@ public class CommonUtil {
             return -1;
         }
         return Integer.parseInt(val);
+    }
+
+    /**
+     * 批量预计算结果容器，包含每个元素的同名索引和同名总数。
+     * 一次性遍历所有涉及到的父节点的子元素，避免对每个元素重复遍历父节点子元素列表。
+     * 将原本 O(N × M) 的复杂度降为 O(P × M)，其中 P 为不同父节点数，M 为最大子节点数。
+     */
+    public static class PredicateIndexInfo {
+        /** 元素 -> 同名元素在 context 中的顺序索引（从1开始） */
+        public final Map<Element, Integer> indexMap;
+        /** 元素 -> 其父节点下同名且在 context 中的元素总数 */
+        public final Map<Element, Integer> countMap;
+
+        public PredicateIndexInfo(Map<Element, Integer> indexMap, Map<Element, Integer> countMap) {
+            this.indexMap = indexMap;
+            this.countMap = countMap;
+        }
+    }
+
+    /**
+     * 批量预计算 context 中所有元素的同名索引和同名总数。
+     * 按父节点分组，每个父节点的子元素列表只遍历两次（计数+编号），
+     * 相比逐个元素调用 getElIndexInSameTags / sameTagElNums 性能大幅提升。
+     *
+     * @param context    当前上下文中的元素列表
+     * @param contextSet 预构建的上下文 HashSet（加速 contains 判断）
+     * @return 预计算结果
+     */
+    public static PredicateIndexInfo preComputePredicateIndices(Elements context, Set<Element> contextSet) {
+        Map<Element, Integer> indexMap = new HashMap<>();
+        Map<Element, Integer> countMap = new HashMap<>();
+
+        // 收集所有涉及的父节点（保持顺序以便调试）
+        Set<Element> parents = new LinkedHashSet<>();
+        for (Element e : context) {
+            if (e.parent() != null) {
+                parents.add(e.parent());
+            }
+        }
+
+        for (Element parent : parents) {
+            // 第一遍：统计每个 tagName 在 context 中的总数
+            Map<String, Integer> tagTotalMap = new HashMap<>();
+            for (Element child : parent.children()) {
+                if (contextSet.contains(child)) {
+                    String tag = child.tagName();
+                    tagTotalMap.merge(tag, 1, Integer::sum);
+                }
+            }
+
+            // 第二遍：为每个 context 中的子元素分配同名索引
+            Map<String, Integer> tagCounterMap = new HashMap<>();
+            for (Element child : parent.children()) {
+                if (contextSet.contains(child)) {
+                    String tag = child.tagName();
+                    int idx = tagCounterMap.getOrDefault(tag, 0) + 1;
+                    tagCounterMap.put(tag, idx);
+                    indexMap.put(child, idx);
+                    countMap.put(child, tagTotalMap.get(tag));
+                }
+            }
+        }
+
+        return new PredicateIndexInfo(indexMap, countMap);
     }
 }

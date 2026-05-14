@@ -238,6 +238,9 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
         Elements newContext = new Elements();
         // 预构建 HashSet，将 contains 查找从 O(n) 降为 O(1)
         Set<Element> contextSet = new HashSet<>(currentScope().context());
+        // 批量预计算所有元素的同名索引和总数，避免每个元素都重复遍历父节点子列表
+        CommonUtil.PredicateIndexInfo indexInfo = CommonUtil.preComputePredicateIndices(
+                currentScope().context(), contextSet);
         for (Element e:currentScope().context()){
             scopeStack.push(Scope.create(e).setParent(currentScope()));
             XValue exprVal = visit(ctx.expr());
@@ -248,7 +251,10 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                     if (Objects.equals(e.tagName(),Constants.DEF_TEXT_TAG_NAME)){
                         index = CommonUtil.getJxSameTagNumsInSiblings(e) + index + 1;
                     }else {
-                        index = CommonUtil.sameTagElNums(e, contextSet, currentScope()) + index + 1;
+                        // 使用预计算的同名总数
+                        Integer preCount = indexInfo.countMap.get(e);
+                        int count = (preCount != null) ? preCount : CommonUtil.sameTagElNums(e, contextSet, currentScope());
+                        index = count + index + 1;
                     }
                     if (index < 0){
                         index = 1;
@@ -259,7 +265,10 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                         newContext.add(e);
                     }
                 }else {
-                    if (index == CommonUtil.getElIndexInSameTags(e, contextSet, currentScope())){
+                    // 使用预计算的同名索引
+                    Integer preIndex = indexInfo.indexMap.get(e);
+                    int elIndex = (preIndex != null) ? preIndex : CommonUtil.getElIndexInSameTags(e, contextSet, currentScope());
+                    if (index == elIndex){
                         newContext.add(e);
                     }
                 }
