@@ -24,6 +24,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author github.com/zhegexiaohuozi seimimaster@gmail.com
@@ -37,10 +38,21 @@ public class CommonUtil {
      * @return
      */
     public static int getElIndexInSameTags(Element e,Scope scope){
+        return getElIndexInSameTags(e, null, scope);
+    }
+
+    /**
+     * 获取同名元素在同胞中的index（使用预构建的 HashSet 加速 contains 查找）
+     * @param e 目标元素
+     * @param contextSet 预构建的上下文元素集合，传 null 则回退到 scope.context().contains()
+     * @param scope 上下文
+     * @return 同名元素的位置索引（从1开始）
+     */
+    public static int getElIndexInSameTags(Element e, Set<Element> contextSet, Scope scope){
         Elements chs = e.parent().children();
         int index = 1;
         for (Element cur : chs) {
-            if (e.tagName().equals(cur.tagName()) && scope.context().contains(cur)) {
+            if (e.tagName().equals(cur.tagName()) && (contextSet != null ? contextSet.contains(cur) : scope.context().contains(cur))) {
                 if (e.equals(cur)) {
                     break;
                 } else {
@@ -58,14 +70,25 @@ public class CommonUtil {
      * @return --
      */
     public static int sameTagElNums(Element e,Scope scope){
-        Elements context = new Elements();
+        return sameTagElNums(e, null, scope);
+    }
+
+    /**
+     * 获取同胞中同名元素的数量（使用预构建的 HashSet 加速 contains 查找）
+     * @param e 目标元素
+     * @param contextSet 预构建的上下文元素集合，传 null 则回退到 scope.context().contains()
+     * @param scope 上下文
+     * @return 同名元素总数
+     */
+    public static int sameTagElNums(Element e, Set<Element> contextSet, Scope scope){
+        int count = 0;
         Elements els = e.parent().getElementsByTag(e.tagName());
         for (Element el:els){
-            if (scope.context().contains(el)){
-                context.add(el);
+            if (contextSet != null ? contextSet.contains(el) : scope.context().contains(el)){
+                count++;
             }
         }
-        return context.size();
+        return count;
     }
 
     public static int getIndexInContext(Scope scope,Element el){

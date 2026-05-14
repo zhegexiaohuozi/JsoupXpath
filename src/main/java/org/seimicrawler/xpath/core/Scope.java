@@ -15,8 +15,7 @@ public class Scope {
 
     private Scope(Elements context){
         super();
-        this.context = new Elements();
-        this.context.addAll(context);
+        this.context = context;
     }
     private Scope(Element context){
         super();
@@ -33,7 +32,7 @@ public class Scope {
     }
 
     public static Scope create(Scope scope){
-        return  new Scope(scope.context()).setParent(scope);
+        return new Scope(scope.context()).setParent(scope);
     }
 
     public Scope setParent(Scope scope){

@@ -18,9 +18,12 @@ import org.slf4j.LoggerFactory;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
 
 import static org.seimicrawler.xpath.antlr.XpathParser.*;
 
@@ -29,7 +32,11 @@ import static org.seimicrawler.xpath.antlr.XpathParser.*;
  * @since 2017/8/30.
  */
 public class XpathProcessor extends XpathBaseVisitor<XValue> {
-    private Logger logger = LoggerFactory.getLogger(XpathProcessor.class);
+    private static final Logger logger = LoggerFactory.getLogger(XpathProcessor.class);
+    /**
+     * 正则表达式 Pattern 缓存，避免每次 String.matches() 重复编译
+     */
+    private static final Map<String, Pattern> REGEX_CACHE = new ConcurrentHashMap<>();
     private Stack<Scope> scopeStack = new Stack<>();
     private Scope rootScope;
     public XpathProcessor(Elements root){
@@ -229,6 +236,8 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
     @Override
     public XValue visitPredicate(XpathParser.PredicateContext ctx) {
         Elements newContext = new Elements();
+        // 预构建 HashSet，将 contains 查找从 O(n) 降为 O(1)
+        Set<Element> contextSet = new HashSet<>(currentScope().context());
         for (Element e:currentScope().context()){
             scopeStack.push(Scope.create(e).setParent(currentScope()));
             XValue exprVal = visit(ctx.expr());
@@ -239,7 +248,7 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                     if (Objects.equals(e.tagName(),Constants.DEF_TEXT_TAG_NAME)){
                         index = CommonUtil.getJxSameTagNumsInSiblings(e) + index + 1;
                     }else {
-                        index = CommonUtil.sameTagElNums(e,currentScope()) + index + 1;
+                        index = CommonUtil.sameTagElNums(e, contextSet, currentScope()) + index + 1;
                     }
                     if (index < 0){
                         index = 1;
@@ -250,7 +259,7 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                         newContext.add(e);
                     }
                 }else {
-                    if (index == CommonUtil.getElIndexInSameTags(e,currentScope())){
+                    if (index == CommonUtil.getElIndexInSameTags(e, contextSet, currentScope())){
                         newContext.add(e);
                     }
                 }
@@ -408,9 +417,11 @@ public class XpathProcessor extends XpathBaseVisitor<XValue> {
                 case CONTAIN_WITH:
                     return XValue.create(left.asString().contains(right.asString()));
                 case REGEXP_WITH:
-                    return XValue.create(left.asString().matches(right.asString()));
+                    return XValue.create(REGEX_CACHE.computeIfAbsent(right.asString(), Pattern::compile)
+                            .matcher(left.asString()).matches());
                 case REGEXP_NOT_WITH:
-                    return XValue.create(!left.asString().matches(right.asString()));
+                    return XValue.create(!REGEX_CACHE.computeIfAbsent(right.asString(), Pattern::compile)
+                            .matcher(left.asString()).matches());
                 default:
                     throw new XpathParserException("unknown operator"+ctx.op.getText());
             }

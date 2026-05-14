@@ -30,6 +30,21 @@ import java.util.Map;
  */
 public class Text implements NodeTest {
     /**
+     * 静态缓存反射方法，避免每次遍历 TextNode 时重复获取
+     */
+    private static final Method SET_PARENT_METHOD;
+    static {
+        Method m = null;
+        try {
+            m = Node.class.getDeclaredMethod("setParentNode", Node.class);
+            m.setAccessible(true);
+        } catch (Exception ignored) {
+            // ignore
+        }
+        SET_PARENT_METHOD = m;
+    }
+
+    /**
      * 支持的函数名
      */
     @Override
@@ -69,9 +84,9 @@ public class Text implements NodeTest {
                                 data.text(textNode.getWholeText());
                                 data.attr(Constants.EL_DEPTH_KEY, key);
                                 try {
-                                    Method parent = Node.class.getDeclaredMethod("setParentNode",Node.class);
-                                    parent.setAccessible(true);
-                                    parent.invoke(data,textNode.parent());
+                                    if (SET_PARENT_METHOD != null) {
+                                        SET_PARENT_METHOD.invoke(data, textNode.parent());
+                                    }
                                 } catch (Exception e) {
                                     //ignore
                                 }

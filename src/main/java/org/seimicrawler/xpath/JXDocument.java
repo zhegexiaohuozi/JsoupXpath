@@ -17,8 +17,10 @@ import org.seimicrawler.xpath.exception.DoFailOnErrorHandler;
 import org.seimicrawler.xpath.exception.XpathParserException;
 import org.seimicrawler.xpath.exception.XpathSyntaxErrorException;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /*
    Copyright 2014 Wang Haomiao<seimimaster@gmail.com>
@@ -40,6 +42,11 @@ import java.util.List;
  * @author github.com/zhegexiaohuozi seimimaster@gmail.com
  */
 public class JXDocument {
+    /**
+     * XPath 表达式 -> 语法分析树的缓存，避免重复解析相同的 XPath 表达式
+     */
+    private static final Map<String, ParseTree> PARSE_TREE_CACHE = new ConcurrentHashMap<>();
+
     private Elements elements;
 
     public JXDocument(Elements els){
@@ -71,7 +78,7 @@ public class JXDocument {
     }
 
     public List<Object> sel(String xpath) {
-        List<Object> res = new LinkedList<>();
+        List<Object> res = new ArrayList<>();
         for (JXNode node:selN(xpath)){
             if (node.isElement()){
                 res.add(node.asElement());
@@ -83,14 +90,17 @@ public class JXDocument {
     }
 
     public List<JXNode> selN(String xpath){
-        List<JXNode> finalRes = new LinkedList<>();
+        List<JXNode> finalRes = new ArrayList<>();
         try{
-            CharStream input = CharStreams.fromString(xpath);
-            XpathLexer lexer = new XpathLexer(input);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            XpathParser parser = new XpathParser(tokens);
-            parser.setErrorHandler(new DoFailOnErrorHandler());
-            ParseTree tree = parser.main();
+            // 使用缓存避免重复解析相同的 XPath 表达式
+            ParseTree tree = PARSE_TREE_CACHE.computeIfAbsent(xpath, k -> {
+                CharStream input = CharStreams.fromString(k);
+                XpathLexer lexer = new XpathLexer(input);
+                CommonTokenStream tokens = new CommonTokenStream(lexer);
+                XpathParser parser = new XpathParser(tokens);
+                parser.setErrorHandler(new DoFailOnErrorHandler());
+                return parser.main();
+            });
             XpathProcessor processor = new XpathProcessor(elements);
             XValue calRes = processor.visit(tree);
             if (calRes == null){
