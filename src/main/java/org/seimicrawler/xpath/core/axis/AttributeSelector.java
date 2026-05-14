@@ -21,7 +21,7 @@ public class AttributeSelector implements AxisSelector{
     }
 
     /**
-     * @param context
+     * @param context 当前上下文元素集合
      * @return res
      */
     @Override

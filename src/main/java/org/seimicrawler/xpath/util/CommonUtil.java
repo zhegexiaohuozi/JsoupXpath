@@ -37,8 +37,9 @@ public class CommonUtil {
 
     /**
      * 获取同名元素在同胞中的index
-     * @param e
-     * @return
+     * @param e 目标元素
+     * @param scope 上下文
+     * @return 同名元素的位置索引（从1开始）
      */
     public static int getElIndexInSameTags(Element e,Scope scope){
         return getElIndexInSameTags(e, null, scope);
@@ -70,7 +71,9 @@ public class CommonUtil {
     /**
      * 获取同胞中同名元素的数量
      * Jsoup文档模型中，空白行和元素均属于同胞也有自己独立的siblingIndex，这对于xpath语法统计，空白行等是没有任何意义的，不应该计入siblingIndex。所以需要自行独立统计，不能直接使用siblingIndex。
-     * @return --
+     * @param e 目标元素
+     * @param scope 上下文
+     * @return 同名元素总数
      */
     public static int sameTagElNums(Element e,Scope scope){
         return sameTagElNums(e, null, scope);
@@ -179,9 +182,9 @@ public class CommonUtil {
      * 将原本 O(N × M) 的复杂度降为 O(P × M)，其中 P 为不同父节点数，M 为最大子节点数。
      */
     public static class PredicateIndexInfo {
-        /** 元素 -> 同名元素在 context 中的顺序索引（从1开始） */
+        /** 元素 -&gt; 同名元素在 context 中的顺序索引（从1开始） */
         public final Map<Element, Integer> indexMap;
-        /** 元素 -> 其父节点下同名且在 context 中的元素总数 */
+        /** 元素 -&gt; 其父节点下同名且在 context 中的元素总数 */
         public final Map<Element, Integer> countMap;
 
         public PredicateIndexInfo(Map<Element, Integer> indexMap, Map<Element, Integer> countMap) {

@@ -8,6 +8,7 @@ package org.seimicrawler.xpath.core;
 public interface NodeTest {
     /**
      * 支持的函数名
+     * @return 节点测试名称
      */
     String name();
 

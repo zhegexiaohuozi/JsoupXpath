@@ -2,7 +2,7 @@ JsoupXpath
 ==========
 
 [![GitHub release](https://img.shields.io/github/release/zhegexiaohuozi/JsoupXpath.svg)](https://github.com/zhegexiaohuozi/JsoupXpath/releases)
-[![Maven](https://maven-badges.herokuapp.com/maven-central/cn.wanghaomiao/JsoupXpath/badge.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22cn.wanghaomiao%22%20AND%20a%3A%22JsoupXpath%22)
+[![Maven](https://img.shields.io/maven-central/v/cn.wanghaomiao/JsoupXpath?logo=apache-maven&color=green)](https://central.sonatype.com/artifact/cn.wanghaomiao/JsoupXpath)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 A pure Java implementation of an HTML parser that supports W3C Xpath 1.0 standard syntax. It is a HTML parser based on Jsoup and Antlr4, and it might be the best in Java. Just try it.

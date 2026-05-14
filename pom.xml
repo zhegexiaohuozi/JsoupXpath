@@ -5,6 +5,14 @@
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <central.plugin.version>0.7.0</central.plugin.version>
+        <gpg.plugin.version>3.2.7</gpg.plugin.version>
+        <source.plugin.version>3.3.1</source.plugin.version>
+    </properties>
     <groupId>cn.wanghaomiao</groupId>
     <artifactId>JsoupXpath</artifactId>
     <version>2.5.5</version>
@@ -111,6 +119,68 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <!-- 1. 官方中央仓发布核心插件（替换旧nexus插件） -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>${central.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!-- 推送模式：自动发布/手动审核 -->
+                    <publishingType>AUTOMATIC</publishingType>
+                    <!-- 绑定要上传的仓库 -->
+                    <publishingServerId>central-publishing</publishingServerId>
+                </configuration>
+            </plugin>
+
+            <!-- 2. GPG签名插件 必须签名 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${gpg.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 3. 打包源码包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${source.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 覆盖父 POM oss-parent:7 中的 javadoc 插件配置，禁用 JDK8 doclint 严格检查 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>

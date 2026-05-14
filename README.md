@@ -2,7 +2,7 @@ JsoupXpath
 ==========
 
 [![GitHub release](https://img.shields.io/github/release/zhegexiaohuozi/JsoupXpath.svg)](https://github.com/zhegexiaohuozi/JsoupXpath/releases)
-[![Maven](https://maven-badges.herokuapp.com/maven-central/cn.wanghaomiao/JsoupXpath/badge.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22cn.wanghaomiao%22%20AND%20a%3A%22JsoupXpath%22)
+[![Maven](https://img.shields.io/maven-central/v/cn.wanghaomiao/JsoupXpath?logo=apache-maven&color=green)](https://central.sonatype.com/artifact/cn.wanghaomiao/JsoupXpath)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 纯Java实现的支持W3C Xpath 1.0标准语法的HTML解析器。A html parser with xpath base on Jsoup and Antlr4.Maybe it is the best in java,Just try it.

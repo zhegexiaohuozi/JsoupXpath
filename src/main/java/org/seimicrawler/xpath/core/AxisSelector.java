@@ -15,8 +15,7 @@ public interface AxisSelector {
     String name();
 
     /**
-     *
-     * @param context
+     * @param context 当前上下文元素集合
      * @return res
      */
     XValue apply(Elements context);
